@@ -42,7 +42,7 @@ class Trainer:
         self,
         network: Network,
         num_simulations: int = 80,
-        num_games: int = 100_000,
+        num_games: int = 50_000,
         model_name: str = "model",
         batch_size: int = 128,
         num_epochs: int = 4,
@@ -50,10 +50,10 @@ class Trainer:
         warmup_buffer_size: int = 1_000,
         lr_schedule: Dict[int, float] = {
             0: 1e-4,
-            5_000: 5e-4,
-            20_000: 2e-4,
-            50_000: 1e-4,
-            80_000: 5e-5,
+            2_500: 5e-4,
+            10_000: 2e-4,
+            25_000: 1e-4,
+            40_000: 5e-5,
         }
     ):  
         self.network = network
@@ -146,11 +146,11 @@ class Trainer:
         return loss.item(), policy_loss.item(), value_loss.item()
 
     def train(self):
+        save_points = {int(self.num_games * (1.05 ** i - 1) / (1.05 ** 50 - 1)) for i in range(50)}
         while self.iterations < self.num_games:
             self.iterations += 1
 
             training_data = self.self_play()
-            print(training_data[0])
             self.buffer.extend(training_data)
             
             # Training phase
@@ -159,18 +159,20 @@ class Trainer:
                 for _ in range(self.num_epochs):
                     loss, policy_loss, value_loss = self.train_epoch()
                     
-                print(f"Game {self.iterations}/{self.num_games} Step {self.steps}")
+                print(f"Game {self.iterations}/{self.num_games}, Step {self.steps}, Buffer size: {len(self.buffer)}")
                 print(f"Loss: {loss:.4f} (Policy: {policy_loss:.4f}, Value: {value_loss:.4f})")
-                print(f"Buffer size: {len(self.buffer)}")
 
                 self.steps += 1
                 
                 if self.steps in self.lr_schedule:
                     self.optimizer.param_groups[0]['lr'] = self.lr_schedule[self.steps]
                 
-            if self.iterations % 100 == 0:
+            if self.iterations in save_points:
                 print(f"Saving model... at {self.iterations}")
                 self.save_trainer(self.iterations, self.steps)
+
+        print(f"Training complete. Saving model...")
+        self.save_trainer(self.iterations, self.steps)
 
     def save_trainer(self, iterations: int, steps: int):
         trainer_state = {
@@ -197,5 +199,5 @@ class Trainer:
 
 if __name__ == "__main__":
     network = Network()
-    trainer = Trainer(network, num_simulations=25, model_name="model_8f3044a")
+    trainer = Trainer(network, num_simulations=25, model_name="model_8f3044a", warmup_buffer_size=10)
     trainer.train()
