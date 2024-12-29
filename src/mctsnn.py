@@ -23,13 +23,14 @@ class MCTSNNNode:
         self.prior = 0.0
 
 class MCTSNN:
-    def __init__(self, network, exploration_weight=1.414, selection_method: Literal["argmax", "sample", "random"]="argmax"):
+    def __init__(self, network, exploration_weight=1.414, selection_method: Literal["argmax", "sample", "random"]="argmax", temperature: float = 1.0):
         self.network = network
         self.exploration_weight = exploration_weight
         self.selection_method = selection_method
         self.root = None
+        self.temperature = temperature
 
-    def choose_action(self, state, num_simulations=1000, temperature=1.0):
+    def choose_action(self, state, num_simulations=1000):
         self.root = MCTSNNNode(state)
         
         # Get initial policy from neural network
@@ -63,12 +64,12 @@ class MCTSNN:
             self._backpropagate(node, value)
         
         visits = np.array([child.visits for child in self.root.children])
-        if temperature == 0:
+        if self.temperature == 0:
             best_actions = np.argwhere(visits == np.max(visits)).flatten()
             chosen_idx = np.random.choice(best_actions)
             return self.root.children[chosen_idx].action
         
-        visits = visits ** (1.0 / temperature)
+        visits = visits ** (1.0 / self.temperature)
         probs = visits / visits.sum()
         chosen_idx = np.random.choice(len(self.root.children), p=probs)
         return self.root.children[chosen_idx].action
