@@ -4,6 +4,11 @@ import torch
 import torch.nn.functional as F
 from typing import List, Optional, Tuple, Literal
 import numpy as np
+import logging
+
+
+EPS = 1e-8
+log = logging.getLogger(__name__)
 
 from utac.utils import move_to_index
 
@@ -22,9 +27,10 @@ class MCTSNN:
         self.network = network
         self.exploration_weight = exploration_weight
         self.selection_method = selection_method
+        self.root = None
 
-    def choose_action(self, state, num_simulations=1000):
-        root = MCTSNNNode(state)
+    def choose_action(self, state, num_simulations=1000, temperature=1.0):
+        self.root = MCTSNNNode(state)
         
         # Get initial policy from neural network
         obs = torch.FloatTensor(state._get_obs()).unsqueeze(0)
@@ -36,32 +42,36 @@ class MCTSNN:
         legal_moves = state.get_legal_actions()
         legal_move_indices = [move_to_index(move) for move in legal_moves]
         policy_legal = policy[legal_move_indices]
-        policy_legal = policy_legal / policy_legal.sum()  # Renormalize
+        sum_policy = policy_legal.sum()
         
-        # Create children with priors
+        if sum_policy > 0:
+            policy_legal = policy_legal / sum_policy
+        else:
+            log.warning("All moves were masked")
+            policy_legal = np.ones_like(policy_legal) / len(policy_legal)
+        
         for move, prior in zip(legal_moves, policy_legal):
             new_state = state.clone()
             new_state.step(move)
-            child = MCTSNNNode(new_state, parent=root, action=move_to_index(move))
+            child = MCTSNNNode(new_state, parent=self.root, action=move_to_index(move))
             child.prior = prior
-            root.children.append(child)
+            self.root.children.append(child)
         
-        # Run simulations
         for _ in range(num_simulations):
-            node = self._select(root)
+            node = self._select(self.root)
             value = self._evaluate(node.state)
             self._backpropagate(node, value)
         
-        # Select action based on specified method
-        if self.selection_method == "argmax":
-            return self._best_child(root, exploration_weight=0).action
-        elif self.selection_method == "sample":
-            visits = np.array([child.visits for child in root.children])
-            probs = visits / visits.sum()
-            chosen_idx = np.random.choice(len(root.children), p=probs)
-            return root.children[chosen_idx].action
-        else:  # random
-            return random.choice(root.children).action
+        visits = np.array([child.visits for child in self.root.children])
+        if temperature == 0:
+            best_actions = np.argwhere(visits == np.max(visits)).flatten()
+            chosen_idx = np.random.choice(best_actions)
+            return self.root.children[chosen_idx].action
+        
+        visits = visits ** (1.0 / temperature)
+        probs = visits / visits.sum()
+        chosen_idx = np.random.choice(len(self.root.children), p=probs)
+        return self.root.children[chosen_idx].action
 
     def _select(self, node: MCTSNNNode) -> MCTSNNNode:
         while not node.state.is_terminal():
@@ -114,10 +124,40 @@ class MCTSNN:
 
         def ucb_score(n: MCTSNNNode) -> float:
             if n.visits == 0:
-                return float('inf')
+                return exploration_weight * n.prior * math.sqrt(node.visits + 1e-8)
             
             q_value = n.value / n.visits
             u_value = exploration_weight * n.prior * math.sqrt(node.visits) / (1 + n.visits)
             return q_value + u_value
 
         return max(node.children, key=ucb_score)
+
+    def get_root_evaluation(self) -> Tuple[dict, List[dict]]:
+        """Returns the evaluation of the root state and its actions"""
+        if self.root is None:
+            raise ValueError("No search has been performed yet")
+        
+        state_eval = {
+            "state": self.root.state.clone(),
+            "visits": self.root.visits,
+            "value": self.root.value,
+            "state_value_mean": self.root.value / max(1, self.root.visits),
+        }
+        
+        if not self.root.children:
+            raise ValueError("Root has no children")
+        if self.root.visits == 0:
+            raise ValueError("Root was not visited")
+            
+        action_evals = []
+        for child in self.root.children:
+            action_eval = {
+                "action": child.action,
+                "visits": child.visits,
+                "prior": child.prior,
+                "value": -child.value,
+                "state_value_mean": -child.value / max(1, child.visits),
+            }
+            action_evals.append(action_eval)
+            
+        return state_eval, action_evals
