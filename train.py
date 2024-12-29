@@ -199,5 +199,5 @@ class Trainer:
 
 if __name__ == "__main__":
     network = Network()
-    trainer = Trainer(network, num_simulations=25, model_name="model_8f3044a", warmup_buffer_size=10)
+    trainer = Trainer(network, num_simulations=25, model_name="model_822eff0")
     trainer.train()
