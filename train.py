@@ -46,8 +46,9 @@ class Trainer:
         model_name: str = "model",
         batch_size: int = 128,
         num_epochs: int = 4,
-        buffer_size: int = 10_000,
-        warmup_buffer_size: int = 1_000,
+        buffer_size: int = 1_000_000,
+        warmup_buffer_size: int = 10_000,
+        save_buffer: bool = False,
         lr_schedule: Dict[int, float] = {
             0: 1e-4,
             2_500: 5e-4,
@@ -61,11 +62,13 @@ class Trainer:
         self.lr_schedule = lr_schedule
         self.optimizer = optim.Adam(network.parameters(), lr=lr_schedule[0])
         self.buffer = deque(maxlen=buffer_size)
+        self.buffer_size = buffer_size
         self.warmup_buffer_size = warmup_buffer_size
         self.num_games = num_games
         self.num_simulations = num_simulations
         self.batch_size = batch_size
         self.num_epochs = num_epochs
+        self.save_buffer = save_buffer
 
         self.iterations = 0
         self.steps = 0
@@ -175,27 +178,62 @@ class Trainer:
         self.save_trainer(self.iterations, self.steps)
 
     def save_trainer(self, iterations: int, steps: int):
+        buffer = deque(maxlen=self.buffer_size)
+        if self.save_buffer:
+            buffer = self.buffer
+        
         trainer_state = {
             'network_state': self.network.state_dict(),
             'optimizer_state': self.optimizer.state_dict(),
-            'buffer': self.buffer,
+            'buffer': buffer,
+            'buffer_size': self.buffer_size,
             'num_games': self.num_games,
             'num_simulations': self.num_simulations,
             'num_epochs': self.num_epochs,
             'batch_size': self.batch_size,
             'warmup_buffer_size': self.warmup_buffer_size,
             'lr_schedule': self.lr_schedule,
+            'model_name': self.model_name,
+            'save_buffer': self.save_buffer,
             'iterations': iterations,
             'steps': steps,
         }
         
-        with open(f"{self.model_name}_{iterations}/{self.num_games}.pkl", "wb") as f:
+        with open(f"{self.model_name}_{iterations}.{self.num_games}.pkl", "wb") as f:
             pickle.dump(trainer_state, f)
 
+        print(f"Saved model to {self.model_name}_{iterations}/{self.num_games}.pkl")
+
     @staticmethod
-    def load_trainer(path: str):
+    def load_trainer(path: str) -> "Trainer":
         with open(path, "rb") as f:
-            return pickle.load(f)
+            trainer_state = pickle.load(f)
+        network = Network()
+        network.load_state_dict(trainer_state['network_state'])
+        optimizer = optim.Adam(network.parameters(), lr=trainer_state['lr_schedule'][0])
+        optimizer.load_state_dict(trainer_state['optimizer_state'])
+
+        kwargs = {
+            "network": network,
+            "buffer_size": trainer_state['buffer_size'],
+            "warmup_buffer_size": trainer_state['warmup_buffer_size'],
+            "num_games": trainer_state['num_games'],
+            "num_simulations": trainer_state['num_simulations'],
+            "batch_size": trainer_state['batch_size'],
+            "num_epochs": trainer_state['num_epochs'],
+            "save_buffer": trainer_state['save_buffer'],
+            "lr_schedule": trainer_state['lr_schedule'],
+            "model_name": trainer_state['model_name'],
+        }
+
+        trainer = Trainer(**kwargs)
+        trainer.network = network
+        trainer.optimizer = optimizer
+        trainer.buffer = trainer_state['buffer']
+        trainer.steps = trainer_state['steps']
+        trainer.iterations = trainer_state['iterations']
+
+        return trainer
 
 if __name__ == "__main__":
     network = Network()
