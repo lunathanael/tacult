@@ -43,6 +43,9 @@ class UtacEnv(gym.Env):
                     move_coord = utac.utils.index_to_board_coord(move_index)
                     board_mask[move_coord] = True
 
+        if self.state.current_player == "O":
+            boardX, boardO = boardO, boardX
+
         observation = np.stack([boardX, boardO, board_mask], axis=0)
         return observation
 
