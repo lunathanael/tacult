@@ -41,7 +41,7 @@ class MCTSNN:
         # Create children with priors
         for move, prior in zip(legal_moves, policy_legal):
             new_state = state.clone()
-            new_state.step(move_to_index(move))
+            new_state.step(move)
             child = MCTSNNNode(new_state, parent=root, action=move_to_index(move))
             child.prior = prior
             root.children.append(child)
@@ -52,7 +52,6 @@ class MCTSNN:
             value = self._evaluate(node.state)
             self._backpropagate(node, value)
         
-        print(self._best_child(root, exploration_weight=0).value)
         # Select action based on specified method
         if self.selection_method == "argmax":
             return self._best_child(root, exploration_weight=0).action
@@ -87,7 +86,7 @@ class MCTSNN:
         for move, prior in zip(legal_moves, policy_legal):
             if not any(child.action == move_to_index(move) for child in node.children):
                 new_state = node.state.clone()
-                new_state.step(move_to_index(move))
+                new_state.step(move)
                 child = MCTSNNNode(new_state, parent=node, action=move_to_index(move))
                 child.prior = prior
                 node.children.append(child)

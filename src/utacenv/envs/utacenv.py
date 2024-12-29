@@ -70,10 +70,7 @@ class UtacEnv(gym.Env):
 
     def step(self, action):
         current_player = self.state.current_player
-        try:
-            self.state.make_move(action)
-        except ValueError:
-            return self._get_obs(), -1, True, False, self._get_info()
+        self.state.make_move(action)
         
         # Check if game is over
         terminated = self.state.game_over
@@ -88,6 +85,9 @@ class UtacEnv(gym.Env):
             self._render_frame()
 
         return observation, reward, terminated, False, info
+
+    def apply_move_index(self, move_index: int):
+        self.state.make_move_index(move_index)
 
     def render(self):
         if self.render_mode == "rgb_array":
@@ -114,12 +114,13 @@ class UtacEnv(gym.Env):
     
     @property
     def current_player(self):
-        return self.state.current_player
+        return self.state.current_player == "X"
     
     def get_reward(self, current_player: int):
+        players = ["O", "X"]
         if self.state.winner not in ("X", "O"):
             return 0
-        if self.state.winner == current_player:
+        if self.state.winner == players[current_player]:
             return 1
         return -1
         
