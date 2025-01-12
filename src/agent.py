@@ -15,14 +15,10 @@ class Agent(nn.Module):
         self.network = nn.Sequential(
             nn.Flatten(),
             layer_init(
-                nn.Linear(obs_dim, 128)
+                nn.Linear(obs_dim, 256)
             ),  # First layer expanded to handle 52 inputs
             nn.ReLU(),
-            layer_init(nn.Linear(128, 256)),
-            nn.ReLU(),
             layer_init(nn.Linear(256, 512)),
-            nn.ReLU(),
-            layer_init(nn.Linear(512, 512)),
             nn.ReLU(),
         )
         self.actor = layer_init(nn.Linear(512, action_dim), std=0.005)
