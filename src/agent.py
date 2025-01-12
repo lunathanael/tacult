@@ -6,7 +6,7 @@ import torch
 import torch.nn as nn
 from torch.distributions.categorical import Categorical
 
-from utils import layer_init
+from .utils import layer_init
 
 
 class Agent(nn.Module):
