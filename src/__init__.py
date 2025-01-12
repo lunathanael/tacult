@@ -1,4 +1,5 @@
-from .utacenv import UtacEnv
-from .mcts import MCTS
-from .mctsnn import MCTSNN
-from .network import Network
+from . import agent, envs, trainer, utils
+from agent import Agent
+from trainer import Trainer, Args
+
+__all__ = ['Agent', 'UtacEnv', 'Trainer', 'Args']
