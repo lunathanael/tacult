@@ -1,10 +1,9 @@
-from . import agent, utacenv, trainer, utils
+from . import agent, trainer, utils
 from .agent import Agent
 from .trainer import Trainer, Args
 
 __all__ = [
     "agent",
-    "utacenv",
     "trainer",
     "utils",
     "Agent",
