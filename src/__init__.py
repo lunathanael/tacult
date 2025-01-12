@@ -7,7 +7,6 @@ __all__ = [
     "trainer",
     "utils",
     "Agent",
-    "UtacEnv",
     "Trainer",
     "Args",
 ]
