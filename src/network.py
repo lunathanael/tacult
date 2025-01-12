@@ -90,3 +90,43 @@ class Network(nn.Module):
         total_loss = policy_loss + value_loss
         
         return total_loss, policy_loss, value_loss
+
+
+class UTTTEvaluator(nn.Module):
+    def __init__(self):
+        super().__init__()
+        
+        # Feature Transformer
+        self.feature_network = nn.Sequential(
+            # Input: 6 x 9 x 9
+            nn.Conv2d(6, 32, kernel_size=3, padding=1),
+            nn.ReLU(),
+            nn.Conv2d(32, 32, kernel_size=3, padding=1),
+            nn.ReLU(),
+            # Output: 32 x 9 x 9
+        )
+        
+        # Accumulator Network
+        self.accumulator = nn.Sequential(
+            nn.Linear(32 * 81, 256),
+            nn.ReLU(),
+            nn.Linear(256, 32),
+            nn.ReLU()
+        )
+        
+        # Output Network
+        self.output = nn.Sequential(
+            nn.Linear(32, 1),
+            nn.Tanh()
+        )
+
+    def forward(self, x):
+        # Transform features
+        features = self.feature_network(x)
+        features = features.view(-1, 32 * 81)
+        
+        # Accumulate
+        accumulated = self.accumulator(features)
+        
+        # Final evaluation
+        return self.output(accumulated)
