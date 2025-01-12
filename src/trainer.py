@@ -13,7 +13,7 @@ from torch.utils.tensorboard import SummaryWriter
 
 from .utils import make_env
 from .agent import Agent
-
+from .evaluate import evaluate_random
 
 @dataclass
 class Args:
@@ -33,6 +33,13 @@ class Args:
     """the entity (team) of wandb's project"""
     capture_video: bool = False
     """whether to capture videos of the agent performances (check out `videos` folder)"""
+
+    evaluation_method: str = "random"
+    """the method to evaluate the agent's performance"""
+    evaluation_num_episodes: int = 100
+    """the number of episodes to evaluate the agent's performance"""
+    evaluation_allow_illegal: bool = False
+    """whether to allow illegal moves during evaluation"""
 
     # Algorithm specific arguments
     env_id: str = "utac-v0"
@@ -98,8 +105,8 @@ class Trainer:
                 monitor_gym=True,
                 save_code=True,
             )
-        writer = SummaryWriter(f"logs/{run_name}")
-        writer.add_text(
+        self.writer = SummaryWriter(f"logs/{run_name}")
+        self.writer.add_text(
             "hyperparameters",
             "|param|value|\n|-|-|\n%s"
             % ("\n".join([f"|{key}|{value}|" for key, value in vars(args).items()])),
@@ -206,6 +213,13 @@ class Trainer:
                         self.writer.add_scalar(
                             "charts/episodic_raw_return", raw_r, global_step
                         )
+            if self.args.evaluation_method is not None:
+                evaluation = None
+                match self.args.evaluation_method:
+                    case "random":
+                        evaluation = evaluate_random(self.agent, self.args.evaluation_num_episodes, self.args.evaluation_allow_illegal)
+                self.writer.add_scalar("charts/evaluation_score", evaluation, global_step)
+
             # bootstrap value if not done
             with torch.no_grad():
                 next_value = self.agent.get_value(next_obs).reshape(1, -1)
@@ -233,7 +247,7 @@ class Trainer:
                 returns = advantages + values
 
             # flatten the batch
-            b_obs = obs.reshape((-1,) + envs.single_observation_space.shape)
+            b_obs = obs.reshape((-1,) + self.envs.single_observation_space.shape)
             b_logprobs = logprobs.reshape(-1)
             b_actions = actions.reshape((-1,) + self.envs.single_action_space.shape)
             b_advantages = advantages.reshape(-1)

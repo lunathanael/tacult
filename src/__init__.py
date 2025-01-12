@@ -1,6 +1,7 @@
 from . import agent, trainer, utils
 from .agent import Agent
 from .trainer import Trainer, Args
+from .evaluate import evaluate_random
 
 __all__ = [
     "agent",
@@ -9,4 +10,5 @@ __all__ = [
     "Agent",
     "Trainer",
     "Args",
+    "evaluate_random",
 ]
