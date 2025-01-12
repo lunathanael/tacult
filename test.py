@@ -9,5 +9,5 @@ env = gym.make("utac-v0")
 agent = Agent.load(pth, np.prod(env.observation_space.shape), env.action_space.n)
 
 
-evaluation = evaluate.evaluate_random(agent, num_episodes=10000)
+evaluation = evaluate.evaluate_random(agent, num_episodes=100)
 print(evaluation)
