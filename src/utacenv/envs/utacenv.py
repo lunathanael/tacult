@@ -4,6 +4,16 @@ import numpy as np
 import utac
 from utac.types import Board, SubBoard
 
+def cast_to_board(subboard: SubBoard) -> Board:
+    board = np.zeros((9, 9), dtype=np.int8)
+    for i in range(3):
+        for j in range(3):
+            if subboard.board[i,j] != 0:
+                row_start = subboard.start_row + (i * 3)
+                col_start = subboard.start_col + (j * 3)
+                board[row_start:row_start+3, col_start:col_start+3] = subboard.board[i,j]
+    return board
+
 class UtacEnv(gym.Env):
     metadata = {"render_modes": ["human", "rgb_array"], "render_fps": 4}
 
@@ -48,6 +58,40 @@ class UtacEnv(gym.Env):
 
         observation = np.stack([boardX, boardO, board_mask], axis=0)
         return observation
+    
+    
+
+    def _get_features(self):
+        # Convert UtacState to 3 binary planes
+        boardX: Board = self.state.boardX.astype(np.int8)
+        boardO: Board = self.state.boardO.astype(np.int8)
+        main_boardX: SubBoard = self.state.main_boardX.astype(np.int8)
+        main_boardO: SubBoard = self.state.main_boardO.astype(np.int8)
+        main_boardDraw: SubBoard = self.state.main_boardDraw.astype(np.int8)
+
+        main_boardX = cast_to_board(main_boardX)
+        main_boardO = cast_to_board(main_boardO)
+        main_boardDraw = cast_to_board(main_boardDraw)
+
+        current_subboard_index: int = self.state.current_subboard_index
+        board_mask: Board = np.zeros((9, 9), dtype=np.int8)
+        if current_subboard_index == -1:
+            board_mask = np.ones((9, 9), dtype=np.int8)
+        else:
+            for i in range(3):
+                for j in range(3):
+                    move = (current_subboard_index, i, j)
+                    move_index = utac.utils.move_to_index(move)
+                    move_coord = utac.utils.index_to_board_coord(move_index)
+                    board_mask[move_coord] = True
+
+        if self.state.current_player == "O":
+            boardX, boardO = boardO, boardX
+            main_boardX, main_boardO = main_boardO, main_boardX
+
+        observation = np.stack([boardX, boardO, board_mask, main_boardX, main_boardO, main_boardDraw], axis=0)
+        return observation
+
 
     def _get_info(self):
         return {

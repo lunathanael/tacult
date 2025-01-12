@@ -2,17 +2,28 @@ from src import UtacEnv, MCTS, Network, MCTSNN
 import torch
 import numpy as np
 
+from train import Trainer
+
 def main():
     env = UtacEnv()
     env.reset()
-    #env.step((4, 1, 1))
+    while True:
+        nenv = env.clone()
+        action = nenv.get_legal_actions()[0]
+        nenv.step(action)
+        if nenv.is_terminal():
+            nenv.state.print()
+            print(f"Action: {action}")
+            break
+        env = nenv
 
-    network = Network()
-    network.load_state_dict(torch.load('model_checkpoint_3900.pt'))
+    # Load trainer from saved checkpoint
+    trainer = Trainer.load_trainer("model_2fc3705_238.50000.pkl")
+    network = trainer.network
     network.eval()
     
     mcts = MCTSNN(network, selection_method="argmax")
-    print(mcts.choose_action(env, 1000, temperature=0))
+    print(mcts.choose_action(env, 1000))
     print(mcts.get_root_evaluation())
     eval = mcts.get_root_evaluation()
 
@@ -40,4 +51,3 @@ def main():
 
 if __name__ == "__main__":
     main()
-
