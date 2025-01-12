@@ -12,7 +12,7 @@ import torch.optim as optim
 from torch.utils.tensorboard import SummaryWriter
 
 from .utils import make_env
-
+from .agent import Agent
 
 @dataclass
 class Args:
@@ -34,7 +34,7 @@ class Args:
     """whether to capture videos of the agent performances (check out `videos` folder)"""
 
     # Algorithm specific arguments
-    env_id: str = "UtacEnv-v0"
+    env_id: str = "utac-v0"
     """the id of the environment"""
     total_timesteps: int = 1_000_000
     """total timesteps of the experiments"""
