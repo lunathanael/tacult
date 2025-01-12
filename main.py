@@ -1,8 +1,9 @@
 from src import Trainer, Args
 import utac
+import tyro
 
 def main():
-    args = Args()
+    args = tyro.cli(Args)
     trainer = Trainer(args)
     trainer.train()
 

@@ -15,15 +15,15 @@ class Agent(nn.Module):
         self.network = nn.Sequential(
             nn.Flatten(),
             layer_init(
-                nn.Linear(obs_dim, 256)
+                nn.Linear(obs_dim, 512)
             ),  # First layer expanded to handle 52 inputs
             nn.ReLU(),
-            layer_init(nn.Linear(256, 512)),
+            layer_init(nn.Linear(512, 1024)),
             nn.ReLU(),
         )
-        self.actor = layer_init(nn.Linear(512, action_dim), std=0.005)
+        self.actor = layer_init(nn.Linear(1024, action_dim), std=0.005)
         # self.actor2 = layer_init(nn.Linear(512, 2), std=0.01)
-        self.critic = layer_init(nn.Linear(512 + action_dim, 1), std=1)
+        self.critic = layer_init(nn.Linear(1024, 1), std=1)
 
     def get_value(self, x):
         return self.get_action_and_value(x, None)[3]
@@ -31,17 +31,21 @@ class Agent(nn.Module):
     def get_action(self, x):
         return self.get_action_and_value(x, None)[0]
 
-    def get_action_and_value(self, x, action=None):
-        x = self.network(x)
+    def get_action_and_value(self, _x, action=None):
+        x = self.network(_x)
         logits = self.actor(x)
+        
+        action_mask = _x[:, 0:1, :, :]
+        # Reshape to match logits shape (batch x 81)
+        action_mask = action_mask.reshape(action_mask.shape[0], -1)
+        # Apply mask by setting logits of invalid actions to large negative value
+        logits = torch.where(action_mask.bool(), logits, torch.tensor(-1e8).to(logits.device))
+
         probs = Categorical(logits=logits)
         # probs2 = torch.distributions.Categorical(logits=logits2)
         if action is None:
             action = probs.sample()
 
-        action_encoded = torch.zeros_like(logits)
-        action_encoded[torch.arange(len(action)), action] = 1
-        x = torch.cat([x, action_encoded], dim=-1)
         return action, probs.log_prob(action), probs.entropy(), self.critic(x)
 
     def save(self, path):
