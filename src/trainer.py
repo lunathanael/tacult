@@ -15,7 +15,7 @@ from .utils import make_env
 from .agent import Agent
 from .evaluate import evaluate_random
 
-from utac.wrappers import RandomOpponent, PlayOpponentWrapper
+from utac.wrappers import RandomOpponent, PlayOpponentWrapper, MCTSOpponent
 
 @dataclass
 class Args:
@@ -148,7 +148,10 @@ class Trainer:
                 self.opponent = Agent.load(args.opponent_model_path, np.prod(self.envs.single_observation_space.shape), self.envs.single_action_space.n)
             case "self":
                 self.opponent = self.agent
+            case "mcts":
+                self.opponent = MCTSOpponent(num_simulations=10, num_rollouts=10)
             case _:
+                print("Couldn't find a valid opponent, playing against self in a bad way")
                 self.opponent = None
 
         if self.opponent is not None:

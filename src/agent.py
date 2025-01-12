@@ -16,7 +16,7 @@ class Agent(nn.Module):
             nn.Flatten(),
             layer_init(
                 nn.Linear(obs_dim, 512)
-            ),  # First layer expanded to handle 52 inputs
+            ),
             nn.ReLU(),
             layer_init(nn.Linear(512, 1024)),
             nn.ReLU(),
@@ -28,7 +28,7 @@ class Agent(nn.Module):
     def get_value(self, x):
         return self.get_action_and_value(x, None)[3]
     
-    def get_action(self, x):
+    def get_action(self, x, info=None):
         return self.get_action_and_value(x, None)[0]
 
     def get_action_and_value(self, _x, action=None):
