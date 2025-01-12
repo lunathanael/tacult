@@ -31,6 +31,9 @@ class Agent(nn.Module):
 
     def get_value(self, x):
         return self.get_action_and_value(x, None)[3]
+    
+    def get_action(self, x):
+        return self.get_action_and_value(x, None)[0]
 
     def get_action_and_value(self, x, action=None):
         x = self.network(x)
