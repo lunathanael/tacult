@@ -15,6 +15,8 @@ from .utils import make_env
 from .agent import Agent
 from .evaluate import evaluate_random
 
+from utac.wrappers import RandomOpponent, PlayOpponentWrapper
+
 @dataclass
 class Args:
     exp_name: str = os.path.basename(__file__)[: -len(".py")]
@@ -34,12 +36,10 @@ class Args:
     capture_video: bool = False
     """whether to capture videos of the agent performances (check out `videos` folder)"""
 
-    evaluation_method: str = "random"
-    """the method to evaluate the agent's performance"""
-    evaluation_num_episodes: int = 100
-    """the number of episodes to evaluate the agent's performance"""
-    evaluation_allow_illegal: bool = False
-    """whether to allow illegal moves during evaluation"""
+    env_opponent: str = "random"
+    """the opponent to play against"""
+    opponent_model_path: str = None
+    """the path to the opponent model"""
 
     # Algorithm specific arguments
     env_id: str = "utac-v0"
@@ -140,6 +140,19 @@ class Trainer:
         self.optimizer = optim.Adam(
             self.agent.parameters(), lr=args.learning_rate, eps=1e-5
         )
+
+        match args.env_opponent:
+            case "random":
+                self.opponent = RandomOpponent()
+            case "model":
+                self.opponent = Agent.load(args.opponent_model_path, np.prod(self.envs.single_observation_space.shape), self.envs.single_action_space.n)
+            case "self":
+                self.opponent = self.agent
+            case _:
+                self.opponent = None
+
+        if self.opponent is not None:
+            self.envs = [PlayOpponentWrapper(env, self.opponent) for env in self.envs]
 
     def train(self):
 

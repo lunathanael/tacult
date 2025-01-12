@@ -2,16 +2,7 @@ from .agent import Agent
 import torch
 import gymnasium as gym
 import utac
-
-
-class RandomAgent:
-    def __init__(self, action_dim: int):
-        self.action_dim = action_dim
-
-    def get_action(self, obs, legal_actions=None):
-        if legal_actions is None:
-            return torch.randint(0, self.action_dim, (1,))
-        return legal_actions[torch.randint(0, len(legal_actions), (1,))]
+from utac.wrappers import PlayOpponentWrapper, RandomOpponent
 
 
 def evaluate_random(
@@ -20,6 +11,7 @@ def evaluate_random(
     total_score = 0
     total_length = 0
     env = gym.make("utac-v0")
+    env = PlayOpponentWrapper(env, RandomOpponent())
     for _ in range(num_episodes):
         obs, info = env.reset()
         agent_player = info["current_player"]
