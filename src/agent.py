@@ -13,7 +13,9 @@ class Agent(nn.Module):
     def __init__(self, obs_dim, action_dim):
         super().__init__()
         self.network = nn.Sequential(
-            layer_init(nn.Linear(obs_dim, 128)),  # First layer expanded to handle 52 inputs
+            layer_init(
+                nn.Linear(obs_dim, 128)
+            ),  # First layer expanded to handle 52 inputs
             nn.ReLU(),
             layer_init(nn.Linear(128, 256)),
             nn.ReLU(),
@@ -23,7 +25,7 @@ class Agent(nn.Module):
             nn.ReLU(),
         )
         self.actor = layer_init(nn.Linear(512, action_dim), std=0.005)
-        # self.actor2 = layer_init(nn.Linear(512, 2), std=0.01) 
+        # self.actor2 = layer_init(nn.Linear(512, 2), std=0.01)
         self.critic = layer_init(nn.Linear(512 + action_dim, 1), std=1)
 
     def get_value(self, x):

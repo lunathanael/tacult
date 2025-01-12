@@ -78,7 +78,6 @@ class Args:
     """the number of iterations (computed in runtime)"""
 
 
-
 class Trainer:
     def __init__(self, args: Args):
         self.args = args
@@ -101,7 +100,8 @@ class Trainer:
         writer = SummaryWriter(f"logs/{run_name}")
         writer.add_text(
             "hyperparameters",
-            "|param|value|\n|-|-|\n%s" % ("\n".join([f"|{key}|{value}|" for key, value in vars(args).items()])),
+            "|param|value|\n|-|-|\n%s"
+            % ("\n".join([f"|{key}|{value}|" for key, value in vars(args).items()])),
         )
 
         # TRY NOT TO MODIFY: seeding
@@ -110,23 +110,43 @@ class Trainer:
         torch.manual_seed(args.seed)
         torch.backends.cudnn.deterministic = args.torch_deterministic
 
-        self.device = torch.device("cuda" if torch.cuda.is_available() and args.cuda else "cpu")
+        self.device = torch.device(
+            "cuda" if torch.cuda.is_available() and args.cuda else "cpu"
+        )
 
         # env setup
         self.envs = gym.vector.SyncVectorEnv(
-            [make_env(args.env_id, i, args.capture_video, run_name) for i in range(args.num_envs)],
+            [
+                make_env(args.env_id, i, args.capture_video, run_name)
+                for i in range(args.num_envs)
+            ],
         )
-        assert isinstance(self.envs.single_action_space, gym.spaces.Discrete), "only discrete action space is supported"
+        assert isinstance(
+            self.envs.single_action_space, gym.spaces.Discrete
+        ), "only discrete action space is supported"
 
-        self.agent = Agent(np.array(self.envs.single_observation_space.shape).prod(), self.envs.single_action_space.n).to(self.device)
-        self.optimizer = optim.Adam(self.agent.parameters(), lr=args.learning_rate, eps=1e-5)
+        self.agent = Agent(
+            np.array(self.envs.single_observation_space.shape).prod(),
+            self.envs.single_action_space.n,
+        ).to(self.device)
+        self.optimizer = optim.Adam(
+            self.agent.parameters(), lr=args.learning_rate, eps=1e-5
+        )
 
     def train(self):
 
         # ALGO Logic: Storage setup
-        obs = torch.zeros((self.args.num_steps, self.args.num_envs) + self.envs.single_observation_space.shape).to(self.device)
-        actions = torch.zeros((self.args.num_steps, self.args.num_envs) + self.envs.single_action_space.shape).to(self.device)
-        logprobs = torch.zeros((self.args.num_steps, self.args.num_envs)).to(self.device)
+        obs = torch.zeros(
+            (self.args.num_steps, self.args.num_envs)
+            + self.envs.single_observation_space.shape
+        ).to(self.device)
+        actions = torch.zeros(
+            (self.args.num_steps, self.args.num_envs)
+            + self.envs.single_action_space.shape
+        ).to(self.device)
+        logprobs = torch.zeros((self.args.num_steps, self.args.num_envs)).to(
+            self.device
+        )
         rewards = torch.zeros((self.args.num_steps, self.args.num_envs)).to(self.device)
         dones = torch.zeros((self.args.num_steps, self.args.num_envs)).to(self.device)
         values = torch.zeros((self.args.num_steps, self.args.num_envs)).to(self.device)
@@ -137,7 +157,6 @@ class Trainer:
         next_obs, infos = self.envs.reset(seed=self.args.seed)
         next_obs = torch.Tensor(next_obs).to(self.device)
         next_done = torch.zeros(self.args.num_envs).to(self.device)
-    
 
         save_iteration = 0
 
@@ -155,24 +174,37 @@ class Trainer:
 
                 # ALGO LOGIC: action logic
                 with torch.no_grad():
-                    action, logprob, _, value = self.agent.get_action_and_value(next_obs)
+                    action, logprob, _, value = self.agent.get_action_and_value(
+                        next_obs
+                    )
                     values[step] = value.flatten()
                 actions[step] = action
                 logprobs[step] = logprob
 
                 # TRY NOT TO MODIFY: execute the game and log data.
-                next_obs, reward, terminations, truncations, infos = self.envs.step(action.cpu().numpy())
+                next_obs, reward, terminations, truncations, infos = self.envs.step(
+                    action.cpu().numpy()
+                )
                 next_done = np.logical_or(terminations, truncations)
                 rewards[step] = torch.tensor(reward).to(self.device).view(-1)
-                next_obs, next_done = torch.Tensor(next_obs).to(self.device), torch.Tensor(next_done).to(self.device)
+                next_obs, next_done = torch.Tensor(next_obs).to(
+                    self.device
+                ), torch.Tensor(next_done).to(self.device)
                 if "final_info" in infos:
-                    for r, raw_r, l, _r in zip(infos["final_info"]["r"], infos["final_info"]["raw_r"], infos["final_info"]["l"], infos["final_info"]["_r"]):
+                    for r, raw_r, l, _r in zip(
+                        infos["final_info"]["r"],
+                        infos["final_info"]["raw_r"],
+                        infos["final_info"]["l"],
+                        infos["final_info"]["_r"],
+                    ):
                         if not _r:
                             continue
                         # print(f"global_step={global_step}, episodic_return={r}")
                         self.writer.add_scalar("charts/episodic_return", r, global_step)
                         self.writer.add_scalar("charts/episodic_length", l, global_step)
-                        self.writer.add_scalar("charts/episodic_raw_return", raw_r, global_step)
+                        self.writer.add_scalar(
+                            "charts/episodic_raw_return", raw_r, global_step
+                        )
             # bootstrap value if not done
             with torch.no_grad():
                 next_value = self.agent.get_value(next_obs).reshape(1, -1)
@@ -185,8 +217,18 @@ class Trainer:
                     else:
                         nextnonterminal = 1.0 - dones[t + 1]
                         nextvalues = values[t + 1]
-                    delta = rewards[t] + self.args.gamma * nextvalues * nextnonterminal - values[t]
-                    advantages[t] = lastgaelam = delta + self.args.gamma * self.args.gae_lambda * nextnonterminal * lastgaelam
+                    delta = (
+                        rewards[t]
+                        + self.args.gamma * nextvalues * nextnonterminal
+                        - values[t]
+                    )
+                    advantages[t] = lastgaelam = (
+                        delta
+                        + self.args.gamma
+                        * self.args.gae_lambda
+                        * nextnonterminal
+                        * lastgaelam
+                    )
                 returns = advantages + values
 
             # flatten the batch
@@ -206,7 +248,9 @@ class Trainer:
                     end = start + self.args.minibatch_size
                     mb_inds = b_inds[start:end]
 
-                    _, newlogprob, entropy, newvalue = self.agent.get_action_and_value(b_obs[mb_inds], b_actions.long()[mb_inds])
+                    _, newlogprob, entropy, newvalue = self.agent.get_action_and_value(
+                        b_obs[mb_inds], b_actions.long()[mb_inds]
+                    )
                     logratio = newlogprob - b_logprobs[mb_inds]
                     ratio = logratio.exp()
 
@@ -214,15 +258,24 @@ class Trainer:
                         # calculate approx_kl http://joschu.net/blog/kl-approx.html
                         old_approx_kl = (-logratio).mean()
                         approx_kl = ((ratio - 1) - logratio).mean()
-                        clipfracs += [((ratio - 1.0).abs() > self.args.clip_coef).float().mean().item()]
+                        clipfracs += [
+                            ((ratio - 1.0).abs() > self.args.clip_coef)
+                            .float()
+                            .mean()
+                            .item()
+                        ]
 
                     mb_advantages = b_advantages[mb_inds]
                     if self.args.norm_adv:
-                        mb_advantages = (mb_advantages - mb_advantages.mean()) / (mb_advantages.std() + 1e-8)
+                        mb_advantages = (mb_advantages - mb_advantages.mean()) / (
+                            mb_advantages.std() + 1e-8
+                        )
 
                     # Policy loss
                     pg_loss1 = -mb_advantages * ratio
-                    pg_loss2 = -mb_advantages * torch.clamp(ratio, 1 - self.args.clip_coef, 1 + self.args.clip_coef)
+                    pg_loss2 = -mb_advantages * torch.clamp(
+                        ratio, 1 - self.args.clip_coef, 1 + self.args.clip_coef
+                    )
                     pg_loss = torch.max(pg_loss1, pg_loss2).mean()
 
                     # Value loss
@@ -241,11 +294,17 @@ class Trainer:
                         v_loss = 0.5 * ((newvalue - b_returns[mb_inds]) ** 2).mean()
 
                     entropy_loss = entropy.mean()
-                    loss = pg_loss - self.args.ent_coef * entropy_loss + v_loss * self.args.vf_coef
+                    loss = (
+                        pg_loss
+                        - self.args.ent_coef * entropy_loss
+                        + v_loss * self.args.vf_coef
+                    )
 
                     self.optimizer.zero_grad()
                     loss.backward()
-                    nn.utils.clip_grad_norm_(self.agent.parameters(), self.args.max_grad_norm)
+                    nn.utils.clip_grad_norm_(
+                        self.agent.parameters(), self.args.max_grad_norm
+                    )
                     self.optimizer.step()
 
                 if self.args.target_kl is not None and approx_kl > self.args.target_kl:
@@ -253,23 +312,35 @@ class Trainer:
 
             y_pred, y_true = b_values.cpu().numpy(), b_returns.cpu().numpy()
             var_y = np.var(y_true)
-            explained_var = np.nan if var_y == 0 else 1 - np.var(y_true - y_pred) / var_y
+            explained_var = (
+                np.nan if var_y == 0 else 1 - np.var(y_true - y_pred) / var_y
+            )
 
             save_iteration += 1
             if save_iteration % 20 == 0:
                 self.agent.save(f"models/{self.args.run_name}.pth")
 
             # TRY NOT TO MODIFY: record rewards for plotting purposes
-            self.writer.add_scalar("charts/learning_rate", self.optimizer.param_groups[0]["lr"], global_step)
+            self.writer.add_scalar(
+                "charts/learning_rate",
+                self.optimizer.param_groups[0]["lr"],
+                global_step,
+            )
             self.writer.add_scalar("losses/value_loss", v_loss.item(), global_step)
             self.writer.add_scalar("losses/policy_loss", pg_loss.item(), global_step)
             self.writer.add_scalar("losses/entropy", entropy_loss.item(), global_step)
-            self.writer.add_scalar("losses/old_approx_kl", old_approx_kl.item(), global_step)
+            self.writer.add_scalar(
+                "losses/old_approx_kl", old_approx_kl.item(), global_step
+            )
             self.writer.add_scalar("losses/approx_kl", approx_kl.item(), global_step)
             self.writer.add_scalar("losses/clipfrac", np.mean(clipfracs), global_step)
-            self.writer.add_scalar("losses/explained_variance", explained_var, global_step)
+            self.writer.add_scalar(
+                "losses/explained_variance", explained_var, global_step
+            )
             # print("SPS:", int(global_step / (time.time() - start_time)))
-            self.writer.add_scalar("charts/SPS", int(global_step / (time.time() - start_time)), global_step)
+            self.writer.add_scalar(
+                "charts/SPS", int(global_step / (time.time() - start_time)), global_step
+            )
 
         self.envs.close()
         self.writer.close()
