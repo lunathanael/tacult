@@ -1,4 +1,4 @@
-from src import Trainer, Args
+from src import Trainer, Args, utacenv
 
 def main():
     args = Args()
