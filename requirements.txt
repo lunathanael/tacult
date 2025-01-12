@@ -71,7 +71,7 @@ typing_extensions==4.12.2
 tyro==0.9.7
 tzdata==2024.2
 urllib3==2.3.0
-utac @ git+https://github.com/lunathanael/utac.git@91723e548ac7864fdbc53dca24186551183acf42
+utac @ git+https://github.com/lunathanael/utac.git@69629cc232d0a23334cb363db0bd4c58d314accb
 Werkzeug==3.1.3
 wheel==0.45.1
 wrapt==1.17.1

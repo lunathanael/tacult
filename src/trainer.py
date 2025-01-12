@@ -152,7 +152,16 @@ class Trainer:
                 self.opponent = None
 
         if self.opponent is not None:
-            self.envs = [PlayOpponentWrapper(env, self.opponent) for env in self.envs]
+            def _play_opponent_wrapper(env):
+                return PlayOpponentWrapper(env, opponent=self.opponent)
+            
+            wrappers = [_play_opponent_wrapper]
+            self.envs = gym.vector.SyncVectorEnv(
+                [
+                    make_env(args.env_id, i, args.capture_video, self.run_name, wrappers)
+                    for i in range(args.num_envs)
+                ],
+            )
 
     def train(self):
 
@@ -226,14 +235,6 @@ class Trainer:
                         self.writer.add_scalar(
                             "charts/episodic_raw_return", raw_r, global_step
                         )
-            if self.args.evaluation_method is not None:
-                evaluation = None
-                length = 0
-                match self.args.evaluation_method:
-                    case "random":
-                        evaluation, length = evaluate_random(self.agent, self.args.evaluation_num_episodes, self.args.evaluation_allow_illegal)
-                self.writer.add_scalar("charts/evaluation_score", evaluation, global_step)
-                self.writer.add_scalar("charts/evaluation_length", length, global_step)
             # bootstrap value if not done
             with torch.no_grad():
                 next_value = self.agent.get_value(next_obs).reshape(1, -1)
