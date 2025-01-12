@@ -92,7 +92,7 @@ class Trainer:
         args.batch_size = int(args.num_envs * args.num_steps)
         args.minibatch_size = int(args.batch_size // args.num_minibatches)
         args.num_iterations = args.total_timesteps // args.batch_size
-        run_name = f"{args.env_id}__{args.exp_name}__{args.seed}__{int(time.time())}"
+        self.run_name = f"{args.env_id}__{args.exp_name}__{args.seed}__{int(time.time())}"
         if args.track:
             import wandb
 
@@ -101,11 +101,11 @@ class Trainer:
                 entity=args.wandb_entity,
                 sync_tensorboard=True,
                 config=vars(args),
-                name=run_name,
+                name=self.run_name,
                 monitor_gym=True,
                 save_code=True,
             )
-        self.writer = SummaryWriter(f"logs/{run_name}")
+        self.writer = SummaryWriter(f"logs/{self.run_name}")
         self.writer.add_text(
             "hyperparameters",
             "|param|value|\n|-|-|\n%s"
@@ -125,7 +125,7 @@ class Trainer:
         # env setup
         self.envs = gym.vector.SyncVectorEnv(
             [
-                make_env(args.env_id, i, args.capture_video, run_name)
+                make_env(args.env_id, i, args.capture_video, self.run_name)
                 for i in range(args.num_envs)
             ],
         )
@@ -215,11 +215,12 @@ class Trainer:
                         )
             if self.args.evaluation_method is not None:
                 evaluation = None
+                length = 0
                 match self.args.evaluation_method:
                     case "random":
-                        evaluation = evaluate_random(self.agent, self.args.evaluation_num_episodes, self.args.evaluation_allow_illegal)
+                        evaluation, length = evaluate_random(self.agent, self.args.evaluation_num_episodes, self.args.evaluation_allow_illegal)
                 self.writer.add_scalar("charts/evaluation_score", evaluation, global_step)
-
+                self.writer.add_scalar("charts/evaluation_length", length, global_step)
             # bootstrap value if not done
             with torch.no_grad():
                 next_value = self.agent.get_value(next_obs).reshape(1, -1)
@@ -333,7 +334,7 @@ class Trainer:
 
             save_iteration += 1
             if save_iteration % 20 == 0:
-                self.agent.save(f"models/{self.args.run_name}.pth")
+                self.agent.save(f"models/{self.run_name}.pth")
 
             # TRY NOT TO MODIFY: record rewards for plotting purposes
             self.writer.add_scalar(
