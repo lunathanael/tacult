@@ -6,11 +6,9 @@ __pycache__/
 *_cpt/
 
 # Model files
-*.pt
-*.pth
 *.ckpt
 model_checkpoints/
-saved_models/
+models/
 
 # Logs
 logs/
