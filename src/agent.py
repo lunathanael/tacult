@@ -13,6 +13,7 @@ class Agent(nn.Module):
     def __init__(self, obs_dim, action_dim):
         super().__init__()
         self.network = nn.Sequential(
+            nn.Flatten(),
             layer_init(
                 nn.Linear(obs_dim, 128)
             ),  # First layer expanded to handle 52 inputs
