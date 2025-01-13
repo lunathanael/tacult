@@ -3,9 +3,10 @@ import logging
 import coloredlogs
 
 from src.base.coach import Coach
-from src.base.game import Game
-from src.base.nn import NeuralNet
+from src.utac_game import UtacGame as Game
 from src.utils import dotdict
+
+from src.utac_nn import UtacNN
 
 log = logging.getLogger(__name__)
 
@@ -21,6 +22,14 @@ args = dotdict({
     'arenaCompare': 40,         # Number of games to play during arena play to determine if new net will be accepted.
     'cpuct': 1,
 
+
+    'lr': 0.001,
+    'dropout': 0.3,
+    'epochs': 10,
+    'batch_size': 128,
+    'cuda': True,
+    'num_channels': 512,
+
     'checkpoint': './temp/',
     'load_model': False,
     'load_folder_file': ('/dev/models/8x100x50','best.pth.tar'),
@@ -31,10 +40,11 @@ args = dotdict({
 
 def main():
     log.info('Loading %s...', Game.__name__)
-    g = Game(6)
+    g = Game()
 
-    log.info('Loading %s...', nn.__name__)
-    nnet = nn(g)
+    
+    log.info('Loading %s...', UtacNN.__name__)
+    nnet = UtacNN(args)
 
     if args.load_model:
         log.info('Loading checkpoint "%s/%s"...', args.load_folder_file[0], args.load_folder_file[1])

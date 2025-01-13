@@ -1,6 +1,5 @@
 import sys
 sys.path.append('..')
-from utils import *
 
 from tensorflow.keras.models import Model
 from tensorflow.keras.layers import Input, Reshape, Activation, BatchNormalization, Conv2D, Flatten, Dropout, Dense

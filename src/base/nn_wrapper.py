@@ -3,7 +3,6 @@ import time
 import numpy as np
 import sys
 sys.path.append('..')
-from utils import *
 from .nn import NeuralNet
 
 """
@@ -49,10 +48,12 @@ class NNetWrapper(NeuralNet):
         # start = time.time()
 
         # preparing input
-        board = board[np.newaxis, :, :]
+        obs = np.array(board.get_obs())
+        obs = obs.reshape(2, 9, 9).transpose(1, 2, 0)
+        obs = obs[np.newaxis, :, :]
 
         # run
-        pi, v = self.nnet.model.predict(board, verbose=False)
+        pi, v = self.nnet.model.predict(obs, verbose=False)
 
         #print('PREDICTION TIME TAKEN : {0:03f}'.format(time.time()-start))
         return pi[0], v[0]
