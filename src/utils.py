@@ -1,23 +1,22 @@
-import gymnasium as gym
-import numpy as np
-import torch
+class AverageMeter(object):
+    """From https://github.com/pytorch/examples/blob/master/imagenet/main.py"""
 
-def layer_init(layer, std=np.sqrt(2), bias_const=0.0):
-    torch.nn.init.orthogonal_(layer.weight, std)
-    torch.nn.init.constant_(layer.bias, bias_const)
-    return layer
+    def __init__(self):
+        self.val = 0
+        self.avg = 0
+        self.sum = 0
+        self.count = 0
+
+    def __repr__(self):
+        return f'{self.avg:.2e}'
+
+    def update(self, val, n=1):
+        self.val = val
+        self.sum += val * n
+        self.count += n
+        self.avg = self.sum / self.count
 
 
-def make_env(env_id, idx, capture_video, run_name, wrappers=[]):
-    def thunk():
-        if capture_video and idx == 0:
-            env = gym.make(env_id, render_mode="rgb_array")
-            env = gym.wrappers.RecordVideo(env, f"videos/{run_name}")
-        else:
-            env = gym.make(env_id)
-        env = gym.wrappers.RecordEpisodeStatistics(env)
-        for wrapper in wrappers:
-            env = wrapper(env)
-        return env
-
-    return thunk
+class dotdict(dict):
+    def __getattr__(self, name):
+        return self[name]
