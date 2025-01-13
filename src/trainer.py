@@ -15,7 +15,7 @@ from .utils import make_env
 from .agent import Agent
 from .evaluate import evaluate_random
 
-from utac.wrappers import RandomOpponent, PlayOpponentWrapper, MCTSOpponent
+from utac_gym.wrappers import RandomOpponent, PlayOpponentWrapper, MCTSOpponent
 
 @dataclass
 class Args:
