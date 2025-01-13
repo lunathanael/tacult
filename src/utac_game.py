@@ -73,6 +73,9 @@ class UtacGame(Game):
         if not board.is_terminal():
             return 0
         
+        if board.terminal_value() == 0:
+            return 1e-4
+        
         return 1 if board.terminal_value() == player else -1
 
     def getCanonicalForm(self, board: GameState, player: int):
