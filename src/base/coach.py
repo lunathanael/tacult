@@ -11,8 +11,33 @@ from tqdm import tqdm
 from .arena import Arena
 from .mcts import MCTS
 
+from utac_gym.core import GameState
+from utac_gym.core.types import GAMESTATE
+
 log = logging.getLogger(__name__)
 
+
+def GAMESTATE_to_dict(gs: GAMESTATE) -> dict:
+    return {
+        'board': gs.board,
+        'occ': gs.occ,
+        'game_occ': gs.game_occ,
+        'main_occ': gs.main_occ,
+        'main_board': gs.main_board,
+        'side': gs.side,
+        'last_square': gs.last_square
+    }
+
+def dict_to_GAMESTATE(d: dict) -> GAMESTATE:
+    return GAMESTATE(
+        d['occ'],
+        d['board'],
+        d['game_occ'],
+        d['main_occ'],
+        d['main_board'],
+        d['side'],
+        d['last_square']
+    )
 
 class Coach():
     """
@@ -115,8 +140,8 @@ class Coach():
 
             log.info('PITTING AGAINST PREVIOUS VERSION')
             arena = Arena(lambda x: np.argmax(pmcts.getActionProb(x, temp=0)),
-                          lambda x: np.argmax(nmcts.getActionProb(x, temp=0)), self.game)
-            pwins, nwins, draws = arena.playGames(self.args.arenaCompare)
+                          lambda x: np.argmax(nmcts.getActionProb(x, temp=0)), self.game, lambda x: x.print())
+            pwins, nwins, draws = arena.playGames(self.args.arenaCompare, verbose=True)
 
             log.info('NEW/PREV WINS : %d / %d ; DRAWS : %d' % (nwins, pwins, draws))
             if pwins + nwins == 0 or float(nwins) / (pwins + nwins) < self.args.updateThreshold:
@@ -135,8 +160,11 @@ class Coach():
         if not os.path.exists(folder):
             os.makedirs(folder)
         filename = os.path.join(folder, self.getCheckpointFile(iteration) + ".examples")
+        train_examples_history = []
+        for idx, ele in enumerate(self.trainExamplesHistory):
+            train_examples_history.append([(GAMESTATE_to_dict(e[0]._get_gs()), e[1], e[2]) for e in ele])
         with open(filename, "wb+") as f:
-            Pickler(f).dump(self.trainExamplesHistory)
+            Pickler(f).dump(train_examples_history)
         f.closed
 
     def loadTrainExamples(self):
@@ -150,7 +178,10 @@ class Coach():
         else:
             log.info("File with trainExamples found. Loading it...")
             with open(examplesFile, "rb") as f:
-                self.trainExamplesHistory = Unpickler(f).load()
+                trainExamplesHistory = Unpickler(f).load()
+            self.trainExamplesHistory = []
+            for ele in trainExamplesHistory:
+                self.trainExamplesHistory.append(deque([(GameState(dict_to_GAMESTATE(e[0])), e[1], e[2]) for e in ele], maxlen=self.args.maxlenOfQueue))
             log.info('Loading done!')
 
             # examples based on the model were already collected (loaded)
