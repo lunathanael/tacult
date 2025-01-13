@@ -183,7 +183,7 @@ class UtacGame(Game):
         return 1 if board.current_player() == 1 else -1
     
     def _get_obs(self, board: GameState):
-        obs = board.get_obs()
+        obs = np.array(board.get_obs())
         obs = obs.reshape(2, 9, 9).transpose(1, 2, 0)
         return obs
     

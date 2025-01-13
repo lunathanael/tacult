@@ -14,6 +14,7 @@ models/
 logs/
 runs/
 tensorboard/
+temp/
 
 # C extensions
 *.so

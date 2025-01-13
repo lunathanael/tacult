@@ -83,7 +83,7 @@ class Coach():
             pi = self.mcts.getActionProb(canonicalBoard, temp=temp)
             sym = self.game.getSymmetries(canonicalBoard, pi)
             for b, p in sym:
-                trainExamples.append([b, self.curPlayer, p, None])
+                trainExamples.append([self.game._get_obs(b), self.curPlayer, p, None])
 
             action = np.random.choice(len(pi), p=pi)
             board, self.curPlayer = self.game.getNextState(board, self.curPlayer, action)
@@ -160,11 +160,8 @@ class Coach():
         if not os.path.exists(folder):
             os.makedirs(folder)
         filename = os.path.join(folder, self.getCheckpointFile(iteration) + ".examples")
-        train_examples_history = []
-        for idx, ele in enumerate(self.trainExamplesHistory):
-            train_examples_history.append([(GAMESTATE_to_dict(e[0]._get_gs()), e[1], e[2]) for e in ele])
         with open(filename, "wb+") as f:
-            Pickler(f).dump(train_examples_history)
+            Pickler(f).dump(self.trainExamplesHistory)
         f.closed
 
     def loadTrainExamples(self):
@@ -178,10 +175,7 @@ class Coach():
         else:
             log.info("File with trainExamples found. Loading it...")
             with open(examplesFile, "rb") as f:
-                trainExamplesHistory = Unpickler(f).load()
-            self.trainExamplesHistory = []
-            for ele in trainExamplesHistory:
-                self.trainExamplesHistory.append(deque([(GameState(dict_to_GAMESTATE(e[0])), e[1], e[2]) for e in ele], maxlen=self.args.maxlenOfQueue))
+                self.trainExamplesHistory = Unpickler(f).load()
             log.info('Loading done!')
 
             # examples based on the model were already collected (loaded)
