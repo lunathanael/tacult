@@ -79,7 +79,6 @@ class Coach():
                            the player eventually won the game, else -1.
         """
         results = []
-        print("execute")
 
         for i in range(self.args.numEnvs):
             if self._autoresetEnvs[i]:

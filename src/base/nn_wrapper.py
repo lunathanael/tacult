@@ -40,23 +40,17 @@ class NNetWrapper(NeuralNet):
         target_vs = np.asarray(target_vs)
         self.nnet.model.fit(x = input_boards, y = [target_pis, target_vs], batch_size = self.args.batch_size, epochs = self.args.epochs)
 
-    def predict(self, board):
+    def predict(self, obs):
         """
         board: np array with board
         """
         # timing
         # start = time.time()
-
-        # preparing input
-        obs = np.array(board.get_obs())
-        obs = obs.reshape(2, 9, 9).transpose(1, 2, 0)
-        obs = obs[np.newaxis, :, :]
-
         # run
         pi, v = self.nnet.model.predict(obs, verbose=False)
 
         #print('PREDICTION TIME TAKEN : {0:03f}'.format(time.time()-start))
-        return pi[0], v[0]
+        return pi, v
 
     def save_checkpoint(self, folder='checkpoint', filename='checkpoint.pth.tar'):
         # change extension

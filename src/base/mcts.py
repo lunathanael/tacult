@@ -82,7 +82,13 @@ class MCTS():
 
         if s not in self.Ps:
             # leaf node
-            self.Ps[s], v = self.nnet.predict(canonicalBoard)
+            
+            obs = np.array(canonicalBoard.get_obs())
+            obs = obs.reshape(2, 9, 9).transpose(1, 2, 0)
+            obs = obs[np.newaxis, :, :]
+            pred = self.nnet.predict(obs)[0]
+            self.Ps[s], v = pred
+
             valids = self.game.getValidMoves(canonicalBoard, 1)
             self.Ps[s] = self.Ps[s] * valids  # masking invalid moves
             sum_Ps_s = np.sum(self.Ps[s])
@@ -247,12 +253,14 @@ class VectorizedMCTS():
         if np.all(terminalMask):
             return _v
         
+        _pis, _vs = self.maskedBatchPrediction(canonicalBoards, terminalMask)
+
         for i, s in enumerate(_s):
             if terminalMask[i]:
                 continue
             if s not in self.Ps[i]:
                 # leaf node
-                self.Ps[i][s], v = self.nnet.predict(canonicalBoards[i])
+                self.Ps[i][s], v = _pis[i], _vs[i]
                 valids = self.game.getValidMoves(canonicalBoards[i], 1)
                 self.Ps[i][s] = self.Ps[i][s] * valids  # masking invalid moves
                 sum_Ps_s = np.sum(self.Ps[i][s])
@@ -325,3 +333,22 @@ class VectorizedMCTS():
             self.Ns[i][s] += 1
             terminalMask[i] = True
         return -_v
+    
+    def maskedBatchPrediction(self, canonicalBoards, terminalMask):
+        obs = np.array([
+            self.to_obs(canonicalBoard) if (canonicalBoard is not None) else np.zeros((9, 9, 2))
+            for canonicalBoard in canonicalBoards
+        ])
+        active_obs = obs[~terminalMask]
+        active_pi, active_v = self.nnet.predict(active_obs)
+
+        full_pi = np.zeros((self.args.numEnvs, self.game.getActionSize()))
+        full_pi[~terminalMask] = active_pi
+        full_v = np.zeros(self.args.numEnvs)
+        full_v[~terminalMask] = active_v.ravel()
+        return full_pi, full_v
+
+    def to_obs(self, canonicalBoard):
+        obs = np.array(canonicalBoard.get_obs())
+        obs = obs.reshape(2, 9, 9).transpose(1, 2, 0)
+        return obs
