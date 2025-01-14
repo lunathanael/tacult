@@ -103,7 +103,7 @@ class Coach():
                 self._trainExamples[i].append([self.game._get_obs(b), self._curPlayer[i], p])
 
             action = np.random.choice(len(pi), p=pi)
-            self._board[i], self._curPlayer[i] = self.game.getNextState(self._board[i], self._curPlayer[i], action)
+            self._board[i], self._curPlayer[i] = self.game.getNextState(self._board[i], int(self._curPlayer[i]), action)
 
             r = self.game.getGameEnded(self._board[i], self._curPlayer[i])
 
