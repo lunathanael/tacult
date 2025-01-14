@@ -4,6 +4,9 @@ import numpy as np
 import sys
 sys.path.append('..')
 from .nn import NeuralNet
+import torch
+
+from tqdm import tqdm
 
 """
 NeuralNet wrapper class for the TicTacToeNNet.
@@ -29,56 +32,118 @@ class NNetWrapper(NeuralNet):
         self.board_x, self.board_y, self.board_z = 9, 9, 2
         self.action_size = 81
         self.args = args
+        # Create optimizer once
+        self.optimizer = torch.optim.Adam(self.nnet.parameters(), lr=args.lr)
 
     def train(self, examples):
         """
         examples: list of examples, each example is of form (board, pi, v)
         """
+        # Convert data to PyTorch tensors
         input_boards, target_pis, target_vs = list(zip(*examples))
-        input_boards = np.asarray(input_boards)
-        target_pis = np.asarray(target_pis)
-        target_vs = np.asarray(target_vs)
-        self.nnet.model.fit(
-            x=input_boards,
-            y=[target_pis, target_vs],
-            batch_size = self.args.batch_size,
-            epochs = self.args.epochs,
-            shuffle=self.args.shuffle_data,
-            validation_split=self.args.validation_split,
-            steps_per_epoch=self.args.steps_per_epoch,
-            verbose=1,
+        input_boards = torch.FloatTensor(np.array(input_boards))
+        target_pis = torch.FloatTensor(np.array(target_pis))
+        target_vs = torch.FloatTensor(np.array(target_vs))
+
+        if self.args.cuda:
+            input_boards = input_boards.cuda()
+            target_pis = target_pis.cuda()
+            target_vs = target_vs.cuda()
+
+        # Create data loader
+        dataset = torch.utils.data.TensorDataset(input_boards, target_pis, target_vs)
+        dataloader = torch.utils.data.DataLoader(
+            dataset, 
+            batch_size=self.args.batch_size, 
+            shuffle=self.args.shuffle_data
         )
+
+        # Training loop
+        self.nnet.train()
+        for epoch in range(self.args.epochs):
+            total_pi_loss = 0
+            total_v_loss = 0
+
+            # Create progress bar for fixed number of steps
+            pbar = tqdm(range(self.args.steps_per_epoch), desc=f'Epoch {epoch+1}/{self.args.epochs}')
+            for step in pbar:
+                # Get next batch from dataloader
+                try:
+                    batch_boards, batch_pis, batch_vs = next(dataloader_iter)
+                except (StopIteration, NameError):
+                    dataloader_iter = iter(dataloader)
+                    batch_boards, batch_pis, batch_vs = next(dataloader_iter)
+
+                # Forward pass
+                self.optimizer.zero_grad()
+                pi, v = self.nnet(batch_boards)
+                
+                # Calculate losses
+                pi_loss = -torch.sum(batch_pis * torch.log(pi + 1e-8)) / batch_pis.size()[0]
+                v_loss = torch.mean((batch_vs - v.squeeze()) ** 2)
+                total_loss = pi_loss + v_loss
+
+                # Backward pass and optimize
+                total_loss.backward()
+                self.optimizer.step()
+
+                # Track metrics
+                total_pi_loss += pi_loss.item()
+                total_v_loss += v_loss.item()
+
+                # Update progress bar with current losses
+                pbar.set_postfix({
+                    'pi_loss': f'{pi_loss.item():.4f}',
+                    'v_loss': f'{v_loss.item():.4f}'
+                })
+
+            # Print epoch results
+            avg_pi_loss = total_pi_loss / self.args.steps_per_epoch
+            avg_v_loss = total_v_loss / self.args.steps_per_epoch
+            print(f'Epoch {epoch+1}/{self.args.epochs}')
+            print(f'Steps: {self.args.steps_per_epoch}, Average Loss - Policy: {avg_pi_loss:.4f}, Value: {avg_v_loss:.4f}')
 
     def predict(self, obs):
         """
-        board: np array with board
+        obs: np array with board
         """
-        # timing
-        # start = time.time()
-        # run
-        pi, v = self.nnet.model.predict(obs, verbose=False)
-
-        #print('PREDICTION TIME TAKEN : {0:03f}'.format(time.time()-start))
-        return pi, v
+        self.nnet.eval()  # Set to evaluation mode
+        with torch.no_grad():
+            # Convert numpy array to tensor
+            obs = torch.FloatTensor(obs)
+            if self.args.cuda:
+                obs = obs.cuda()
+            
+            # Get predictions
+            pi, v = self.nnet(obs)
+            
+            # Convert to numpy
+            return pi.cpu().numpy(), v.cpu().numpy()
 
     def save_checkpoint(self, folder='checkpoint', filename='checkpoint.pth.tar'):
-        # change extension
-        filename = filename.split(".")[0] + ".weights.h5"
-
         filepath = os.path.join(folder, filename)
         if not os.path.exists(folder):
-            print("Checkpoint Directory does not exist! Making directory {}".format(folder))
+            print(f"Checkpoint Directory does not exist! Making directory {folder}")
             os.mkdir(folder)
-        else:
-            print("Checkpoint Directory exists! ")
-        self.nnet.model.save_weights(filepath)
+        
+        torch.save({
+            'state_dict': self.nnet.state_dict(),
+            'optimizer': self.optimizer.state_dict(),
+        }, filepath)
 
     def load_checkpoint(self, folder='checkpoint', filename='checkpoint.pth.tar'):
-        # change extension
-        filename = filename.split(".")[0] + ".weights.h5"
-
-        # https://github.com/pytorch/examples/blob/master/imagenet/main.py#L98
         filepath = os.path.join(folder, filename)
         if not os.path.exists(filepath):
-            raise ValueError("No model in path '{}'".format(filepath))
-        self.nnet.model.load_weights(filepath)
+            raise ValueError(f"No model in path '{filepath}'")
+        
+        checkpoint = torch.load(filepath)
+        self.nnet.load_state_dict(checkpoint['state_dict'])
+        self.optimizer.load_state_dict(checkpoint['optimizer'])
+
+    def train_mode(self):
+        """Set the network to training mode"""
+        self.nnet.train()
+
+    def eval_mode(self):
+        """Set the network to evaluation mode"""
+        self.nnet.eval()

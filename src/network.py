@@ -1,43 +1,61 @@
 import sys
 sys.path.append('..')
 
-from tensorflow.keras.models import Model
-from tensorflow.keras.layers import Input, BatchNormalization, Conv2D, Flatten, Dense, Activation, Dropout, Reshape
-from tensorflow.keras.optimizers import Adam
-from tensorflow.keras.mixed_precision import set_global_policy
-import tensorflow as tf
+import torch
+import torch.nn as nn
+import torch.nn.functional as F
 
-class UtacNNet():
+class UtacNNet(nn.Module):
     def __init__(self, args):
-        # Enable mixed precision training
-        if args.cuda:
-            set_global_policy('mixed_float16')
-            
-        # Configure GPU memory growth
-        physical_devices = tf.config.list_physical_devices('GPU')
-        if physical_devices and args.cuda:
-            for device in physical_devices:
-                tf.config.experimental.set_memory_growth(device, True)
-
+        super(UtacNNet, self).__init__()
+        
         self.board_x, self.board_y, self.board_z = 9, 9, 2
         self.action_size = 81
         self.args = args
 
-        # Neural Net
-        self.input_boards = Input(shape=(self.board_x, self.board_y, self.board_z))
+        # Neural Net layers
+        self.conv1 = nn.Conv2d(self.board_z, 512, 3, padding=1)
+        self.conv2 = nn.Conv2d(512, 512, 3, padding=1)
+        self.conv3 = nn.Conv2d(512, 512, 3, padding=1)
+        self.conv4 = nn.Conv2d(512, 512, 3, padding=0)
 
-        x_image = Reshape((self.board_x, self.board_y, self.board_z))(self.input_boards)                # batch_size  x board_x x board_y x 1
-        h_conv1 = Activation('relu')(BatchNormalization(axis=3)(Conv2D(512, 3, padding='same')(x_image)))         # batch_size  x board_x x board_y x num_channels
-        h_conv2 = Activation('relu')(BatchNormalization(axis=3)(Conv2D(512, 3, padding='same')(h_conv1)))         # batch_size  x board_x x board_y x num_channels
-        h_conv3 = Activation('relu')(BatchNormalization(axis=3)(Conv2D(512, 3, padding='same')(h_conv2)))        # batch_size  x (board_x) x (board_y) x num_channels
-        h_conv4 = Activation('relu')(BatchNormalization(axis=3)(Conv2D(512, 3, padding='valid')(h_conv3)))        # batch_size  x (board_x-2) x (board_y-2) x num_channels
+        self.bn1 = nn.BatchNorm2d(512)
+        self.bn2 = nn.BatchNorm2d(512)
+        self.bn3 = nn.BatchNorm2d(512)
+        self.bn4 = nn.BatchNorm2d(512)
 
-        h_conv4_flat = Flatten()(h_conv4)       
-        s_fc1 = Dropout(args.dropout)(Activation('relu')(BatchNormalization(axis=1)(Dense(1024)(h_conv4_flat))))  # batch_size x 1024
-        s_fc2 = Dropout(args.dropout)(Activation('relu')(BatchNormalization(axis=1)(Dense(512)(s_fc1))))          # batch_size x 1024
+        # Calculate size after convolutions
+        conv_output_size = ((self.board_x - 2) * (self.board_y - 2) * 512)
 
-        self.pi = Dense(self.action_size, activation='softmax', name='pi')(s_fc2)   # batch_size x self.action_size
-        self.v = Dense(1, activation='tanh', name='v')(s_fc2)                    # batch_size x 1
+        self.fc1 = nn.Linear(conv_output_size, 1024)
+        self.fc2 = nn.Linear(1024, 512)
+        self.fc_bn1 = nn.BatchNorm1d(1024)
+        self.fc_bn2 = nn.BatchNorm1d(512)
 
-        self.model = Model(inputs=self.input_boards, outputs=[self.pi, self.v])
-        self.model.compile(loss=['categorical_crossentropy','mean_squared_error'], optimizer=Adam(args.lr))
+        self.pi = nn.Linear(512, self.action_size)
+        self.v = nn.Linear(512, 1)
+
+        if args.cuda:
+            self.cuda()
+
+    def forward(self, x):
+        # Convolutional layers
+        x = F.relu(self.bn1(self.conv1(x)))
+        x = F.relu(self.bn2(self.conv2(x)))
+        x = F.relu(self.bn3(self.conv3(x)))
+        x = F.relu(self.bn4(self.conv4(x)))
+
+        # Flatten
+        x = torch.flatten(x, 1)
+
+        # Fully connected layers
+        x = F.relu(self.fc_bn1(self.fc1(x)))
+        x = F.dropout(x, p=self.args.dropout, training=self.training)
+        x = F.relu(self.fc_bn2(self.fc2(x)))
+        x = F.dropout(x, p=self.args.dropout, training=self.training)
+
+        # Output layers
+        pi = F.softmax(self.pi(x), dim=1)
+        v = torch.tanh(self.v(x))
+
+        return pi, v

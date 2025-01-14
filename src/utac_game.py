@@ -187,7 +187,7 @@ class UtacGame(Game):
     
     def _get_obs(self, board: GameState):
         obs = np.array(board.get_obs())
-        obs = obs.reshape(2, 9, 9).transpose(1, 2, 0)
+        obs = obs.reshape(2, 9, 9)
         return obs
     
 def bitboard_to_array(bitboard: int):
