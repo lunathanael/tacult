@@ -25,8 +25,7 @@ args = dotdict({
     'arenaCompare': 20,         # Number of games to play during arena play to determine if new net will be accepted.
     'verbose': False,            # Whether to print verbose output for Arena.
 
-    'shuffle_data': False,
-    'validation_split': 0.1,
+    'shuffle_data': True,
     'steps_per_epoch': 10,   
     'epochs': 10,
     'batch_size': 1024,
@@ -39,7 +38,6 @@ args = dotdict({
     'load_model': False,
     'load_folder_file': ('./temp/','checkpoint_2.pth.tar'),
     'numItersForTrainExamplesHistory': 10,
-
 })
 
 
