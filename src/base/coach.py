@@ -92,6 +92,16 @@ class Coach():
 
             if r != 0:
                 return [(x[0], x[2], r * ((-1) ** (x[1] != self.curPlayer))) for x in trainExamples]
+            
+    def generateTrainExamples(self):
+        
+        iterationTrainExamples = deque([], maxlen=self.args.maxlenOfQueue)
+
+        for _ in tqdm(range(self.args.numEps), desc="Self Play"):
+            self.mcts = MCTS(self.game, self.nnet, self.args)  # reset search tree
+            iterationTrainExamples += self.executeEpisode()
+
+        return iterationTrainExamples
 
     def learn(self):
         """
@@ -107,11 +117,7 @@ class Coach():
             log.info(f'Starting Iter #{i} ...')
             # examples of the iteration
             if not self.skipFirstSelfPlay or i > 1:
-                iterationTrainExamples = deque([], maxlen=self.args.maxlenOfQueue)
-
-                for _ in tqdm(range(self.args.numEps), desc="Self Play"):
-                    self.mcts = MCTS(self.game, self.nnet, self.args)  # reset search tree
-                    iterationTrainExamples += self.executeEpisode()
+                iterationTrainExamples = self.generateTrainExamples()
 
                 # save the iteration examples to the history 
                 self.trainExamplesHistory.append(iterationTrainExamples)
