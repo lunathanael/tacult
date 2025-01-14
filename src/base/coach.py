@@ -179,8 +179,8 @@ class Coach():
 
             log.info('PITTING AGAINST PREVIOUS VERSION')
             arena = SingleArena(
-                lambda x: np.argmax(pmcts.getActionProbs(x, temps=np.zeros(self.args.numEnvs))),
-                lambda x: np.argmax(nmcts.getActionProbs(x, temps=np.zeros(self.args.numEnvs))),
+                lambda x: np.argmax(pmcts.getActionProb(x, temp=0)),
+                lambda x: np.argmax(nmcts.getActionProb(x, temp=0)),
                 self.game,
                 lambda x: x.print(),
             )
