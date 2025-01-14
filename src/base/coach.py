@@ -53,6 +53,14 @@ class Coach():
         self.trainExamplesHistory = []  # history of examples from args.numItersForTrainExamplesHistory latest iterations
         self.skipFirstSelfPlay = False  # can be overriden in loadTrainExamples()
 
+    def prepExecuteEpisode(self):
+        self._trainExamples = [[] for _ in range(self.args.numEnvs)]
+        self._board = [self.game.getInitBoard() for _ in range(self.args.numEnvs)]
+        self._curPlayer = np.ones(self.args.numEnvs, dtype=bool)
+        self._episodeStep = np.zeros(self.args.numEnvs, dtype=int)
+
+        self._autoresetEnvs = np.zeros(self.args.numEnvs, dtype=bool)
+
     def executeEpisode(self, mcts: MCTS):
         """
         This function executes one episode of self-play, starting with player 1.
@@ -69,29 +77,48 @@ class Coach():
                            pi is the MCTS informed policy vector, v is +1 if
                            the player eventually won the game, else -1.
         """
-        trainExamples = []
-        board = self.game.getInitBoard()
-        self.curPlayer = 1
-        episodeStep = 0
+        results = []
 
-        while True:
-            episodeStep += 1
-            canonicalBoard = self.game.getCanonicalForm(board, self.curPlayer)
-            temp = int(episodeStep < self.args.tempThreshold)
+        for i in range(self.args.numEnvs):
+            if self._autoresetEnvs[i]:
+                self._trainExamples[i] = []
+                self._board[i] = self.game.getInitBoard()
+                self._curPlayer[i] = 1
+                self._episodeStep[i] = 0
+                mcts.reset(i)
 
-            pi = mcts.getActionProb(canonicalBoard, temp=temp)
-            sym = self.game.getSymmetries(canonicalBoard, pi)
+        self._episodeStep += 1
+        temps = np.less(self._episodeStep, self.args.tempThreshold)
+        canonicalBoards = [
+            self.game.getCanonicalForm(self._board[i], self._curPlayer[i])
+            for i in range(self.args.numEnvs)
+        ]
+
+        pis = mcts.getActionProbs(canonicalBoards, temp=temps)
+        for i in range(self.args.numEnvs):
+            pi = pis[i]
+            sym = self.game.getSymmetries(canonicalBoards[i], pi)
             for b, p in sym:
-                trainExamples.append([self.game._get_obs(b), self.curPlayer, p, None])
+                self._trainExamples[i].append([self.game._get_obs(b), self._curPlayer[i], p])
 
             action = np.random.choice(len(pi), p=pi)
-            board, self.curPlayer = self.game.getNextState(board, self.curPlayer, action)
+            self._board[i], self._curPlayer[i] = self.game.getNextState(self._board[i], self._curPlayer[i], action)
 
-            r = self.game.getGameEnded(board, self.curPlayer)
+            r = self.game.getGameEnded(self._board[i], self._curPlayer[i])
 
             if r != 0:
-                return [[(x[0], x[2], r * ((-1) ** (x[1] != self.curPlayer))) for x in trainExamples]]
-            
+                results.append(
+                    [
+                        (
+                            x[0], x[2], r * ((-1) ** (x[1] != self._curPlayer[i]))
+                        )
+                        for x in self._trainExamples[i]
+                    ]
+                )
+                self._autoresetEnvs[i] = True
+        
+        return results
+
     def generateTrainExamples(self):
         pbar = tqdm(total=self.args.minNumEps, desc="Self Play", unit="episode")
         
