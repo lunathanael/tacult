@@ -7,6 +7,7 @@ EPS = 1e-8
 
 log = logging.getLogger(__name__)
 
+from .utils import to_obs
 
 class MCTS():
     """
@@ -83,9 +84,7 @@ class MCTS():
         if s not in self.Ps:
             # leaf node
             
-            obs = np.array(canonicalBoard.get_obs())
-            obs = obs.reshape(2, 9, 9).transpose(1, 2, 0)
-            obs = obs[np.newaxis, :, :]
+            obs = to_obs(canonicalBoard)
             pred = self.nnet.predict(obs)[0]
             self.Ps[s], v = pred
 
@@ -336,7 +335,7 @@ class VectorizedMCTS():
     
     def maskedBatchPrediction(self, canonicalBoards, terminalMask):
         obs = np.array([
-            self.to_obs(canonicalBoard) if (canonicalBoard is not None) else np.zeros((9, 9, 2))
+            to_obs(canonicalBoard) if (canonicalBoard is not None) else np.zeros((9, 9, 2))
             for canonicalBoard in canonicalBoards
         ])
         active_obs = obs[~terminalMask]
@@ -348,7 +347,4 @@ class VectorizedMCTS():
         full_v[~terminalMask] = active_v.ravel()
         return full_pi, full_v
 
-    def to_obs(self, canonicalBoard):
-        obs = np.array(canonicalBoard.get_obs())
-        obs = obs.reshape(2, 9, 9).transpose(1, 2, 0)
-        return obs
+
