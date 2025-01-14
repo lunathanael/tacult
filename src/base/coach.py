@@ -10,6 +10,7 @@ from tqdm import tqdm
 
 from .arena import Arena
 from .mcts import VectorizedMCTS as MCTS
+from .mcts import MCTS as SingleMCTS
 
 from utac_gym.core import GameState
 from utac_gym.core.types import GAMESTATE
@@ -94,7 +95,7 @@ class Coach():
             for i in range(self.args.numEnvs)
         ]
 
-        pis = mcts.getActionProbs(canonicalBoards, temp=temps)
+        pis = mcts.getActionProbs(canonicalBoards, temps=temps)
         for i in range(self.args.numEnvs):
             pi = pis[i]
             sym = self.game.getSymmetries(canonicalBoards[i], pi)
@@ -125,6 +126,7 @@ class Coach():
         iterationTrainExamples = deque([], maxlen=self.args.maxlenOfQueue)
         mcts = MCTS(self.game, self.nnet, self.args)  # reset search tree
 
+        self.prepExecuteEpisode()
         while True:
             new_examples = self.executeEpisode(mcts)
             iterationTrainExamples += [
@@ -175,10 +177,10 @@ class Coach():
             # training new network, keeping a copy of the old one
             self.nnet.save_checkpoint(folder=self.args.checkpoint, filename='temp.pth.tar')
             self.pnet.load_checkpoint(folder=self.args.checkpoint, filename='temp.pth.tar')
-            pmcts = MCTS(self.game, self.pnet, self.args)
+            pmcts = SingleMCTS(self.game, self.pnet, self.args)
 
             self.nnet.train(trainExamples)
-            nmcts = MCTS(self.game, self.nnet, self.args)
+            nmcts = SingleMCTS(self.game, self.nnet, self.args)
 
             log.info('PITTING AGAINST PREVIOUS VERSION')
             arena = Arena(lambda x: np.argmax(pmcts.getActionProb(x, temp=0)),
