@@ -1,4 +1,4 @@
-from src.base.game import Game
+from tacult.base.game import Game
 from utac_gym.core import GameState
 from utac_gym.core.types import GAMESTATE
 import numpy as np
