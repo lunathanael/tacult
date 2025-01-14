@@ -4,12 +4,24 @@ sys.path.append('..')
 from tensorflow.keras.models import Model
 from tensorflow.keras.layers import Input, Reshape, Activation, BatchNormalization, Conv2D, Flatten, Dropout, Dense
 from tensorflow.keras.optimizers import Adam
+from tensorflow.keras.mixed_precision import set_global_policy
+import tensorflow as tf
 
 """
 Inspiration from the TicTacToeNNet by Evgeny Tyurin
 """
 class UtacNNet():
     def __init__(self, args):
+        # Enable mixed precision training
+        if args.cuda:
+            set_global_policy('mixed_float16')
+            
+        # Configure GPU memory growth
+        physical_devices = tf.config.list_physical_devices('GPU')
+        if physical_devices and args.cuda:
+            for device in physical_devices:
+                tf.config.experimental.set_memory_growth(device, True)
+
         # game params
         self.board_x, self.board_y, self.board_z = 9, 9, 2
         self.action_size = 81
