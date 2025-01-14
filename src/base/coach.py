@@ -9,7 +9,7 @@ import numpy as np
 from tqdm import tqdm
 
 from .arena import Arena
-from .mcts import MCTS
+from .mcts import VectorizedMCTS as MCTS
 
 from utac_gym.core import GameState
 from utac_gym.core.types import GAMESTATE
