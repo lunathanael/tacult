@@ -157,13 +157,11 @@ class VectorizedArena():
         terminal_boards = [False for _ in range(self.num_envs)]
         it = 0
 
-        results = [0 for _ in range(self.num_envs)]
-
         for player in players[0], players[2]:
             if hasattr(player, "startGame"):
                 player.startGame()
         
-        while all([not terminal_boards[i] for i in range(self.num_envs)]):
+        while any([not terminal_boards[i] for i in range(self.num_envs)]):
             it += 1
             if verbose:
                 assert self.display
@@ -198,18 +196,18 @@ class VectorizedArena():
                 value = self.game.getGameEnded(boards[i], nextPlayer)
                 if value != 0:
                     terminal_boards[i] = True
-                    results[i] = nextPlayer * value
                     if verbose:
                         assert self.display
                         print("Game ", str(i), "Game over: Turn ", str(it), "Result ", str(self.game.getGameEnded(boards[i], 1)))
                         self.display(board)
+                    yield nextPlayer * value
             curPlayer = nextPlayer
 
         for player in players[0], players[2]:
             if hasattr(player, "endGame"):
                 player.endGame()
 
-        return results
+        return
 
     def playGames(self, num, verbose=False):
         """
@@ -229,7 +227,6 @@ class VectorizedArena():
 
         num_games_played = 0
         time_started = time.time()
-        pbar = tqdm(total=num, desc="Arena.playGames (1)")
         print(
             tqdm.format_meter(
                 n=num_games_played,
@@ -241,30 +238,28 @@ class VectorizedArena():
             end="\r"
         )
         while num_games_played < num:
-            gameResults = self.playGame(verbose=verbose)
-            for result in gameResults:
+            for result in self.playGame(verbose=verbose):
                 if result == 1:
                     oneWon += 1
                 elif result == -1:
                     twoWon += 1
                 else:
                     draws += 1
-            num_games_played += len(gameResults)
-            elapsed = time.time() - time_started
-            print(
-                tqdm.format_meter(
-                    n=num_games_played,
-                    total=num,
-                    elapsed=elapsed,
-                    unit="game",
-                    prefix="Arena.playGames (1): "
-                ),
-                end="\r"
-            )
+                num_games_played += 1
+                elapsed = time.time() - time_started
+                print(
+                    tqdm.format_meter(
+                        n=num_games_played,
+                        total=num,
+                        elapsed=elapsed,
+                        unit="game",
+                        prefix="Arena.playGames (1): "
+                    ),
+                    end="\r"
+                )
         print()
 
         self.player1, self.player2 = self.player2, self.player1
-
 
         num_games_played = 0
         time_started = time.time()
@@ -279,26 +274,25 @@ class VectorizedArena():
             end="\r"
         )
         while num_games_played < num:
-            gameResults = self.playGame(verbose=verbose)
-            for result in gameResults:
+            for result in self.playGame(verbose=verbose):
                 if result == -1:
                     oneWon += 1
                 elif result == 1:
                     twoWon += 1
                 else:
                     draws += 1
-            num_games_played += len(gameResults)
-            elapsed = time.time() - time_started
-            print(
-                tqdm.format_meter(
-                    n=num_games_played,
-                    total=num,
-                    elapsed=elapsed,
-                    unit="game",
-                    prefix="Arena.playGames (2): "
-                ),
-                end="\r"
-            )
+                num_games_played += 1
+                elapsed = time.time() - time_started
+                print(
+                    tqdm.format_meter(
+                        n=num_games_played,
+                        total=num,
+                        elapsed=elapsed,
+                        unit="game",
+                        prefix="Arena.playGames (2): "
+                    ),
+                    end="\r"
+                )
         print()
 
         return oneWon, twoWon, draws
