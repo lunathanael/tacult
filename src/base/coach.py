@@ -4,6 +4,7 @@ import sys
 from collections import deque
 from pickle import Pickler, Unpickler
 from random import shuffle
+import time
 
 import numpy as np
 from tqdm import tqdm
@@ -100,23 +101,37 @@ class Coach():
         return results
 
     def generateTrainExamples(self):
-        pbar = tqdm(total=self.args.minNumEps, desc="Self Play", unit="episode")
-        
         iterationTrainExamples = deque([], maxlen=self.args.maxlenOfQueue)
         mcts = MCTS(self.game, self.nnet, self.args)  # reset search tree
 
+        games_played = 0
+        time_started = time.time()
+        print(tqdm.format_meter(
+            n=games_played,
+            total=self.args.minNumEps,
+            elapsed=time.time() - time_started,
+            unit="episode",
+            prefix="Self Play: "
+        ), end="\r")
+
         self.prepExecuteEpisode()
-        while True:
+        while games_played < self.args.minNumEps:
             new_examples = self.executeEpisode(mcts)
             iterationTrainExamples += [
                 example
                 for episode_examples in new_examples
                 for example in episode_examples
             ]
-            pbar.update(len(new_examples))
-            if pbar.n >= self.args.minNumEps:
-                break
-        pbar.close()
+            games_played += len(new_examples)
+            elapsed = time.time() - time_started
+            print(tqdm.format_meter(
+                n=games_played,
+                total=self.args.minNumEps,
+                elapsed=elapsed,
+                unit="episode",
+                prefix="Self Play: "
+            ), end="\r")
+        print()
 
         return iterationTrainExamples
 
