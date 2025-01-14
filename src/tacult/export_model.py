@@ -10,8 +10,8 @@ import onnxruntime
 import torch
 import torch.nn as nn
 
-from src.utac_game import UtacGame
-from src.network import UtacNNet
+from tacult.utac_game import UtacGame
+from tacult.network import UtacNNet
 
 
 def run_argparse() -> argparse.Namespace:
@@ -154,8 +154,11 @@ def compare_outputs(
             np.testing.assert_allclose(torch_array, onnxruntime_array, rtol=rtol, atol=atol)
 
 
-def main() -> None:
-    args = run_argparse()
+def main(_args=None) -> None:
+    if _args is None:
+        args = run_argparse()
+    else:
+        args = _args
     print(args)
 
     policy_value_net = load_policy_value_net(
@@ -199,5 +202,9 @@ def main() -> None:
     print("All comparison tests passed successfully!")
 
 
+def export_model(_args=None):
+    main(_args)
+
+
 if __name__ == "__main__":
-    main()
+    export_model()

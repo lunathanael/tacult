@@ -2,17 +2,17 @@ import logging
 
 import coloredlogs
 
-from src.base.coach import Coach
-from src.utac_game import UtacGame as Game
-from src.utils import dotdict
+from tacult.base.coach import Coach
+from tacult.utac_game import UtacGame as Game
+from tacult.utils import dotdict
 
-from src.utac_nn import UtacNN
+from tacult.utac_nn import UtacNN
 
 log = logging.getLogger(__name__)
 
 coloredlogs.install(level='INFO')  # Change this to DEBUG to see more info.
 
-args = dotdict({
+_args = dotdict({
     'numIters': 1000,
     'minNumEps': 128,              # Minimum number of complete self-play games to simulate during a new iteration, an upper bound over this minimum is the number of environments.
     'numEnvs': 128,
@@ -24,6 +24,9 @@ args = dotdict({
 
     'arenaCompare': 20,         # Number of games to play during arena play to determine if new net will be accepted.
     'verbose': False,            # Whether to print verbose output for Arena.
+
+    'saveAllModels': False,
+    'saveTrainExamples': False,
 
     'shuffle_data': True,
     'steps_per_epoch': 10,   
@@ -41,7 +44,7 @@ args = dotdict({
 })
 
 
-def main():
+def main(args=_args):
     log.info('Loading %s...', Game.__name__)
     g = Game()
 
@@ -64,6 +67,9 @@ def main():
 
     log.info('Starting the learning process 🎉')
     c.learn()
+
+def train(args=_args):
+    main(args)
 
 
 if __name__ == "__main__":

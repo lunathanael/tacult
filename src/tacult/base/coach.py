@@ -163,8 +163,10 @@ class Coach():
                     f"Removing the oldest entry in trainExamples. len(trainExamplesHistory) = {len(self.trainExamplesHistory)}")
                 self.trainExamplesHistory.pop(0)
             # backup history to a file
-            # NB! the examples were collected using the model from the previous iteration, so (i-1)  
-            self.saveTrainExamples(i - 1)
+            # NB! the examples were collected using the model from the previous iteration, so (i-1)
+            if self.args.saveTrainExamples:
+                self.deleteTrainExamples(i - 2)
+                self.saveTrainExamples(i - 1)
 
             # shuffle examples before training
             trainExamples = []
@@ -194,11 +196,18 @@ class Coach():
                 self.nnet.load_checkpoint(folder=self.args.checkpoint, filename='temp.pth.tar')
             else:
                 log.info('ACCEPTING NEW MODEL')
-                self.nnet.save_checkpoint(folder=self.args.checkpoint, filename=self.getCheckpointFile(i))
+                if self.args.saveAllModels:
+                    self.nnet.save_checkpoint(folder=self.args.checkpoint, filename=self.getCheckpointFile(i))
                 self.nnet.save_checkpoint(folder=self.args.checkpoint, filename='best.pth.tar')
 
     def getCheckpointFile(self, iteration):
         return 'checkpoint_' + str(iteration) + '.pth.tar'
+
+    def deleteTrainExamples(self, iteration):
+        folder = self.args.checkpoint
+        filename = os.path.join(folder, self.getCheckpointFile(iteration) + ".examples")
+        if os.path.exists(filename):
+            os.remove(filename)
 
     def saveTrainExamples(self, iteration):
         folder = self.args.checkpoint
