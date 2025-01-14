@@ -1,6 +1,7 @@
 import logging
 
 from tqdm import tqdm
+import time
 
 log = logging.getLogger(__name__)
 
@@ -194,10 +195,10 @@ class VectorizedArena():
 
                 boards[i], nextPlayer = self.game.getNextState(board, curPlayer, action)
 
-                value = self.game.getGameEnded(boards[i], curPlayer)
+                value = self.game.getGameEnded(boards[i], nextPlayer)
                 if value != 0:
                     terminal_boards[i] = True
-                    results[i] = curPlayer * value
+                    results[i] = nextPlayer * value
                     if verbose:
                         assert self.display
                         print("Game ", str(i), "Game over: Turn ", str(it), "Result ", str(self.game.getGameEnded(boards[i], 1)))
@@ -226,8 +227,20 @@ class VectorizedArena():
         twoWon = 0
         draws = 0
 
+        num_games_played = 0
+        time_started = time.time()
         pbar = tqdm(total=num, desc="Arena.playGames (1)")
-        while pbar.n < num:
+        print(
+            tqdm.format_meter(
+                n=num_games_played,
+                total=num,
+                elapsed=0,
+                unit="game",
+                prefix="Arena.playGames (1): "
+            ),
+            end="\r"
+        )
+        while num_games_played < num:
             gameResults = self.playGame(verbose=verbose)
             for result in gameResults:
                 if result == 1:
@@ -236,13 +249,36 @@ class VectorizedArena():
                     twoWon += 1
                 else:
                     draws += 1
-            pbar.update(len(gameResults))
+            num_games_played += len(gameResults)
+            elapsed = time.time() - time_started
+            print(
+                tqdm.format_meter(
+                    n=num_games_played,
+                    total=num,
+                    elapsed=elapsed,
+                    unit="game",
+                    prefix="Arena.playGames (1): "
+                ),
+                end="\r"
+            )
+        print()
 
         self.player1, self.player2 = self.player2, self.player1
-        pbar.close()
 
-        pbar2 = tqdm(total=num, desc="Arena.playGames (2)")
-        while pbar2.n < num:
+
+        num_games_played = 0
+        time_started = time.time()
+        print(
+            tqdm.format_meter(
+                n=num_games_played,
+                total=num,
+                elapsed=0,
+                unit="game",
+                prefix="Arena.playGames (2): "
+            ),
+            end="\r"
+        )
+        while num_games_played < num:
             gameResults = self.playGame(verbose=verbose)
             for result in gameResults:
                 if result == -1:
@@ -251,6 +287,18 @@ class VectorizedArena():
                     twoWon += 1
                 else:
                     draws += 1
-            pbar2.update(len(gameResults))
+            num_games_played += len(gameResults)
+            elapsed = time.time() - time_started
+            print(
+                tqdm.format_meter(
+                    n=num_games_played,
+                    total=num,
+                    elapsed=elapsed,
+                    unit="game",
+                    prefix="Arena.playGames (2): "
+                ),
+                end="\r"
+            )
+        print()
 
         return oneWon, twoWon, draws
