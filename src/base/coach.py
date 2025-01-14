@@ -18,28 +18,6 @@ from utac_gym.core.types import GAMESTATE
 log = logging.getLogger(__name__)
 
 
-def GAMESTATE_to_dict(gs: GAMESTATE) -> dict:
-    return {
-        'board': gs.board,
-        'occ': gs.occ,
-        'game_occ': gs.game_occ,
-        'main_occ': gs.main_occ,
-        'main_board': gs.main_board,
-        'side': gs.side,
-        'last_square': gs.last_square
-    }
-
-def dict_to_GAMESTATE(d: dict) -> GAMESTATE:
-    return GAMESTATE(
-        d['occ'],
-        d['board'],
-        d['game_occ'],
-        d['main_occ'],
-        d['main_board'],
-        d['side'],
-        d['last_square']
-    )
-
 class Coach():
     """
     This class executes the self-play + learning. It uses the functions defined
