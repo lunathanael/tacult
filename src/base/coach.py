@@ -62,12 +62,13 @@ class Coach():
 
         for i in range(self.args.numEnvs):
             if self._autoresetEnvs[i]:
-                self._trainExamples[i] = []
-                self._board[i] = self.game.getInitBoard()
-                self._curPlayer[i] = 1
-                self._episodeStep[i] = 0
-                self._autoresetEnvs[i] = False
-                mcts.reset(i)
+                # self._trainExamples[i] = []
+                # self._board[i] = self.game.getInitBoard()
+                # self._curPlayer[i] = 1
+                # self._episodeStep[i] = 0
+                # self._autoresetEnvs[i] = False
+                # mcts.reset(i)
+                pass
 
         self._episodeStep += 1
         temps = np.less(self._episodeStep, self.args.tempThreshold)
@@ -78,6 +79,8 @@ class Coach():
 
         pis = mcts.getActionProbs(canonicalBoards, temps=temps)
         for i in range(self.args.numEnvs):
+            if self._autoresetEnvs[i]:
+                continue
             pi = pis[i]
             sym = self.game.getSymmetries(canonicalBoards[i], pi)
             for b, p in sym:

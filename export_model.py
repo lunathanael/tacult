@@ -23,9 +23,10 @@ def run_argparse() -> argparse.Namespace:
 
 
 def load_policy_value_net(state_dict_path: pathlib.Path, device: torch.device) -> nn.Module:
-    policy_value_net = UtacNNet(onnx_export=True)
+    policy_value_net = UtacNNet(cuda=False, onnx_export=True)
     policy_value_net.to(device=device)
-    state_dict = torch.load(state_dict_path, map_location=device)
+    checkpoint = torch.load(state_dict_path, map_location=device, weights_only=False)
+    state_dict = checkpoint['state_dict']
     policy_value_net_keys = set(policy_value_net.state_dict().keys())
     for key in list(state_dict.keys()):
         if key not in policy_value_net_keys:
@@ -45,14 +46,15 @@ def get_random_uttt(
     num_retries = 0
     player = 1
     while d < depth:
-        if game.getGameEnded(uttt) != 0:
+        if game.getGameEnded(uttt, player) != 0:
             uttt = game.getInitBoard()
+            player = 1
             d = 0
             num_retries += 1
             if num_retries >= max_num_retries:
                 raise RuntimeError(f"max_num_retries={max_num_retries} exceeded!")
         valids = game.getValidMoves(uttt, player)
-        action = random.choice(np.where(valids == 1)[0])
+        action = random.choice(np.where(valids)[0])
         uttt, player = game.getNextState(uttt, player, action)
         d += 1
     return uttt
