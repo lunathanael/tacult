@@ -247,10 +247,10 @@ class VectorizedMCTS():
             if self.Es[i][s] != 0:
                 terminalMask[i] = True
                 _s[i] = None
-                _v[i] = -self.Es[i][s]
+                _v[i] = self.Es[i][s]
 
         if np.all(terminalMask):
-            return _v
+            return -_v
         
         _pis, _vs = self.maskedBatchPrediction(canonicalBoards, terminalMask)
 
@@ -279,10 +279,10 @@ class VectorizedMCTS():
 
                 terminalMask[i] = True
                 _s[i] = None
-                _v[i] = -v
+                _v[i] = v
 
         if np.all(terminalMask):
-            return _v
+            return -_v
         
         _next_s = [None] * self.args.numEnvs
         _a = [None] * self.args.numEnvs
