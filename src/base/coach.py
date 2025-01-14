@@ -8,7 +8,7 @@ from random import shuffle
 import numpy as np
 from tqdm import tqdm
 
-from .arena import Arena
+from .arena import VectorizedArena as Arena
 from .mcts import VectorizedMCTS as MCTS
 from .mcts import MCTS as SingleMCTS
 
@@ -86,6 +86,7 @@ class Coach():
                 self._board[i] = self.game.getInitBoard()
                 self._curPlayer[i] = 1
                 self._episodeStep[i] = 0
+                self._autoresetEnvs[i] = False
                 mcts.reset(i)
 
         self._episodeStep += 1
@@ -177,14 +178,19 @@ class Coach():
             # training new network, keeping a copy of the old one
             self.nnet.save_checkpoint(folder=self.args.checkpoint, filename='temp.pth.tar')
             self.pnet.load_checkpoint(folder=self.args.checkpoint, filename='temp.pth.tar')
-            pmcts = SingleMCTS(self.game, self.pnet, self.args)
+            pmcts = MCTS(self.game, self.pnet, self.args)
 
             self.nnet.train(trainExamples)
-            nmcts = SingleMCTS(self.game, self.nnet, self.args)
+            nmcts = MCTS(self.game, self.nnet, self.args)
 
             log.info('PITTING AGAINST PREVIOUS VERSION')
-            arena = Arena(lambda x: np.argmax(pmcts.getActionProb(x, temp=0)),
-                          lambda x: np.argmax(nmcts.getActionProb(x, temp=0)), self.game, lambda x: x.print())
+            arena = Arena(
+                lambda x: np.argmax(pmcts.getActionProbs(x, temps=np.zeros(self.args.numEnvs)), axis=1),
+                lambda x: np.argmax(nmcts.getActionProbs(x, temps=np.zeros(self.args.numEnvs)), axis=1),
+                self.game,
+                lambda x: x.print(),
+                self.args.numEnvs
+            )
             pwins, nwins, draws = arena.playGames(self.args.arenaCompare, verbose=self.args.verbose)
 
             log.info('NEW/PREV WINS : %d / %d ; DRAWS : %d' % (nwins, pwins, draws))

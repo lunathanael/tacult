@@ -4,6 +4,8 @@ from tqdm import tqdm
 
 log = logging.getLogger(__name__)
 
+from .utils import to_obs
+
 
 class Arena():
     """
@@ -53,7 +55,6 @@ class Arena():
                 print("Turn ", str(it), "Player ", str(curPlayer))
                 self.display(board)
             action = players[curPlayer + 1](self.game.getCanonicalForm(board, curPlayer))
-
             valids = self.game.getValidMoves(self.game.getCanonicalForm(board, curPlayer), 1)
 
             if valids[action] == 0:
@@ -112,5 +113,143 @@ class Arena():
                 twoWon += 1
             else:
                 draws += 1
+
+        return oneWon, twoWon, draws
+
+
+class VectorizedArena():
+    """
+    An Arena class where any 2 agents can be pit against each other.
+    """
+
+    def __init__(self, player1, player2, game, display, num_envs):
+        """
+        Input:
+            player 1,2: two functions that takes board as input, return action
+            game: Game object
+            display: a function that takes board as input and prints it (e.g.
+                     display in othello/OthelloGame). Is necessary for verbose
+                     mode.
+
+        see othello/OthelloPlayers.py for an example. See pit.py for pitting
+        human players/other baselines with each other.
+        """
+        self.player1 = player1
+        self.player2 = player2
+        self.game = game
+        self.display = display
+        self.num_envs = num_envs
+
+    def playGame(self, verbose=False):
+        """
+        Executes one episode of a game on all environments.
+
+        Returns:
+            either
+                winner: player who won the game (1 if player1, -1 if player2)
+            or
+                draw result returned from the game that is neither 1, -1, nor 0.
+        """
+        players = [self.player2, None, self.player1]
+        curPlayer = 1
+        boards = [self.game.getInitBoard() for _ in range(self.num_envs)]
+        terminal_boards = [False for _ in range(self.num_envs)]
+        it = 0
+
+        results = [0 for _ in range(self.num_envs)]
+
+        for player in players[0], players[2]:
+            if hasattr(player, "startGame"):
+                player.startGame()
+        
+        while all([not terminal_boards[i] for i in range(self.num_envs)]):
+            it += 1
+            if verbose:
+                assert self.display
+                for i, board in enumerate(boards):
+                    if not terminal_boards[i]:
+                        print("Game ", str(i), "Turn ", str(it), "Player ", str(curPlayer))
+                        self.display(board)
+
+            canonicalBoards = [
+                self.game.getCanonicalForm(board, curPlayer) for board in boards
+            ]
+            actions = players[curPlayer + 1](canonicalBoards)
+
+            for i, board in enumerate(boards):
+                if terminal_boards[i]:
+                    continue
+                valids = self.game.getValidMoves(canonicalBoards[i], 1)
+                action = actions[i]
+
+                if valids[action] == 0:
+                    log.error(f'Action {action} is not valid!')
+                    log.debug(f'valids = {valids}')
+                    assert valids[action] > 0
+
+                # Notifying the opponent for the move
+                opponent = players[-curPlayer + 1]
+                if hasattr(opponent, "notify"):
+                    opponent.notify(board, action)
+
+                boards[i], curPlayer = self.game.getNextState(board, curPlayer, action)
+
+                value = self.game.getGameEnded(boards[i], curPlayer)
+                if value != 0:
+                    terminal_boards[i] = True
+                    results[i] = curPlayer * value
+                    if verbose:
+                        assert self.display
+                        print("Game ", str(i), "Game over: Turn ", str(it), "Result ", str(self.game.getGameEnded(boards[i], 1)))
+                        self.display(board)
+
+        for player in players[0], players[2]:
+            if hasattr(player, "endGame"):
+                player.endGame()
+
+        return results
+
+    def playGames(self, num, verbose=False):
+        """
+        Plays num games in which player1 starts num/2 games and player2 starts
+        num/2 games.
+
+        Returns:
+            oneWon: games won by player1
+            twoWon: games won by player2
+            draws:  games won by nobody
+        """
+
+        num = int(num / 2)
+        oneWon = 0
+        twoWon = 0
+        draws = 0
+
+        pbar = tqdm(total=num, desc="Arena.playGames (1)")
+        while pbar.n < num:
+            gameResults = self.playGame(verbose=verbose)
+            for result in gameResults:
+                if result == 1:
+                    oneWon += 1
+                elif result == -1:
+                    twoWon += 1
+                else:
+                    draws += 1
+            pbar.update(len(gameResults))
+
+        self.player1, self.player2 = self.player2, self.player1
+        pbar.close()
+
+        pbar2 = tqdm(total=num, desc="Arena.playGames (2)")
+        while pbar2.n < num:
+            gameResults = self.playGame(verbose=verbose)
+            for result in gameResults:
+                if result == -1:
+                    oneWon += 1
+                elif result == 1:
+                    twoWon += 1
+                else:
+                    draws += 1
+            pbar2.update(len(gameResults))
 
         return oneWon, twoWon, draws

@@ -14,29 +14,31 @@ coloredlogs.install(level='INFO')  # Change this to DEBUG to see more info.
 
 args = dotdict({
     'numIters': 1000,
-    'minNumEps': 100,              # Minimum number of complete self-play games to simulate during a new iteration, an upper bound over this minimum is the number of environments.
-    'numEnvs': 64,
+    'minNumEps': 128,              # Minimum number of complete self-play games to simulate during a new iteration, an upper bound over this minimum is the number of environments.
+    'numEnvs': 128,
     'tempThreshold': 18,        #
     'updateThreshold': 0.6,     # During arena playoff, new neural net will be accepted if threshold or more of games are won.
-    'maxlenOfQueue': 200000,    # Number of game examples to train the neural networks.
-    'numMCTSSims': 18,          # Number of games moves for MCTS to simulate.
+    'maxlenOfQueue': 165888,    # Number of game examples to train the neural networks. Do (minNumEps + numEnvs) * 81 * 8
+    'numMCTSSims': 20,          # Number of games moves for MCTS to simulate.
     'cpuct': 1,
 
-    'arenaCompare': 40,         # Number of games to play during arena play to determine if new net will be accepted.
+    'arenaCompare': 128,         # Number of games to play during arena play to determine if new net will be accepted.
     'verbose': False,            # Whether to print verbose output for Arena.
 
+    'shuffle_data': False,
+    'validation_split': 0.1,
+    'steps_per_epoch': 10,
+    'epochs': 10,
+    'batch_size': 1024,
 
     'lr': 0.001,
     'dropout': 0.3,
-    'epochs': 10,
-    'batch_size': 256,
     'cuda': False,
-    'num_channels': 512,
 
     'checkpoint': './temp/batch_temp/',
     'load_model': False,
     'load_folder_file': ('/dev/models/8x100x50','best.pth.tar'),
-    'numItersForTrainExamplesHistory': 20,
+    'numItersForTrainExamplesHistory': 10,
 
 })
 
