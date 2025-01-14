@@ -192,7 +192,7 @@ class VectorizedArena():
                 if hasattr(opponent, "notify"):
                     opponent.notify(board, action)
 
-                boards[i], curPlayer = self.game.getNextState(board, curPlayer, action)
+                boards[i], nextPlayer = self.game.getNextState(board, curPlayer, action)
 
                 value = self.game.getGameEnded(boards[i], curPlayer)
                 if value != 0:
@@ -202,6 +202,7 @@ class VectorizedArena():
                         assert self.display
                         print("Game ", str(i), "Game over: Turn ", str(it), "Result ", str(self.game.getGameEnded(boards[i], 1)))
                         self.display(board)
+            curPlayer = nextPlayer
 
         for player in players[0], players[2]:
             if hasattr(player, "endGame"):
