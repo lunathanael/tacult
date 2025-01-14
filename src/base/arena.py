@@ -2,8 +2,10 @@ import logging
 
 from tqdm import tqdm
 import time
+import numpy as np
 
 log = logging.getLogger(__name__)
+
 
 from .utils import to_obs
 
@@ -154,21 +156,21 @@ class VectorizedArena():
         players = [self.player2, None, self.player1]
         curPlayer = 1
         boards = [self.game.getInitBoard() for _ in range(self.num_envs)]
-        terminal_boards = [False for _ in range(self.num_envs)]
+        terminal_boards = np.zeros(self.num_envs, dtype=bool)
         it = 0
 
         for player in players[0], players[2]:
             if hasattr(player, "startGame"):
                 player.startGame()
         
-        while any([not terminal_boards[i] for i in range(self.num_envs)]):
+        while not np.all(terminal_boards):
             it += 1
             if verbose:
                 assert self.display
-                for i, board in enumerate(boards):
-                    if not terminal_boards[i]:
-                        print("Game ", str(i), "Turn ", str(it), "Player ", str(curPlayer))
-                        self.display(board)
+                # for i, board in enumerate(boards):
+                #     if not terminal_boards[i]:
+                #         print("Game ", str(i), "Turn ", str(it), "Player ", str(curPlayer))
+                #         self.display(board)
 
             canonicalBoards = [
                 self.game.getCanonicalForm(board, curPlayer) for board in boards
@@ -198,8 +200,8 @@ class VectorizedArena():
                     terminal_boards[i] = True
                     if verbose:
                         assert self.display
-                        print("Game ", str(i), "Game over: Turn ", str(it), "Result ", str(self.game.getGameEnded(boards[i], 1)))
-                        self.display(board)
+                        # print("Game ", str(i), "Game over: Turn ", str(it), "Result ", str(self.game.getGameEnded(boards[i], 1)))
+                        # self.display(board)
                     yield nextPlayer * value
             curPlayer = nextPlayer
 

@@ -10,6 +10,7 @@ import numpy as np
 from tqdm import tqdm
 
 from .arena import VectorizedArena as Arena
+from .arena import Arena as SingleArena
 from .mcts import VectorizedMCTS as MCTS
 from .mcts import MCTS as SingleMCTS
 
@@ -171,18 +172,17 @@ class Coach():
             # training new network, keeping a copy of the old one
             self.nnet.save_checkpoint(folder=self.args.checkpoint, filename='temp.pth.tar')
             self.pnet.load_checkpoint(folder=self.args.checkpoint, filename='temp.pth.tar')
-            pmcts = MCTS(self.game, self.pnet, self.args)
+            pmcts = SingleMCTS(self.game, self.pnet, self.args)
 
             self.nnet.train(trainExamples)
-            nmcts = MCTS(self.game, self.nnet, self.args)
+            nmcts = SingleMCTS(self.game, self.nnet, self.args)
 
             log.info('PITTING AGAINST PREVIOUS VERSION')
-            arena = Arena(
-                lambda x: np.argmax(pmcts.getActionProbs(x, temps=np.zeros(self.args.numEnvs)), axis=1),
-                lambda x: np.argmax(nmcts.getActionProbs(x, temps=np.zeros(self.args.numEnvs)), axis=1),
+            arena = SingleArena(
+                lambda x: np.argmax(pmcts.getActionProbs(x, temps=np.zeros(self.args.numEnvs))),
+                lambda x: np.argmax(nmcts.getActionProbs(x, temps=np.zeros(self.args.numEnvs))),
                 self.game,
                 lambda x: x.print(),
-                self.args.numEnvs
             )
             pwins, nwins, draws = arena.playGames(self.args.arenaCompare, verbose=self.args.verbose)
 
