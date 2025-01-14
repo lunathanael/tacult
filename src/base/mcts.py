@@ -231,6 +231,9 @@ class VectorizedMCTS():
             v: the negative of the value of the current canonicalBoard
         """
         terminalMask = np.zeros(self.args.numEnvs, dtype=bool)
+        for i in range(self.args.numEnvs):
+            if canonicalBoards[i] is None:
+                terminalMask[i] = True
         return self._search(canonicalBoards, terminalMask)
 
     

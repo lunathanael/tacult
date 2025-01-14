@@ -28,7 +28,7 @@ Based on (copy-pasted from) the NNet by SourKream and Surag Nair.
 
 class NNetWrapper(NeuralNet):
     def __init__(self, network, args):
-        self.nnet = network(args)
+        self.nnet = network
         self.board_x, self.board_y, self.board_z = 9, 9, 2
         self.action_size = 81
         self.args = args
@@ -120,7 +120,7 @@ class NNetWrapper(NeuralNet):
             # Convert to numpy
             return pi.cpu().numpy(), v.cpu().numpy()
 
-    def save_checkpoint(self, folder='checkpoint', filename='checkpoint.pth.tar'):
+    def save_checkpoint(self, folder='checkpoint', filename='checkpoint.pt'):
         filepath = os.path.join(folder, filename)
         if not os.path.exists(folder):
             print(f"Checkpoint Directory does not exist! Making directory {folder}")
@@ -131,7 +131,7 @@ class NNetWrapper(NeuralNet):
             'optimizer': self.optimizer.state_dict(),
         }, filepath)
 
-    def load_checkpoint(self, folder='checkpoint', filename='checkpoint.pth.tar'):
+    def load_checkpoint(self, folder='checkpoint', filename='checkpoint.pt'):
         filepath = os.path.join(folder, filename)
         if not os.path.exists(filepath):
             raise ValueError(f"No model in path '{filepath}'")
