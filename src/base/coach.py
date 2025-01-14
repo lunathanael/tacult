@@ -50,11 +50,10 @@ class Coach():
         self.nnet = nnet
         self.pnet = self.nnet.__class__(args)  # the competitor network
         self.args = args
-        self.mcts = MCTS(self.game, self.nnet, self.args)
         self.trainExamplesHistory = []  # history of examples from args.numItersForTrainExamplesHistory latest iterations
         self.skipFirstSelfPlay = False  # can be overriden in loadTrainExamples()
 
-    def executeEpisode(self):
+    def executeEpisode(self, mcts: MCTS):
         """
         This function executes one episode of self-play, starting with player 1.
         As the game is played, each turn is added as a training example to
@@ -80,7 +79,7 @@ class Coach():
             canonicalBoard = self.game.getCanonicalForm(board, self.curPlayer)
             temp = int(episodeStep < self.args.tempThreshold)
 
-            pi = self.mcts.getActionProb(canonicalBoard, temp=temp)
+            pi = mcts.getActionProb(canonicalBoard, temp=temp)
             sym = self.game.getSymmetries(canonicalBoard, pi)
             for b, p in sym:
                 trainExamples.append([self.game._get_obs(b), self.curPlayer, p, None])
@@ -94,18 +93,28 @@ class Coach():
                 return [(x[0], x[2], r * ((-1) ** (x[1] != self.curPlayer))) for x in trainExamples]
             
     def generateTrainExamples(self):
+        pbar = tqdm(total=self.args.minNumEps, desc="Self Play", unit="episode")
         
         iterationTrainExamples = deque([], maxlen=self.args.maxlenOfQueue)
+        mcts = MCTS(self.game, self.nnet, self.args)  # reset search tree
 
-        for _ in tqdm(range(self.args.numEps), desc="Self Play"):
-            self.mcts = MCTS(self.game, self.nnet, self.args)  # reset search tree
-            iterationTrainExamples += self.executeEpisode()
+        while True:
+            new_examples = self.executeEpisode(mcts)
+            iterationTrainExamples += [
+                example
+                for episode_examples in new_examples
+                for example in episode_examples
+            ]
+            pbar.update(len(new_examples))
+            if pbar.n >= self.args.minNumEps:
+                break
+        pbar.close()
 
         return iterationTrainExamples
 
     def learn(self):
         """
-        Performs numIters iterations with numEps episodes of self-play in each
+        Performs numIters iterations with at least minNumEps episodes of self-play in each
         iteration. After every iteration, it retrains neural network with
         examples in trainExamples (which has a maximum length of maxlenofQueue).
         It then pits the new neural network against the old one and accepts it
