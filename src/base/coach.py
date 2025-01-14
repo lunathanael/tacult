@@ -57,7 +57,7 @@ class Coach():
     def prepExecuteEpisode(self):
         self._trainExamples = [[] for _ in range(self.args.numEnvs)]
         self._board = [self.game.getInitBoard() for _ in range(self.args.numEnvs)]
-        self._curPlayer = np.ones(self.args.numEnvs, dtype=bool)
+        self._curPlayer = np.ones(self.args.numEnvs, dtype=int)
         self._episodeStep = np.zeros(self.args.numEnvs, dtype=int)
 
         self._autoresetEnvs = np.zeros(self.args.numEnvs, dtype=bool)
@@ -79,6 +79,7 @@ class Coach():
                            the player eventually won the game, else -1.
         """
         results = []
+        print("execute")
 
         for i in range(self.args.numEnvs):
             if self._autoresetEnvs[i]:

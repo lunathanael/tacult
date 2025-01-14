@@ -185,8 +185,8 @@ class VectorizedMCTS():
             ]
             for i, s in enumerate(_s)
         ]
-        _counts = np.array(_counts)
 
+        _counts = np.array(_counts)
         _probs = np.zeros((self.args.numEnvs, self.game.getActionSize()))
 
         for i in range(self.args.numEnvs):
