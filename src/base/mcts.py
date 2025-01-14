@@ -6,6 +6,7 @@ import numpy as np
 EPS = 1e-8
 
 log = logging.getLogger(__name__)
+import torch
 
 from .utils import to_obs
 
@@ -85,8 +86,9 @@ class MCTS():
             # leaf node
             
             obs = to_obs(canonicalBoard)
-            pred = self.nnet.predict(obs)[0]
-            self.Ps[s], v = pred
+            obs = np.expand_dims(obs, axis=0)
+            pred = self.nnet.predict(obs)
+            self.Ps[s], v = pred[0][0], pred[1][0]
 
             valids = self.game.getValidMoves(canonicalBoard, 1)
             self.Ps[s] = self.Ps[s] * valids  # masking invalid moves
@@ -335,7 +337,7 @@ class VectorizedMCTS():
     
     def maskedBatchPrediction(self, canonicalBoards, terminalMask):
         obs = np.array([
-            to_obs(canonicalBoard) if (canonicalBoard is not None) else np.zeros((9, 9, 2))
+            to_obs(canonicalBoard) if (canonicalBoard is not None) else torch.zeros(2, 9, 9, dtype=torch.float32)
             for canonicalBoard in canonicalBoards
         ])
         active_obs = obs[~terminalMask]
