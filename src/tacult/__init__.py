@@ -9,7 +9,9 @@ try:
     assert "utac_gym" in globals().keys()
     del sys
 except AssertionError:
-    raise ImportError("utac_gym module is required but not found")
+    import warnings
+    warnings.warn("utac_gym module is required but not found", ImportWarning)
+    del warnings
 
 
 __all__ = [
