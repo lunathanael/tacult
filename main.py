@@ -27,9 +27,10 @@ args = dotdict({
     'lr': 0.001,
     'dropout': 0.3,
     'epochs': 10,
-    'batch_size': 128,
+    'batch_size': 256,
     'cuda': False,
     'num_channels': 512,
+    'num_envs': 128,
 
     'checkpoint': './temp/',
     'load_model': False,
