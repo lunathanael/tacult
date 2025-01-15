@@ -106,7 +106,7 @@ class Generator():
 def main():
     game = Game()
     generator = Generator(game, args)
-    generator.generate_games(100, './temp/data.examples')
+    generator.generate_games(200, './temp/data.examples')
 
 if __name__ == '__main__':
     main()

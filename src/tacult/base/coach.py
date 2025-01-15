@@ -110,7 +110,7 @@ class Coach():
     
     def generateTrainExamples(self):
         iterationTrainExamples = []
-        mcts = MCTS(self.game, self.nnet, self.args)  # reset search tree
+        mcts = MCTS(self.game, self.pnet, self.args)  # reset search tree
 
         games_played = 0
         time_started = time.time()
@@ -153,6 +153,9 @@ class Coach():
         only if it wins >= updateThreshold fraction of games.
         """
 
+        self.nnet.save_checkpoint(folder=self.args.checkpoint, filename='best.pt')
+        self.pnet.load_checkpoint(folder=self.args.checkpoint, filename='best.pt')
+
         for i in range(1, self.args.numIters + 1):
             # bookkeeping
             log.info(f'Starting Iter #{i} ...')
@@ -180,11 +183,9 @@ class Coach():
             log.info(f"Training on {len(self.trainExamplesHistory)} examples")
 
             # training new network, keeping a copy of the old one
-            self.nnet.save_checkpoint(folder=self.args.checkpoint, filename='temp.pt')
+            # self.nnet.save_checkpoint(folder=self.args.checkpoint, filename='temp.pt')
 
             self.nnet.train(self.trainExamplesHistory)
-
-            self.pnet.load_checkpoint(folder=self.args.checkpoint, filename='temp.pt')
 
             pmcts = SingleMCTS(self.game, self.pnet, self.args)
             nmcts = SingleMCTS(self.game, self.nnet, self.args)
@@ -201,15 +202,16 @@ class Coach():
             log.info('NEW/PREV WINS : %d / %d ; DRAWS : %d' % (nwins, pwins, draws))
             if pwins + nwins == 0 or float(nwins) / (pwins + nwins) < self.args.updateThreshold:
                 log.info('REJECTING NEW MODEL')
-                self.nnet.load_checkpoint(folder=self.args.checkpoint, filename='temp.pt')
+                # self.nnet.load_checkpoint(folder=self.args.checkpoint, filename='temp.pt')
             else:
                 log.info('ACCEPTING NEW MODEL')
-                if self.args.saveAllModels:
-                    self.nnet.save_checkpoint(folder=self.args.checkpoint, filename=self.getCheckpointFile(i))
+                # if self.args.saveAllModels:
+                #     self.nnet.save_checkpoint(folder=self.args.checkpoint, filename=self.getCheckpointFile(i))
                 self.nnet.save_checkpoint(folder=self.args.checkpoint, filename='best.pt')
+                self.pnet.load_checkpoint(folder=self.args.checkpoint, filename='best.pt')
 
     def getCheckpointFile(self, iteration):
-        return 'checkpoint_' + str(iteration) + '.pth.tar'
+        return 'checkpoint_' + str(iteration) + '.pt'
 
     def deleteTrainExamples(self, iteration):
         folder = self.args.checkpoint

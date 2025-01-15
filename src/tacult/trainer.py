@@ -16,10 +16,10 @@ _args = dotdict({
     'numIters': 200,
     'minNumEps': 128,              # Minimum number of complete self-play games to simulate during a new iteration, an upper bound over this minimum is the number of environments.
     'numEnvs': 128,
-    'tempThreshold': 15,        #
+    'tempThreshold': 10,        #
     'updateThreshold': 0.6,     # During arena playoff, new neural net will be accepted if threshold or more of games are won.
     'maxlenOfQueue': 331776,    # Number of game examples to train the neural networks. Do (minNumEps + numEnvs) * 81 * 8
-    'numMCTSSims': 25,          # Number of games moves for MCTS to simulate.
+    'numMCTSSims': 30,          # Number of games moves for MCTS to simulate.
     'cpuct': 1,
 
     'arenaCompare': 20,         # Number of games to play during arena play to determine if new net will be accepted.
@@ -37,10 +37,10 @@ _args = dotdict({
     'dropout': 0.3,
     'cuda': False,
 
-    'load_checkpoint': True,
-    'load_model': False,
-    'checkpoint': './temp/run_1',
-    'load_folder_file': ('./temp','data'),
+    'load_checkpoint': False,
+    'load_model': True,
+    'checkpoint': './temp/rerun_1/',
+    'load_folder_file': ('./temp/run_1','best.pt'),
     'numItersForTrainExamplesHistory': 20,
 })
 
