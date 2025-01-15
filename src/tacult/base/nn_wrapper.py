@@ -34,7 +34,7 @@ class NNetWrapper(NeuralNet):
         # Create scheduler
         self.scheduler = torch.optim.lr_scheduler.CosineAnnealingLR(
             self.optimizer,
-            T_max=args.epochs * args.steps_per_epoch
+            T_max=args.epochs * args.steps_per_epoch * args.numIters
         )
 
         log.info(f"Network {network.__class__.__name__} initialized on device {self.device}")
@@ -106,8 +106,8 @@ class NNetWrapper(NeuralNet):
                 total_v_loss += v_loss
 
                 pbar.set_postfix({
-                    'pi_loss': f'{pi_loss.item():.4f}',
-                    'v_loss': f'{v_loss.item():.4f}',
+                    'pi_loss': f'{pi_loss:.4f}',
+                    'v_loss': f'{v_loss:.4f}',
                     'lr': f'{current_lr:.2e}'
                 })
 
@@ -160,7 +160,7 @@ class NNetWrapper(NeuralNet):
         if not os.path.exists(filepath):
             raise FileNotFoundError(f"No model found at {filepath}")
 
-        checkpoint = torch.load(filepath, map_location=self.device)
+        checkpoint = torch.load(filepath, map_location=self.device, weights_only=False)
         self.nnet.load_state_dict(checkpoint['state_dict'])
         
         if 'optimizer' in checkpoint:

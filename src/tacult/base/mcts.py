@@ -87,8 +87,7 @@ class MCTS():
         if s not in self.Ps:
             # leaf node
             
-            obs = to_obs(canonicalBoard)
-            obs = np.expand_dims(obs, axis=0)
+            obs = to_obs(canonicalBoard).unsqueeze(0)
             pred = self.nnet.predict(obs)
             self.Ps[s], v = pred[0][0], pred[1][0]
 
@@ -349,6 +348,7 @@ class VectorizedMCTS():
             for canonicalBoard in canonicalBoards
         ])
         active_obs = obs[~terminalMask]
+        active_obs = torch.from_numpy(active_obs).float()
         active_pi, active_v = self.nnet.predict(active_obs)
 
         full_pi = np.zeros((self.args.numEnvs, self.game.getActionSize()))
