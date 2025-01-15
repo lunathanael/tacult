@@ -32,7 +32,7 @@ class Arena():
         self.game = game
         self.display = display
 
-    @torch.compile
+    
     def playGame(self, verbose=False):
         """
         Executes one episode of a game.
@@ -83,7 +83,7 @@ class Arena():
             self.display(board)
         return curPlayer * self.game.getGameEnded(board, curPlayer)
 
-    @torch.compile
+    
     def playGames(self, num, verbose=False):
         """
         Plays num games in which player1 starts num/2 games and player2 starts

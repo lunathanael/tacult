@@ -1,11 +1,13 @@
 import numpy as np
 import torch
+import logging
 
-@torch.compiler.disable(recursive=False)
+log = logging.getLogger(__name__)
+
 def to_obs(canonicalBoard):
     obs = np.array(canonicalBoard.get_obs())
     obs = obs.reshape(4, 9, 9)
-    return obs
+    return torch.from_numpy(obs)
 
 
 def get_device(cuda: bool = None) -> torch.device:

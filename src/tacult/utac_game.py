@@ -9,7 +9,6 @@ class UtacGame(Game):
     def __init__(self):
         pass
 
-    @torch.compiler.disable(recursive=True)
     def getInitBoard(self):
         """
         Returns:
@@ -32,7 +31,6 @@ class UtacGame(Game):
         """
         return 81
 
-    @torch.compiler.disable(recursive=True)
     def getNextState(self, board: GameState, player: int, action: int):
         """
         Input:
@@ -48,7 +46,6 @@ class UtacGame(Game):
         board.make_move(action)
         return board, -player
 
-    @torch.compiler.disable(recursive=True)
     def getValidMoves(self, board: GameState, player: int):
         """
         Input:
@@ -64,7 +61,6 @@ class UtacGame(Game):
             return np.zeros(81)
         return board.get_valid_mask()
 
-    @torch.compiler.disable(recursive=True)
     def getGameEnded(self, board: GameState, player: int):
         """
         Input:
@@ -84,7 +80,6 @@ class UtacGame(Game):
 
         return 1 if board.terminal_value() == player else -1
 
-    @torch.compiler.disable(recursive=True)
     def getCanonicalForm(self, board: GameState, player: int):
         """
         Input:
@@ -111,7 +106,6 @@ class UtacGame(Game):
             return GameState(state)
 
     @staticmethod
-    @torch.compile
     def _getSymmetriesHelper(
         occ_arrays,
         board_arrays,
@@ -162,7 +156,6 @@ class UtacGame(Game):
             newPi,
         )
 
-    @torch.compiler.disable(recursive=False)
     def getSymmetries(self, board: GameState, pi):
         """
         Input:
@@ -226,7 +219,6 @@ class UtacGame(Game):
         return symmetries
     
     @staticmethod
-    @torch.compile
     def _stringRepresentationHelper(board, occ, side, last_square):
         board_str = occ_str = ""
         for i in range(9):
@@ -235,7 +227,6 @@ class UtacGame(Game):
         s = board_str + occ_str + str(side) + str(last_square)
         return s
 
-    @torch.compile
     def stringRepresentation(self, board: GameState):
         """
         Input:
@@ -248,19 +239,16 @@ class UtacGame(Game):
         gs: GAMESTATE = board._get_gs()
         return self._stringRepresentationHelper(gs.board, gs.occ, gs.side, gs.last_square)
 
-    @torch.compiler.disable(recursive=True)
     def _get_current_player(self, board: GameState):
         return 1 if board.current_player() == 1 else -1
 
 
-    @torch.compiler.disable(recursive=False)
     def _get_obs(self, board: GameState):
         obs = np.array(board.get_obs())
         obs = obs.reshape(4, 9, 9)
-        return obs
+        return torch.from_numpy(obs)
 
 
-@torch.compiler.disable(recursive=True)
 def bitboard_to_array(_bitboard: int):
     last_bit = bool(_bitboard & 0x100)
     _bitboard = _bitboard & 0xFF
@@ -270,12 +258,11 @@ def bitboard_to_array(_bitboard: int):
     return arr
 
 
-@torch.compile
 def array_to_bitboard(array: np.ndarray):
     return np.packbits(array.ravel(), bitorder="little")[0]
 
 
-@torch.compile
+
 def array_of_bitboards_to_array(array_of_bitboards: np.ndarray):
     arrays = [bitboard_to_array(bitboard) for bitboard in array_of_bitboards]
     result = np.zeros((9, 9), dtype=np.int8)
@@ -287,7 +274,7 @@ def array_of_bitboards_to_array(array_of_bitboards: np.ndarray):
     return result
 
 
-@torch.compile
+
 def array_to_array_of_bitboards(array: np.ndarray):
     bitboards = []
     # Process each 3x3 subgrid
