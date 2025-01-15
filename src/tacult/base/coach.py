@@ -5,7 +5,7 @@ from collections import deque
 from pickle import Pickler, Unpickler
 from random import shuffle
 import time
-
+import torch
 import numpy as np
 from tqdm import tqdm
 
@@ -34,6 +34,7 @@ class Coach():
         self.trainExamplesHistory = []  # history of examples from args.numItersForTrainExamplesHistory latest iterations
         self.skipFirstSelfPlay = False  # can be overriden in loadTrainExamples()
 
+    @torch.compile
     def prepExecuteEpisode(self):
         self._trainExamples = [[] for _ in range(self.args.numEnvs)]
         self._board = [self.game.getInitBoard() for _ in range(self.args.numEnvs)]
@@ -42,6 +43,7 @@ class Coach():
 
         self._autoresetEnvs = np.zeros(self.args.numEnvs, dtype=bool)
 
+    @torch.compile  
     def executeEpisode(self, mcts: MCTS):
         """
         This function executes one episode of self-play, starting with player 1.
@@ -104,6 +106,7 @@ class Coach():
         
         return results
 
+    @torch.compile
     def generateTrainExamples(self):
         iterationTrainExamples = deque([], maxlen=self.args.maxlenOfQueue)
         mcts = MCTS(self.game, self.nnet, self.args)  # reset search tree
@@ -139,6 +142,7 @@ class Coach():
 
         return iterationTrainExamples
 
+    @torch.compile
     def learn(self):
         """
         Performs numIters iterations with at least minNumEps episodes of self-play in each
@@ -165,8 +169,8 @@ class Coach():
             # backup history to a file
             # NB! the examples were collected using the model from the previous iteration, so (i-1)
             if self.args.saveTrainExamples:
-                self.deleteTrainExamples(i - 2)
                 self.saveTrainExamples(i - 1)
+                self.deleteTrainExamples(i - 2)
 
             # shuffle examples before training
             trainExamples = []
@@ -175,10 +179,12 @@ class Coach():
 
             # training new network, keeping a copy of the old one
             self.nnet.save_checkpoint(folder=self.args.checkpoint, filename='temp.pth.tar')
-            self.pnet.load_checkpoint(folder=self.args.checkpoint, filename='temp.pth.tar')
-            pmcts = SingleMCTS(self.game, self.pnet, self.args)
 
             self.nnet.train(trainExamples)
+
+            self.pnet.load_checkpoint(folder=self.args.checkpoint, filename='temp.pth.tar', weights_only=False)
+
+            pmcts = SingleMCTS(self.game, self.pnet, self.args)
             nmcts = SingleMCTS(self.game, self.nnet, self.args)
 
             log.info('PITTING AGAINST PREVIOUS VERSION')
@@ -203,12 +209,14 @@ class Coach():
     def getCheckpointFile(self, iteration):
         return 'checkpoint_' + str(iteration) + '.pth.tar'
 
+    @torch.compiler.disable(recursive=True)
     def deleteTrainExamples(self, iteration):
         folder = self.args.checkpoint
         filename = os.path.join(folder, self.getCheckpointFile(iteration) + ".examples")
         if os.path.exists(filename):
             os.remove(filename)
 
+    @torch.compiler.disable(recursive=True)
     def saveTrainExamples(self, iteration):
         folder = self.args.checkpoint
         if not os.path.exists(folder):
@@ -218,6 +226,7 @@ class Coach():
             Pickler(f).dump(self.trainExamplesHistory)
         f.closed
 
+    @torch.compiler.disable(recursive=True)
     def loadTrainExamples(self):
         modelFile = os.path.join(self.args.load_folder_file[0], self.args.load_folder_file[1])
         examplesFile = modelFile + ".examples"

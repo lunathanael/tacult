@@ -2,11 +2,14 @@ from tacult.base.game import Game
 from utac_gym.core import GameState
 from utac_gym.core.types import GAMESTATE
 import numpy as np
+import torch
+
 
 class UtacGame(Game):
     def __init__(self):
         pass
 
+    @torch.compiler.disable(recursive=True)
     def getInitBoard(self):
         """
         Returns:
@@ -20,7 +23,7 @@ class UtacGame(Game):
         Returns:
             (x,y): a tuple of board dimensions
         """
-        return (9, 9, 2)
+        return (9, 9, 4)
 
     def getActionSize(self):
         """
@@ -29,6 +32,7 @@ class UtacGame(Game):
         """
         return 81
 
+    @torch.compiler.disable(recursive=True)
     def getNextState(self, board: GameState, player: int, action: int):
         """
         Input:
@@ -44,6 +48,7 @@ class UtacGame(Game):
         board.make_move(action)
         return board, -player
 
+    @torch.compiler.disable(recursive=True)
     def getValidMoves(self, board: GameState, player: int):
         """
         Input:
@@ -59,6 +64,7 @@ class UtacGame(Game):
             return np.zeros(81)
         return board.get_valid_mask()
 
+    @torch.compiler.disable(recursive=True)
     def getGameEnded(self, board: GameState, player: int):
         """
         Input:
@@ -68,16 +74,17 @@ class UtacGame(Game):
         Returns:
             r: 0 if game has not ended. 1 if player won, -1 if player lost,
                small non-zero value for draw.
-               
+
         """
         if not board.is_terminal():
             return 0
-        
+
         if board.terminal_value() == 0:
             return 1e-4
-        
+
         return 1 if board.terminal_value() == player else -1
 
+    @torch.compiler.disable(recursive=True)
     def getCanonicalForm(self, board: GameState, player: int):
         """
         Input:
@@ -103,6 +110,59 @@ class UtacGame(Game):
             state.side = 1
             return GameState(state)
 
+    @staticmethod
+    @torch.compile
+    def _getSymmetriesHelper(
+        occ_arrays,
+        board_arrays,
+        game_occ_array,
+        main_occ_array,
+        main_board_array,
+        last_square_array,
+        pi_board,
+        i,
+        j,
+    ):
+        last_square_array = last_square_array.reshape(3, 3)
+
+        # Rotate arrays
+        occ_arrays = np.rot90(occ_arrays, i)
+        board_arrays = np.rot90(board_arrays, i)
+        game_occ_array = np.rot90(game_occ_array, i)
+        main_occ_array = np.rot90(main_occ_array, i)
+        main_board_array = np.rot90(main_board_array, i)
+        last_square_array = np.rot90(last_square_array, i)
+        newPi = np.rot90(pi_board, i)
+
+        if j:
+            occ_arrays = np.fliplr(occ_arrays)
+            board_arrays = np.fliplr(board_arrays)
+            game_occ_array = np.fliplr(game_occ_array)
+            main_occ_array = np.fliplr(main_occ_array)
+            main_board_array = np.fliplr(main_board_array)
+            last_square_array = np.fliplr(last_square_array)
+            newPi = np.fliplr(newPi)
+        # Convert back to bitboards
+        state_occ = array_to_array_of_bitboards(occ_arrays)
+        state_board = array_to_array_of_bitboards(board_arrays)
+
+        state_game_occ = array_to_bitboard(game_occ_array.ravel())
+        state_main_occ = array_to_bitboard(main_occ_array.ravel())
+        state_main_board = array_to_bitboard(main_board_array.ravel())
+        state_last_square = np.argmax(last_square_array.ravel())
+        newPi = newPi.flatten()
+
+        return (
+            state_occ,
+            state_board,
+            state_game_occ,
+            state_main_occ,
+            state_main_board,
+            state_last_square,
+            newPi,
+        )
+
+    @torch.compiler.disable(recursive=False)
     def getSymmetries(self, board: GameState, pi):
         """
         Input:
@@ -130,41 +190,52 @@ class UtacGame(Game):
                 last_square_array = np.zeros(9, dtype=bool)
                 if state.last_square != -1:
                     last_square_array[state.last_square] = 1
-                last_square_array = last_square_array.reshape(3, 3)
 
-                # Rotate arrays
-                occ_arrays = np.rot90(occ_arrays, i)
-                board_arrays = np.rot90(board_arrays, i)
-                game_occ_array = np.rot90(game_occ_array, i)
-                main_occ_array = np.rot90(main_occ_array, i)
-                main_board_array = np.rot90(main_board_array, i)
-                last_square_array = np.rot90(last_square_array, i)
-                
-                if j:
-                    occ_arrays = np.fliplr(occ_arrays)
-                    board_arrays = np.fliplr(board_arrays)
-                    game_occ_array = np.fliplr(game_occ_array)
-                    main_occ_array = np.fliplr(main_occ_array)
-                    main_board_array = np.fliplr(main_board_array)
-                    last_square_array = np.fliplr(last_square_array)
-                
+                (
+                    state_occ,
+                    state_board,
+                    state_game_occ,
+                    state_main_occ,
+                    state_main_board,
+                    state_last_square,
+                    newPi
+                ) = self._getSymmetriesHelper(
+                    occ_arrays,
+                    board_arrays,
+                    game_occ_array,
+                    main_occ_array,
+                    main_board_array,
+                    last_square_array,
+                    pi_board,
+                    i,
+                    j,
+                )
+
                 # Convert back to bitboards
-                state.occ = array_to_array_of_bitboards(occ_arrays)
-                state.board = array_to_array_of_bitboards(board_arrays)
+                state.occ = state_occ
+                state.board = state_board
 
-                state.game_occ = array_to_bitboard(game_occ_array.ravel())
-                state.main_occ = array_to_bitboard(main_occ_array.ravel()) 
-                state.main_board = array_to_bitboard(main_board_array.ravel())
+                state.game_occ = state_game_occ
+                state.main_occ = state_main_occ
+                state.main_board = state_main_board
                 if state.last_square != -1:
-                    state.last_square = np.argmax(last_square_array.ravel())
-                
+                    state.last_square = state_last_square
+
                 newB = GameState(state)
-                newPi = np.rot90(pi_board, i)
-                if j:
-                    newPi = np.fliplr(newPi)
                 symmetries.append((newB, newPi.flatten()))
         return symmetries
+    
+    @staticmethod
+    @torch.compile
+    def _stringRepresentationHelper(board, occ, side, last_square):
+        board_str = occ_str = ""
+        for i in range(9):
+            board_str += np.binary_repr(board[i], width=9)
+            occ_str += np.binary_repr(occ[i], width=9)
+        s = board_str + occ_str + str(side) + str(last_square)
+        return s
 
+    @torch.compile
     def stringRepresentation(self, board: GameState):
         """
         Input:
@@ -175,37 +246,48 @@ class UtacGame(Game):
                          Required by MCTS for hashing.
         """
         gs: GAMESTATE = board._get_gs()
-        board_str = occ_str = ""
-        for i in range(9):
-            board_str += format(gs.board[i], '09b')
-            occ_str += format(gs.occ[i], '09b')
-        s = board_str + occ_str + str(gs.side) + str(gs.last_square)
-        return s
+        return self._stringRepresentationHelper(gs.board, gs.occ, gs.side, gs.last_square)
 
+    @torch.compiler.disable(recursive=True)
     def _get_current_player(self, board: GameState):
         return 1 if board.current_player() == 1 else -1
-    
+
+
+    @torch.compiler.disable(recursive=False)
     def _get_obs(self, board: GameState):
         obs = np.array(board.get_obs())
-        obs = obs.reshape(2, 9, 9)
+        obs = obs.reshape(4, 9, 9)
         return obs
-    
-def bitboard_to_array(bitboard: int):
-    return np.array([int(bit) for bit in format(bitboard, '09b')])
 
+
+@torch.compiler.disable(recursive=True)
+def bitboard_to_array(_bitboard: int):
+    last_bit = bool(_bitboard & 0x100)
+    _bitboard = _bitboard & 0xFF
+    bitboard = np.array([_bitboard], dtype=np.uint8)
+    arr = np.unpackbits(bitboard, bitorder="little", count=9)
+    arr[8] = last_bit
+    return arr
+
+
+@torch.compile
 def array_to_bitboard(array: np.ndarray):
-    return int(''.join(str(int(bit)) for bit in array.flatten()), 2)
+    return np.packbits(array.ravel(), bitorder="little")[0]
 
+
+@torch.compile
 def array_of_bitboards_to_array(array_of_bitboards: np.ndarray):
     arrays = [bitboard_to_array(bitboard) for bitboard in array_of_bitboards]
-    result = np.zeros((9, 9))
+    result = np.zeros((9, 9), dtype=np.int8)
     for i, arr in enumerate(arrays):
         grid_row = (i // 3) * 3
         grid_col = (i % 3) * 3
         # Place the 9 elements into their corresponding 3x3 subgrid
-        result[grid_row:grid_row+3, grid_col:grid_col+3] = arr.reshape(3, 3)
+        result[grid_row : grid_row + 3, grid_col : grid_col + 3] = arr.reshape(3, 3)
     return result
 
+
+@torch.compile
 def array_to_array_of_bitboards(array: np.ndarray):
     bitboards = []
     # Process each 3x3 subgrid
@@ -214,9 +296,8 @@ def array_to_array_of_bitboards(array: np.ndarray):
             # Extract the 3x3 subgrid
             grid_row = i * 3
             grid_col = j * 3
-            subgrid = array[grid_row:grid_row+3, grid_col:grid_col+3]
+            subgrid = array[grid_row : grid_row + 3, grid_col : grid_col + 3]
             # Convert the subgrid to a bitboard
             bitboard = array_to_bitboard(subgrid)
             bitboards.append(bitboard)
     return np.array(bitboards)
-    

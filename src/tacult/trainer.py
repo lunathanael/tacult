@@ -6,6 +6,8 @@ from tacult.base.coach import Coach
 from tacult.utac_game import UtacGame as Game
 from tacult.utils import dotdict
 
+import torch
+
 from tacult.utac_nn import UtacNN
 
 log = logging.getLogger(__name__)
@@ -14,12 +16,12 @@ coloredlogs.install(level='INFO')  # Change this to DEBUG to see more info.
 
 _args = dotdict({
     'numIters': 1000,
-    'minNumEps': 256,              # Minimum number of complete self-play games to simulate during a new iteration, an upper bound over this minimum is the number of environments.
-    'numEnvs': 256,
+    'minNumEps': 32,              # Minimum number of complete self-play games to simulate during a new iteration, an upper bound over this minimum is the number of environments.
+    'numEnvs': 32,
     'tempThreshold': 18,        #
     'updateThreshold': 0.6,     # During arena playoff, new neural net will be accepted if threshold or more of games are won.
     'maxlenOfQueue': 331776,    # Number of game examples to train the neural networks. Do (minNumEps + numEnvs) * 81 * 8
-    'numMCTSSims': 30,          # Number of games moves for MCTS to simulate.
+    'numMCTSSims': 10,          # Number of games moves for MCTS to simulate.
     'cpuct': 1,
 
     'arenaCompare': 20,         # Number of games to play during arena play to determine if new net will be accepted.
@@ -31,7 +33,7 @@ _args = dotdict({
     'shuffle_data': True,
     'steps_per_epoch': 10,   
     'epochs': 10,
-    'batch_size': 1024,
+    'batch_size': 128,
 
     'lr': 0.001,
     'dropout': 0.3,
@@ -69,7 +71,9 @@ def main(args=_args):
     c.learn()
 
 def train(args=_args):
-    main(args)
+    # main(args)
+    compiled_main = torch.compile(main)
+    compiled_main(args)
 
 
 if __name__ == "__main__":
