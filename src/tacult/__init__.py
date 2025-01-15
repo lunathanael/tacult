@@ -2,6 +2,7 @@ from . import network, utac_game, utac_nn, utils, base, trainer, export_model
 from .base import coach, mcts, nn_wrapper, utils, arena
 from .trainer import train
 from .export_model import export_model
+from .utac_game import UtacGame
 
 
 try:
@@ -27,4 +28,5 @@ __all__ = [
     "nn_wrapper",
     "arena",
     "train",
+    "UtacGame",
 ]
