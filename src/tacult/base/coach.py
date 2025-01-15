@@ -208,22 +208,23 @@ class Coach():
                 # if self.args.saveAllModels:
                 #     self.nnet.save_checkpoint(folder=self.args.checkpoint, filename=self.getCheckpointFile(i))
                 self.nnet.save_checkpoint(folder=self.args.checkpoint, filename='best.pt')
+                self.saveTrainExamples(folder=self.args.checkpoint, filename='best.pt.examples')
                 self.pnet.load_checkpoint(folder=self.args.checkpoint, filename='best.pt')
 
     def getCheckpointFile(self, iteration):
         return 'checkpoint_' + str(iteration) + '.pt'
 
-    def deleteTrainExamples(self, iteration):
-        folder = self.args.checkpoint
-        filename = os.path.join(folder, self.getCheckpointFile(iteration) + ".examples")
+    def deleteTrainExamples(self, directory: str, filename: str):
+        folder = directory
+        filename = os.path.join(folder, filename)
         if os.path.exists(filename):
             os.remove(filename)
 
-    def saveTrainExamples(self, iteration):
-        folder = self.args.checkpoint
+    def saveTrainExamples(self, directory: str, filename: str):
+        folder = directory
         if not os.path.exists(folder):
             os.makedirs(folder)
-        filename = os.path.join(folder, self.getCheckpointFile(iteration) + ".examples")
+        filename = os.path.join(folder, filename)
         with open(filename, "wb+") as f:
             Pickler(f).dump(self.trainExamplesHistory)
         f.closed

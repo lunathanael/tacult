@@ -37,7 +37,7 @@ _args = dotdict({
     'dropout': 0.3,
     'cuda': False,
 
-    'load_checkpoint': False,
+    'load_checkpoint': True,
     'load_model': True,
     'checkpoint': './temp/rerun_1/',
     'load_folder_file': ('./temp/run_1','best.pt'),
