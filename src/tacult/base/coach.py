@@ -87,7 +87,7 @@ class Coach():
             pi = pis[i]
             sym = self.game.getSymmetries(canonicalBoards[i], pi)
             for b, p in sym:
-                self._trainExamples[i].append([self.game._get_obs(b), self._curPlayer[i], torch.from_numpy(p)])
+                self._trainExamples[i].append([self.game._get_obs(b), self._curPlayer[i], torch.from_numpy(p).float()])
 
             action = np.random.choice(len(pi), p=pi)
             self._board[i], self._curPlayer[i] = self.game.getNextState(self._board[i], int(self._curPlayer[i]), action)

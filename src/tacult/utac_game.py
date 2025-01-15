@@ -246,7 +246,7 @@ class UtacGame(Game):
     def _get_obs(self, board: GameState):
         obs = np.array(board.get_obs())
         obs = obs.reshape(4, 9, 9)
-        return torch.from_numpy(obs)
+        return torch.from_numpy(obs).float()
 
 
 def bitboard_to_array(_bitboard: int):
