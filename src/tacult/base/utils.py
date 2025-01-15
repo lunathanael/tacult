@@ -7,7 +7,7 @@ log = logging.getLogger(__name__)
 def to_obs(canonicalBoard):
     obs = np.array(canonicalBoard.get_obs())
     obs = obs.reshape(4, 9, 9)
-    return torch.from_numpy(obs)
+    return torch.from_numpy(obs).float()
 
 
 def get_device(cuda: bool = None) -> torch.device:

@@ -59,10 +59,6 @@ class NNetWrapper(NeuralNet):
         """
         # Convert data to PyTorch tensors
         input_boards, target_pis, target_vs = list(zip(*examples))
-        for b in input_boards:
-            if not isinstance(b, torch.Tensor):
-                print(b)
-                assert False
         input_boards = torch.stack(input_boards)
         target_pis = torch.stack(target_pis) 
         target_vs = torch.tensor(target_vs)
@@ -79,7 +75,6 @@ class NNetWrapper(NeuralNet):
             num_workers=4,
             prefetch_factor=2,
             persistent_workers=True,
-            pin_memory_device=self.device,
         )
         dataloader_iter = iter(dataloader)
 
@@ -134,7 +129,7 @@ class NNetWrapper(NeuralNet):
         """
         self.nnet.eval()  # Set to evaluation mode
         with torch.no_grad():
-            obs = torch.from_numpy(obs).float().to(self.device)
+            obs = obs.to(self.device)
             
             pi, v = self.nnet(obs)
             

@@ -37,10 +37,10 @@ _args = dotdict({
     'dropout': 0.3,
     'cuda': True,
 
-    'load_checkpoint': False,
+    'load_checkpoint': True,
     'load_model': False,
     'checkpoint': './temp/run_1',
-    'load_folder_file': ('./temp','data'),
+    'load_folder_file': ('./temp','copy'),
     'numItersForTrainExamplesHistory': 20,
 })
 
