@@ -1,25 +1,28 @@
 import sys
+from tacult.base.utils import get_device
 import torch
-
 import torch.nn as nn
 import torch.nn.functional as F
-
 
 sys.path.append('..')
 
 
-def UtacNNet(cuda: bool=True, dropout: float=0.3, onnx_export: bool=False) -> nn.Module:
+def UtacNNet(
+    cuda: bool = True, dropout: float = 0.3, onnx_export: bool = False
+) -> nn.Module:
     if onnx_export:
         return _OnnxExportUtacNNet(cuda)
     else:
         return _UtacNNet(cuda, dropout)
 
+
 class _UtacNNet(nn.Module):
-    def __init__(self, cuda: bool=True, dropout: float=0.3):
+    def __init__(self, cuda: bool = True, dropout: float = 0.3):
         super(_UtacNNet, self).__init__()
         
         self.board_x, self.board_y, self.board_z = 9, 9, 2
         self.action_size = 81
+        self.device = get_device(cuda)
 
         # Neural Net layers
         self.conv1 = nn.Conv2d(self.board_z, 512, 3, padding=1)
@@ -45,10 +48,11 @@ class _UtacNNet(nn.Module):
         
         self.dropout = dropout
 
-        if cuda:
-            self.cuda()
+        self.to(self.device)
 
     def forward(self, x):
+        x = x.to(self.device)
+        
         # Convolutional layers
         x = F.relu(self.bn1(self.conv1(x)))
         x = F.relu(self.bn2(self.conv2(x)))
@@ -69,14 +73,15 @@ class _UtacNNet(nn.Module):
         v = torch.tanh(self.v(x))
 
         return pi, v
-    
+
 
 class _OnnxExportUtacNNet(nn.Module):
-    def __init__(self, cuda: bool=True):
+    def __init__(self, cuda: bool = True):
         super(_OnnxExportUtacNNet, self).__init__()
         
         self.board_x, self.board_y, self.board_z = 9, 9, 2
         self.action_size = 81
+        self.device = get_device(cuda)
 
         # Neural Net layers
         self.conv1 = nn.Conv2d(self.board_z, 512, 3, padding=1)
@@ -93,10 +98,11 @@ class _OnnxExportUtacNNet(nn.Module):
         self.pi = nn.Linear(512, self.action_size)
         self.v = nn.Linear(512, 1)
 
-        if cuda:
-            self.cuda()
+        self.to(self.device)
 
     def forward(self, x):
+        x = x.to(self.device)
+        
         # Convolutional layers
         x = F.relu(self.conv1(x))
         x = F.relu(self.conv2(x))
