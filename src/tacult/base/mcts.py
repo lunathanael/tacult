@@ -27,6 +27,7 @@ class MCTS():
         self.Es = {}  # stores game.getGameEnded ended for board s
         self.Vs = {}  # stores game.getValidMoves for board s
 
+    @torch.compile
     def getActionProb(self, canonicalBoard, temp=1):
         """
         This function performs numMCTSSims simulations of MCTS starting from
@@ -54,6 +55,7 @@ class MCTS():
         probs = [x / counts_sum for x in counts]
         return probs
 
+    @torch.compile
     def search(self, canonicalBoard):
         """
         This function performs one iteration of MCTS. It is recursively called
@@ -160,6 +162,7 @@ class VectorizedMCTS():
         self.Es = [{} for _ in range(args.numEnvs)]  # stores game.getGameEnded ended for board s
         self.Vs = [{} for _ in range(args.numEnvs)]  # stores game.getValidMoves for board s
 
+    @torch.compile
     def reset(self, i):
         self.Qsa[i] = {}
         self.Nsa[i] = {}
@@ -169,6 +172,7 @@ class VectorizedMCTS():
         self.Es[i] = {}
         self.Vs[i] = {}
 
+    @torch.compile
     def getActionProbs(self, canonicalBoards, temps):
         """
         This function performs numMCTSSims simulations of MCTS starting from
@@ -210,7 +214,7 @@ class VectorizedMCTS():
                 _probs[i] = counts / counts_sum
         return _probs
 
-
+    @torch.compile
     def search(self, canonicalBoards):
         """
         This function performs one iteration of MCTS. It is recursively called
@@ -236,7 +240,7 @@ class VectorizedMCTS():
                 terminalMask[i] = True
         return self._search(canonicalBoards, terminalMask)
 
-    
+    @torch.compile
     def _search(self, canonicalBoards, terminalMask):
         _v = np.zeros(self.args.numEnvs)
         _s = [
@@ -338,9 +342,10 @@ class VectorizedMCTS():
             terminalMask[i] = True
         return -_v
     
+    @torch.compile
     def maskedBatchPrediction(self, canonicalBoards, terminalMask):
         obs = np.array([
-            to_obs(canonicalBoard) if (canonicalBoard is not None) else torch.zeros(2, 9, 9, dtype=torch.float32)
+            to_obs(canonicalBoard) if (canonicalBoard is not None) else torch.zeros(4, 9, 9, dtype=torch.float32)
             for canonicalBoard in canonicalBoards
         ])
         active_obs = obs[~terminalMask]
