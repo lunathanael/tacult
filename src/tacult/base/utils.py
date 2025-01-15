@@ -1,6 +1,5 @@
 import numpy as np
 import torch
-import warnings
 
 @torch.compiler.disable(recursive=False)
 def to_obs(canonicalBoard):
@@ -22,7 +21,7 @@ def get_device(cuda: bool = None) -> torch.device:
     if cuda is None:
         cuda = torch.cuda.is_available()
     elif cuda and not torch.cuda.is_available():
-        warnings.warn("CUDA requested but not available! Using CPU instead.")
+        log.warning("CUDA requested but not available! Using CPU instead.")
         cuda = False
     
     return torch.device("cuda" if cuda else "cpu")

@@ -6,7 +6,6 @@ from tqdm import tqdm
 from .nn import NeuralNet
 from .utils import get_device
 
-import warnings
 import logging
 
 log = logging.getLogger(__name__)
@@ -175,12 +174,12 @@ class NNetWrapper(NeuralNet):
         if 'optimizer' in checkpoint:
             self.optimizer.load_state_dict(checkpoint['optimizer'])
         else:
-            warnings.warn("No optimizer state dict found in checkpoint")
+            log.warning("No optimizer state dict found in checkpoint")
 
         if 'scheduler' in checkpoint:
             self.scheduler.load_state_dict(checkpoint['scheduler'])
         else:
-            warnings.warn("No scheduler state dict found in checkpoint")
+            log.warning("No scheduler state dict found in checkpoint")
 
     def train_mode(self):
         """Set the network to training mode"""

@@ -7,7 +7,7 @@ from tacult.utac_game import UtacGame as Game
 from tacult.base.mcts import RawMCTS
 from collections import deque
 from tacult.utils import dotdict
-from pickle import Pickler
+from pickle import Unpickler, Pickler
 import torch.nn.functional as F
 import torch._dynamo
 
@@ -37,6 +37,7 @@ class Generator():
         # Pre-allocate tensors
         self.pi_tensor = torch.zeros(game.getActionSize(), dtype=torch.float32)
         self.action_tensor = torch.zeros(1, dtype=torch.long)
+        self.iterationTrainExamples = []
 
     @torch.compile
     def execute_episode(self):
@@ -57,7 +58,7 @@ class Generator():
             
             pi = self.mcts.getActionProb(canonical_board, temp=1)
             # Convert pi to tensor
-            self.pi_tensor.copy_(torch.tensor(pi))
+            self.pi_tensor.copy_(torch.from_numpy(pi))
             
             # Use torch.multinomial instead of np.random.choice
             self.action_tensor = torch.multinomial(self.pi_tensor, 1)
@@ -68,19 +69,21 @@ class Generator():
             sym = self.game.getSymmetries(canonical_board, pi)
             for b, p in sym:
                 train_examples.append([
-                    torch.tensor(self.game._get_obs(b), dtype=torch.float32),
-                    torch.tensor(current_player, dtype=torch.int32),
-                    torch.tensor(p, dtype=torch.float32),
+                    self.game._get_obs(b),
+                    current_player,
+                    p,
                 ])
 
             r = self.game.getGameEnded(board, current_player)
             if r != 0:
-                # Vectorize the result calculation
-                results = torch.full((len(train_examples),), r, dtype=torch.float32)
-                player_diff = torch.tensor([x[1].item() != current_player for x in train_examples], dtype=torch.float32)
-                results *= torch.pow(-1, player_diff)
+                results = [
+                    (
+                        x[0], x[2], r * ((-1) ** (x[1] != current_player))
+                    )
+                    for x in train_examples
+                ]
+                return results
                 
-                return [(x[0], x[1], x[2], r) for x, r in zip(train_examples, results)]
 
     @torch.compile
     def generate_games(self, num_games, output_path):
@@ -91,14 +94,13 @@ class Generator():
             num_games: Number of games to generate
             output_dir: Directory to save the generated games
         """
-        iterationTrainExamples = deque([], maxlen=self.args.maxlenOfQueue)
         
         for i in tqdm(range(num_games), desc="Generating games"):
             # Play one episode
-            iterationTrainExamples += self.execute_episode()
+            self.iterationTrainExamples.extend(self.execute_episode())
         
-        log.info(f"Saving {len(iterationTrainExamples)} examples to {output_path}")
-        self.saveTrainExamples(iterationTrainExamples, output_path)
+        log.info(f"Saving {len(self.iterationTrainExamples)} examples to {output_path}")
+        self.saveTrainExamples(self.iterationTrainExamples, output_path)
 
     @torch.compiler.disable(recursive=True)
     def saveTrainExamples(self, game_history, output_path):
@@ -106,14 +108,21 @@ class Generator():
         if not os.path.exists(folder):
             os.makedirs(folder)
         with open(output_path, "wb+") as f:
-            Pickler(f).dump([game_history])
+            Pickler(f).dump(game_history)
         
+    @torch.compiler.disable(recursive=True)
+    def loadTrainExamples(self, input_path):
+        with open(input_path, "rb") as f:
+            gh  = Unpickler(f).load()
+        self.iterationTrainExamples = [example for episode in gh for example in episode]
         
 
 def main():
     game = Game()
     generator = Generator(game, args)
-    generator.generate_games(200, './data.examples')
+    generator.loadTrainExamples('./temp/copy.examples')
+    generator.generate_games(200, './temp/data.examples')
 
 if __name__ == '__main__':
-    main()
+    m = torch.compile(main)
+    m()

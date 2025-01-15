@@ -27,7 +27,7 @@ _args = dotdict({
     'arenaCompare': 20,         # Number of games to play during arena play to determine if new net will be accepted.
     'verbose': False,            # Whether to print verbose output for Arena.
 
-    'saveAllModels': False,
+    'saveAllModels': True,
     'saveTrainExamples': False,
 
     'shuffle_data': True,
@@ -39,9 +39,10 @@ _args = dotdict({
     'dropout': 0.3,
     'cuda': True,
 
-    'checkpoint': './data.examples',
+    'load_checkpoint': True,
     'load_model': False,
-    'load_folder_file': ('./temp/','checkpoint_2.pt'),
+    'checkpoint': './temp/run_1',
+    'load_folder_file': ('./temp','data'),
     'numItersForTrainExamplesHistory': 20,
 })
 
@@ -63,7 +64,7 @@ def main(args=_args):
     log.info('Loading the Coach...')
     c = Coach(g, nnet, args)
 
-    if args.load_model:
+    if args.load_checkpoint:
         log.info("Loading 'trainExamples' from file...")
         c.loadTrainExamples()
 
