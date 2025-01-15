@@ -9,15 +9,12 @@ from collections import deque
 from tacult.utils import dotdict
 from pickle import Unpickler, Pickler
 import torch.nn.functional as F
-import torch._dynamo
-
-torch._dynamo.config.capture_scalar_outputs = True
 
 log = logging.getLogger(__name__)
 
 args = dotdict({
-    'numMCTSSims': 81,
-    'numRollouts': 5,
+    'numMCTSSims': 100,
+    'numRollouts': 9,
     'cpuct': 1.0,
     'maxlenOfQueue': 331776,
 })
@@ -35,11 +32,8 @@ class Generator():
         self.args = args
         self.mcts = RawMCTS(game, args)
         # Pre-allocate tensors
-        self.pi_tensor = torch.zeros(game.getActionSize(), dtype=torch.float32)
-        self.action_tensor = torch.zeros(1, dtype=torch.long)
         self.iterationTrainExamples = []
 
-    @torch.compile
     def execute_episode(self):
         """
         Execute one episode of self-play using MCTS.
@@ -58,11 +52,11 @@ class Generator():
             
             pi = self.mcts.getActionProb(canonical_board, temp=1)
             # Convert pi to tensor
-            self.pi_tensor.copy_(torch.from_numpy(pi))
+            pi_tensor = torch.from_numpy(pi)
             
             # Use torch.multinomial instead of np.random.choice
-            self.action_tensor = torch.multinomial(self.pi_tensor, 1)
-            action = int(self.action_tensor.item())  # Convert to int outside the critical path
+            action_tensor = torch.multinomial(pi_tensor, 1)
+            action = int(action_tensor.item())  # Convert to int outside the critical path
             
             board, current_player = self.game.getNextState(board, current_player, action)
             
@@ -85,7 +79,6 @@ class Generator():
                 return results
                 
 
-    @torch.compile
     def generate_games(self, num_games, output_path):
         """
         Generate a specified number of self-play games and save them.
@@ -102,7 +95,6 @@ class Generator():
         log.info(f"Saving {len(self.iterationTrainExamples)} examples to {output_path}")
         self.saveTrainExamples(self.iterationTrainExamples, output_path)
 
-    @torch.compiler.disable(recursive=True)
     def saveTrainExamples(self, game_history, output_path):
         folder = os.path.dirname(output_path)
         if not os.path.exists(folder):
@@ -110,19 +102,11 @@ class Generator():
         with open(output_path, "wb+") as f:
             Pickler(f).dump(game_history)
         
-    @torch.compiler.disable(recursive=True)
-    def loadTrainExamples(self, input_path):
-        with open(input_path, "rb") as f:
-            gh  = Unpickler(f).load()
-        self.iterationTrainExamples = [example for episode in gh for example in episode]
-        
 
 def main():
     game = Game()
     generator = Generator(game, args)
-    generator.loadTrainExamples('./temp/copy.examples')
-    generator.generate_games(200, './temp/data.examples')
+    generator.generate_games(100, './temp/data.examples')
 
 if __name__ == '__main__':
-    m = torch.compile(main)
-    m()
+    main()

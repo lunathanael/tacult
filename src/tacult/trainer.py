@@ -6,8 +6,6 @@ from tacult.base.coach import Coach
 from tacult.utac_game import UtacGame as Game
 from tacult.utils import dotdict
 
-import torch
-
 from tacult.utac_nn import UtacNN
 
 log = logging.getLogger(__name__)
@@ -39,7 +37,7 @@ _args = dotdict({
     'dropout': 0.3,
     'cuda': True,
 
-    'load_checkpoint': True,
+    'load_checkpoint': False,
     'load_model': False,
     'checkpoint': './temp/run_1',
     'load_folder_file': ('./temp','data'),
@@ -73,8 +71,7 @@ def main(args=_args):
 
 def train(args=_args):
     # main(args)
-    compiled_main = torch.compile(main)
-    compiled_main(args)
+    main(args)
 
 
 if __name__ == "__main__":

@@ -35,7 +35,7 @@ class Coach():
         self.trainExamplesSizes = deque(maxlen=args.numItersForTrainExamplesHistory + 1)
         self.skipFirstSelfPlay = False  # can be overriden in loadTrainExamples()
 
-    @torch.compile
+    
     def prepExecuteEpisode(self):
         self._trainExamples = [[] for _ in range(self.args.numEnvs)]
         self._board = [self.game.getInitBoard() for _ in range(self.args.numEnvs)]
@@ -44,7 +44,7 @@ class Coach():
 
         self._autoresetEnvs = np.zeros(self.args.numEnvs, dtype=bool)
 
-    @torch.compile  
+      
     def executeEpisode(self, mcts: MCTS):
         """
         This function executes one episode of self-play, starting with player 1.
@@ -87,7 +87,7 @@ class Coach():
             pi = pis[i]
             sym = self.game.getSymmetries(canonicalBoards[i], pi)
             for b, p in sym:
-                self._trainExamples[i].append([self.game._get_obs(b), self._curPlayer[i], p])
+                self._trainExamples[i].append([self.game._get_obs(b), self._curPlayer[i], torch.from_numpy(p)])
 
             action = np.random.choice(len(pi), p=pi)
             self._board[i], self._curPlayer[i] = self.game.getNextState(self._board[i], int(self._curPlayer[i]), action)
@@ -107,7 +107,7 @@ class Coach():
         
         return results
 
-    @torch.compile
+    
     def generateTrainExamples(self):
         iterationTrainExamples = []
         mcts = MCTS(self.game, self.nnet, self.args)  # reset search tree
@@ -143,7 +143,7 @@ class Coach():
 
         return iterationTrainExamples
 
-    @torch.compile
+    
     def learn(self):
         """
         Performs numIters iterations with at least minNumEps episodes of self-play in each
@@ -176,16 +176,13 @@ class Coach():
                 self.saveTrainExamples(i - 1)
                 self.deleteTrainExamples(i - 2)
             # shuffle examples before training
-            trainExamples = []
-            for e in self.trainExamplesHistory:
-                trainExamples.extend(e)
 
-            log.info(f"Training on {len(trainExamples)} examples")
+            log.info(f"Training on {len(self.trainExamplesHistory)} examples")
 
             # training new network, keeping a copy of the old one
             self.nnet.save_checkpoint(folder=self.args.checkpoint, filename='temp.pt')
 
-            self.nnet.train(trainExamples)
+            self.nnet.train(self.trainExamplesHistory)
 
             self.pnet.load_checkpoint(folder=self.args.checkpoint, filename='temp.pt', weights_only=False)
 
@@ -214,14 +211,12 @@ class Coach():
     def getCheckpointFile(self, iteration):
         return 'checkpoint_' + str(iteration) + '.pth.tar'
 
-    @torch.compiler.disable(recursive=True)
     def deleteTrainExamples(self, iteration):
         folder = self.args.checkpoint
         filename = os.path.join(folder, self.getCheckpointFile(iteration) + ".examples")
         if os.path.exists(filename):
             os.remove(filename)
 
-    @torch.compiler.disable(recursive=True)
     def saveTrainExamples(self, iteration):
         folder = self.args.checkpoint
         if not os.path.exists(folder):
@@ -231,7 +226,6 @@ class Coach():
             Pickler(f).dump(self.trainExamplesHistory)
         f.closed
 
-    @torch.compiler.disable(recursive=True)
     def loadTrainExamples(self):
         modelFile = os.path.join(self.args.load_folder_file[0], self.args.load_folder_file[1])
         examplesFile = modelFile + ".examples"

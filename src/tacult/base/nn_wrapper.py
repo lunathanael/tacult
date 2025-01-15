@@ -39,7 +39,6 @@ class NNetWrapper(NeuralNet):
 
         log.info(f"Network {network.__class__.__name__} initialized on device {self.device}")
 
-    @torch.compile
     def training_step(self, boards, pis, vs):
         self.optimizer.zero_grad()
         out_pi, out_v = self.nnet(boards)
@@ -53,20 +52,20 @@ class NNetWrapper(NeuralNet):
         self.scheduler.step()
         return pi_loss.item(), v_loss.item()
 
-    @torch.compile
+    
     def train(self, examples):
         """
         examples: list of examples, each example is of form (board, pi, v)
         """
         # Convert data to PyTorch tensors
-        input_boards, target_pis, target_vs = map(
-            lambda x: torch.from_numpy(np.array(x)).to(self.device),
-            zip(*examples)
-        )
-
-        input_boards = input_boards.float()
-        target_pis = target_pis.float()
-        target_vs = target_vs.float()
+        input_boards, target_pis, target_vs = list(zip(*examples))
+        for b in input_boards:
+            if not isinstance(b, torch.Tensor):
+                print(b)
+                assert False
+        input_boards = torch.stack(input_boards)
+        target_pis = torch.stack(target_pis) 
+        target_vs = torch.tensor(target_vs)
 
         # Create data loader
         dataset = torch.utils.data.TensorDataset(
@@ -128,7 +127,7 @@ class NNetWrapper(NeuralNet):
                 )
             )
 
-    @torch.compile
+    
     def predict(self, obs):
         """
         obs: np array with board
@@ -142,7 +141,6 @@ class NNetWrapper(NeuralNet):
             # Convert to numpy
             return pi.cpu().numpy(), v.cpu().numpy()
 
-    @torch.compiler.disable(recursive=True)
     def save_checkpoint(
         self, folder: str = 'checkpoint', filename: str = 'checkpoint.pt'
     ):
@@ -160,7 +158,6 @@ class NNetWrapper(NeuralNet):
             'scheduler': self.scheduler.state_dict()
         }, filepath)
 
-    @torch.compiler.disable(recursive=True)
     def load_checkpoint(
         self, folder: str = 'checkpoint', filename: str = 'checkpoint.pt'
     ):
