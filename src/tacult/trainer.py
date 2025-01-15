@@ -13,7 +13,7 @@ log = logging.getLogger(__name__)
 coloredlogs.install(level='INFO')  # Change this to DEBUG to see more info.
 
 _args = dotdict({
-    'numIters': 1000,
+    'numIters': 200,
     'minNumEps': 256,              # Minimum number of complete self-play games to simulate during a new iteration, an upper bound over this minimum is the number of environments.
     'numEnvs': 256,
     'tempThreshold': 15,        #
