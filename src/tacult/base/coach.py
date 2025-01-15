@@ -31,7 +31,8 @@ class Coach():
         self.nnet = nnet
         self.pnet = self.nnet.__class__(args)  # the competitor network
         self.args = args
-        self.trainExamplesHistory = []  # history of examples from args.numItersForTrainExamplesHistory latest iterations
+        self.trainExamplesHistory = deque(maxlen=args.maxlenOfQueue)  # history of examples from args.numItersForTrainExamplesHistory latest iterations
+        self.trainExamplesSizes = deque(maxlen=args.numItersForTrainExamplesHistory + 1)
         self.skipFirstSelfPlay = False  # can be overriden in loadTrainExamples()
 
     @torch.compile
@@ -108,7 +109,7 @@ class Coach():
 
     @torch.compile
     def generateTrainExamples(self):
-        iterationTrainExamples = deque([], maxlen=self.args.maxlenOfQueue)
+        iterationTrainExamples = []
         mcts = MCTS(self.game, self.nnet, self.args)  # reset search tree
 
         games_played = 0
@@ -124,11 +125,11 @@ class Coach():
         self.prepExecuteEpisode()
         while games_played < self.args.minNumEps:
             new_examples = self.executeEpisode(mcts)
-            iterationTrainExamples += [
+            iterationTrainExamples.extend([
                 example
                 for episode_examples in new_examples
                 for example in episode_examples
-            ]
+            ])
             games_played += len(new_examples)
             elapsed = time.time() - time_started
             print(tqdm.format_meter(
@@ -160,29 +161,33 @@ class Coach():
                 iterationTrainExamples = self.generateTrainExamples()
 
                 # save the iteration examples to the history 
-                self.trainExamplesHistory.append(iterationTrainExamples)
+                self.trainExamplesHistory.extend(iterationTrainExamples)
+                self.trainExamplesSizes.append(len(iterationTrainExamples))
 
-            if len(self.trainExamplesHistory) > self.args.numItersForTrainExamplesHistory:
+            if len(self.trainExamplesSizes) >= self.args.numItersForTrainExamplesHistory:
                 log.warning(
-                    f"Removing the oldest entry in trainExamples. len(trainExamplesHistory) = {len(self.trainExamplesHistory)}")
-                self.trainExamplesHistory.pop(0)
+                    f"Removing the old entries in trainExamples. len(trainExamplesHistory) = {len(self.trainExamplesHistory)}")
+                for _ in range(self.trainExamplesSizes.popleft()):
+                    self.trainExamplesHistory.popleft()
+
             # backup history to a file
             # NB! the examples were collected using the model from the previous iteration, so (i-1)
             if self.args.saveTrainExamples:
                 self.saveTrainExamples(i - 1)
                 self.deleteTrainExamples(i - 2)
-
             # shuffle examples before training
             trainExamples = []
             for e in self.trainExamplesHistory:
                 trainExamples.extend(e)
 
+            log.info(f"Training on {len(trainExamples)} examples")
+
             # training new network, keeping a copy of the old one
-            self.nnet.save_checkpoint(folder=self.args.checkpoint, filename='temp.pth.tar')
+            self.nnet.save_checkpoint(folder=self.args.checkpoint, filename='temp.pt')
 
             self.nnet.train(trainExamples)
 
-            self.pnet.load_checkpoint(folder=self.args.checkpoint, filename='temp.pth.tar', weights_only=False)
+            self.pnet.load_checkpoint(folder=self.args.checkpoint, filename='temp.pt', weights_only=False)
 
             pmcts = SingleMCTS(self.game, self.pnet, self.args)
             nmcts = SingleMCTS(self.game, self.nnet, self.args)
@@ -199,12 +204,12 @@ class Coach():
             log.info('NEW/PREV WINS : %d / %d ; DRAWS : %d' % (nwins, pwins, draws))
             if pwins + nwins == 0 or float(nwins) / (pwins + nwins) < self.args.updateThreshold:
                 log.info('REJECTING NEW MODEL')
-                self.nnet.load_checkpoint(folder=self.args.checkpoint, filename='temp.pth.tar')
+                self.nnet.load_checkpoint(folder=self.args.checkpoint, filename='temp.pt')
             else:
                 log.info('ACCEPTING NEW MODEL')
                 if self.args.saveAllModels:
                     self.nnet.save_checkpoint(folder=self.args.checkpoint, filename=self.getCheckpointFile(i))
-                self.nnet.save_checkpoint(folder=self.args.checkpoint, filename='best.pth.tar')
+                self.nnet.save_checkpoint(folder=self.args.checkpoint, filename='best.pt')
 
     def getCheckpointFile(self, iteration):
         return 'checkpoint_' + str(iteration) + '.pth.tar'
