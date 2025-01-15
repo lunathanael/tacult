@@ -366,125 +366,105 @@ class RawMCTS():
     def __init__(self, game, args):
         self.game = game
         self.args = args
-        self.Qsa = {}  # stores Q values for s,a
-        self.Nsa = {}  # stores #times edge s,a was visited
-        self.Ns = {}   # stores #times board s was visited
-        self.Ps = {}   # stores initial policy (uniform for raw MCTS)
-
-        self.Es = {}   # stores game.getGameEnded ended for board s
-        self.Vs = {}   # stores game.getValidMoves for board s
+        self.Qsa = {}
+        self.Nsa = {}
+        self.Ns = {}
+        self.Ps = {}
+        self.Es = {}
+        self.Vs = {}
+        
+        # Pre-allocate tensors for frequently used operations
+        self.action_size = game.getActionSize()
+        self.probs = torch.zeros(self.action_size, dtype=torch.float32)
+        self.counts = torch.zeros(self.action_size, dtype=torch.float32)
+        self.valid_moves = torch.zeros(self.action_size, dtype=torch.bool)
+        self.ucb_scores = torch.zeros(self.action_size, dtype=torch.float32)
 
     @torch.compile
     def getActionProb(self, canonicalBoard, temp=1):
-        """
-        This function performs numMCTSSims simulations of MCTS starting from
-        canonicalBoard.
-
-        Returns:
-            probs: a policy vector where the probability of the ith action is
-                   proportional to Nsa[(s,a)]**(1./temp)
-        """
+        """Vectorized version of getActionProb using tensors"""
         for i in range(self.args.numMCTSSims):
             self.search(canonicalBoard)
 
         s = self.game.stringRepresentation(canonicalBoard)
-        counts = [self.Nsa[(s, a)] if (s, a) in self.Nsa else 0 for a in range(self.game.getActionSize())]
+        
+        # Convert counts to tensor
+        self.counts.zero_()
+        for a in range(self.action_size):
+            if (s, a) in self.Nsa:
+                self.counts[a] = self.Nsa[(s, a)]
 
         if temp == 0:
-            bestAs = np.array(np.argwhere(counts == np.max(counts))).flatten()
-            bestA = np.random.choice(bestAs)
-            probs = [0] * len(counts)
-            probs[bestA] = 1
-            return probs
+            max_count = torch.max(self.counts)
+            max_indices = torch.nonzero(self.counts == max_count).flatten()
+            selected_action = max_indices[torch.randint(len(max_indices), (1,))]
+            self.probs.zero_()
+            self.probs[selected_action] = 1
+        else:
+            self.counts = torch.pow(self.counts, 1.0 / temp)
+            self.probs = self.counts / torch.sum(self.counts)
 
-        counts = [x ** (1. / temp) for x in counts]
-        counts_sum = float(sum(counts))
-        probs = [x / counts_sum for x in counts]
-        return probs
+        return self.probs.cpu().numpy()
 
     @torch.compile
     def search(self, canonicalBoard):
-        """
-        This function performs one iteration of MCTS. It is recursively called
-        till a leaf node is found. The action chosen at each node is one that
-        has the maximum upper confidence bound as in the paper.
-
-        Once a leaf node is found, a rollout is performed to estimate its value.
-        This value is propagated up the search path.
-
-        Returns:
-            v: the negative of the value of the current canonicalBoard
-        """
         s = self.game.stringRepresentation(canonicalBoard)
 
         if s not in self.Es:
             self.Es[s] = self.game.getGameEnded(canonicalBoard, 1)
         if self.Es[s] != 0:
-            # terminal node
             return -self.Es[s]
 
         if s not in self.Ps:
-            # leaf node - perform rollout
-            valids = self.game.getValidMoves(canonicalBoard, 1)
-            
-            # Use uniform policy for unexplored nodes
-            self.Ps[s] = valids / np.sum(valids)
+            valids = torch.tensor(self.game.getValidMoves(canonicalBoard, 1), dtype=torch.float32)
+            self.Ps[s] = valids / torch.sum(valids)
             self.Vs[s] = valids
             self.Ns[s] = 0
-            
-            # Perform rollout
             return -self.rollouts(canonicalBoard)
 
         valids = self.Vs[s]
-        cur_best = -float('inf')
-        best_act = -1
+        
+        # Vectorized UCB calculation
+        self.ucb_scores.fill_(-float('inf'))
+        valid_actions = torch.nonzero(valids).flatten()
+        
+        for a in valid_actions:
+            a = a.item()
+            if (s, a) in self.Qsa:
+                self.ucb_scores[a] = self.Qsa[(s, a)] + self.args.cpuct * self.Ps[s][a] * \
+                    torch.sqrt(torch.tensor(self.Ns[s])) / (1 + self.Nsa[(s, a)])
+            else:
+                self.ucb_scores[a] = self.args.cpuct * self.Ps[s][a] * \
+                    torch.sqrt(torch.tensor(self.Ns[s] + EPS))
 
-        # pick the action with the highest upper confidence bound
-        for a in range(self.game.getActionSize()):
-            if valids[a]:
-                if (s, a) in self.Qsa:
-                    u = self.Qsa[(s, a)] + self.args.cpuct * self.Ps[s][a] * math.sqrt(self.Ns[s]) / (
-                            1 + self.Nsa[(s, a)])
-                else:
-                    u = self.args.cpuct * self.Ps[s][a] * math.sqrt(self.Ns[s] + EPS)
-
-                if u > cur_best:
-                    cur_best = u
-                    best_act = a
-
-        a = best_act
-        next_s, next_player = self.game.getNextState(canonicalBoard, 1, a)
+        best_act = torch.argmax(self.ucb_scores).item()
+        
+        next_s, next_player = self.game.getNextState(canonicalBoard, 1, best_act)
         next_s = self.game.getCanonicalForm(next_s, next_player)
 
         v = self.search(next_s)
 
-        if (s, a) in self.Qsa:
-            self.Qsa[(s, a)] = (self.Nsa[(s, a)] * self.Qsa[(s, a)] + v) / (self.Nsa[(s, a)] + 1)
-            self.Nsa[(s, a)] += 1
+        if (s, best_act) in self.Qsa:
+            self.Qsa[(s, best_act)] = (self.Nsa[(s, best_act)] * self.Qsa[(s, best_act)] + v) / \
+                                     (self.Nsa[(s, best_act)] + 1)
+            self.Nsa[(s, best_act)] += 1
         else:
-            self.Qsa[(s, a)] = v
-            self.Nsa[(s, a)] = 1
+            self.Qsa[(s, best_act)] = v
+            self.Nsa[(s, best_act)] = 1
 
         self.Ns[s] += 1
         return -v
-    
+
     @torch.compile
     def rollouts(self, canonicalBoard):
-        """
-        Performs rollouts from the given board state using random moves.
-        Returns the game result from the perspective of the current player.
-        """
-        results = 0
+        """Vectorized rollouts"""
+        results = torch.zeros(self.args.numRollouts)
         for i in range(self.args.numRollouts):
-            results += self.rollout(canonicalBoard)
-        return results / self.args.numRollouts
+            results[i] = self.rollout(canonicalBoard)
+        return torch.mean(results).item()
 
     @torch.compile
     def rollout(self, canonicalBoard):
-        """
-        Performs a rollout from the given board state using random moves.
-        Returns the game result from the perspective of the current player.
-        """
         current_board = canonicalBoard
         current_player = 1
 
@@ -493,9 +473,9 @@ class RawMCTS():
             if ended != 0:
                 return ended
 
-            valid_moves = self.game.getValidMoves(current_board, current_player)
-            valid_moves_indices = np.where(valid_moves)[0]
-            action = np.random.choice(valid_moves_indices)
+            valid_moves = torch.tensor(self.game.getValidMoves(current_board, current_player))
+            valid_indices = torch.nonzero(valid_moves).flatten()
+            action = valid_indices[torch.randint(len(valid_indices), (1,))].item()
             
             current_board, current_player = self.game.getNextState(current_board, current_player, action)
 
