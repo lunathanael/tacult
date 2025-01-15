@@ -14,7 +14,6 @@ def UtacNNet(
         net = _OnnxExportUtacNNet(cuda)
     else:
         net = _UtacNNet(cuda, dropout)
-    net.compile()
     return net
 
 
