@@ -184,7 +184,7 @@ class Coach():
 
             self.nnet.train(self.trainExamplesHistory)
 
-            self.pnet.load_checkpoint(folder=self.args.checkpoint, filename='temp.pt', weights_only=False)
+            self.pnet.load_checkpoint(folder=self.args.checkpoint, filename='temp.pt')
 
             pmcts = SingleMCTS(self.game, self.pnet, self.args)
             nmcts = SingleMCTS(self.game, self.nnet, self.args)
