@@ -59,7 +59,7 @@ class Generator():
                 train_examples.append([
                     self.game._get_obs(b),
                     current_player,
-                    p,
+                    torch.from_numpy(p).float(),
                 ])
             
             action_tensor = torch.multinomial(pi_tensor, 1)
