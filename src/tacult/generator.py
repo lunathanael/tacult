@@ -53,13 +53,7 @@ class Generator():
             pi = self.mcts.getActionProb(canonical_board, temp=1)
             # Convert pi to tensor
             pi_tensor = torch.from_numpy(pi).float()
-            
-            # Use torch.multinomial instead of np.random.choice
-            action_tensor = torch.multinomial(pi_tensor, 1)
-            action = int(action_tensor.item())  # Convert to int outside the critical path
-            
-            board, current_player = self.game.getNextState(board, current_player, action)
-            
+
             sym = self.game.getSymmetries(canonical_board, pi_tensor)
             for b, p in sym:
                 train_examples.append([
@@ -67,6 +61,12 @@ class Generator():
                     current_player,
                     p,
                 ])
+            
+            action_tensor = torch.multinomial(pi_tensor, 1)
+            action = int(action_tensor.item()) 
+            
+            board, current_player = self.game.getNextState(board, current_player, action)
+            
 
             r = self.game.getGameEnded(board, current_player)
             if r != 0:
