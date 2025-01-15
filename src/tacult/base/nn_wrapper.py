@@ -7,6 +7,9 @@ from .nn import NeuralNet
 from .utils import get_device
 
 import warnings
+import logging
+
+log = logging.getLogger(__name__)
 
 """
 NeuralNet wrapper class for the TicTacToeNNet.
@@ -27,6 +30,8 @@ class NNetWrapper(NeuralNet):
         self.device = get_device(args.cuda)
         # Create optimizer once
         self.optimizer = torch.optim.Adam(self.nnet.parameters(), lr=args.lr)
+
+        log.info(f"Network {network.__class__.__name__} initialized on device {self.device}")
 
     def train(self, examples):
         """
