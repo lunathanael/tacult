@@ -358,3 +358,169 @@ class VectorizedMCTS():
         return full_pi, full_v
 
 
+class RawMCTS():
+    """
+    This class handles the MCTS tree using rollouts instead of neural network evaluation.
+    """
+
+    def __init__(self, game, args):
+        self.game = game
+        self.args = args
+        self.Qsa = {}  # stores Q values for s,a
+        self.Nsa = {}  # stores #times edge s,a was visited
+        self.Ns = {}   # stores #times board s was visited
+        self.Ps = {}   # stores initial policy (uniform for raw MCTS)
+
+        self.Es = {}   # stores game.getGameEnded ended for board s
+        self.Vs = {}   # stores game.getValidMoves for board s
+
+    @torch.compile
+    def getActionProb(self, canonicalBoard, temp=1):
+        """
+        This function performs numMCTSSims simulations of MCTS starting from
+        canonicalBoard.
+
+        Returns:
+            probs: a policy vector where the probability of the ith action is
+                   proportional to Nsa[(s,a)]**(1./temp)
+        """
+        for i in range(self.args.numMCTSSims):
+            self.search(canonicalBoard)
+
+        s = self.game.stringRepresentation(canonicalBoard)
+        counts = [self.Nsa[(s, a)] if (s, a) in self.Nsa else 0 for a in range(self.game.getActionSize())]
+
+        if temp == 0:
+            bestAs = np.array(np.argwhere(counts == np.max(counts))).flatten()
+            bestA = np.random.choice(bestAs)
+            probs = [0] * len(counts)
+            probs[bestA] = 1
+            return probs
+
+        counts = [x ** (1. / temp) for x in counts]
+        counts_sum = float(sum(counts))
+        probs = [x / counts_sum for x in counts]
+        return probs
+
+    @torch.compile
+    def search(self, canonicalBoard):
+        """
+        This function performs one iteration of MCTS. It is recursively called
+        till a leaf node is found. The action chosen at each node is one that
+        has the maximum upper confidence bound as in the paper.
+
+        Once a leaf node is found, a rollout is performed to estimate its value.
+        This value is propagated up the search path.
+
+        Returns:
+            v: the negative of the value of the current canonicalBoard
+        """
+        s = self.game.stringRepresentation(canonicalBoard)
+
+        if s not in self.Es:
+            self.Es[s] = self.game.getGameEnded(canonicalBoard, 1)
+        if self.Es[s] != 0:
+            # terminal node
+            return -self.Es[s]
+
+        if s not in self.Ps:
+            # leaf node - perform rollout
+            valids = self.game.getValidMoves(canonicalBoard, 1)
+            
+            # Use uniform policy for unexplored nodes
+            self.Ps[s] = valids / np.sum(valids)
+            self.Vs[s] = valids
+            self.Ns[s] = 0
+            
+            # Perform rollout
+            return -self.rollouts(canonicalBoard)
+
+        valids = self.Vs[s]
+        cur_best = -float('inf')
+        best_act = -1
+
+        # pick the action with the highest upper confidence bound
+        for a in range(self.game.getActionSize()):
+            if valids[a]:
+                if (s, a) in self.Qsa:
+                    u = self.Qsa[(s, a)] + self.args.cpuct * self.Ps[s][a] * math.sqrt(self.Ns[s]) / (
+                            1 + self.Nsa[(s, a)])
+                else:
+                    u = self.args.cpuct * self.Ps[s][a] * math.sqrt(self.Ns[s] + EPS)
+
+                if u > cur_best:
+                    cur_best = u
+                    best_act = a
+
+        a = best_act
+        next_s, next_player = self.game.getNextState(canonicalBoard, 1, a)
+        next_s = self.game.getCanonicalForm(next_s, next_player)
+
+        v = self.search(next_s)
+
+        if (s, a) in self.Qsa:
+            self.Qsa[(s, a)] = (self.Nsa[(s, a)] * self.Qsa[(s, a)] + v) / (self.Nsa[(s, a)] + 1)
+            self.Nsa[(s, a)] += 1
+        else:
+            self.Qsa[(s, a)] = v
+            self.Nsa[(s, a)] = 1
+
+        self.Ns[s] += 1
+        return -v
+    
+    @torch.compile
+    def rollouts(self, canonicalBoard):
+        """
+        Performs rollouts from the given board state using random moves.
+        Returns the game result from the perspective of the current player.
+        """
+        results = 0
+        for i in range(self.args.numRollouts):
+            results += self.rollout(canonicalBoard)
+        return results / self.args.numRollouts
+
+    @torch.compile
+    def rollout(self, canonicalBoard):
+        """
+        Performs a rollout from the given board state using random moves.
+        Returns the game result from the perspective of the current player.
+        """
+        current_board = canonicalBoard
+        current_player = 1
+
+        while True:
+            ended = self.game.getGameEnded(current_board, current_player)
+            if ended != 0:
+                return ended
+
+            valid_moves = self.game.getValidMoves(current_board, current_player)
+            valid_moves_indices = np.where(valid_moves)[0]
+            action = np.random.choice(valid_moves_indices)
+            
+            current_board, current_player = self.game.getNextState(current_board, current_player, action)
+
+    @torch.compile
+    def getCurrentEvaluation(self, canonicalBoard):
+        """
+        Returns the current evaluation of the position from the perspective of the current player.
+        The evaluation is based on the Q-value of the best move found.
+        Returns:
+            float: Q-value of the best move. Higher values favor the current player.
+        """
+        s = self.game.stringRepresentation(canonicalBoard)
+        if s in self.Es and self.Es[s] != 0:
+            # If terminal state, return the game result
+            return self.Es[s]
+            
+        if s not in self.Vs:
+            # If state never visited, return 0 (neutral evaluation)
+            return 0
+            
+        valids = self.Vs[s]
+        best_value = float('-inf')
+        
+        for a in range(self.game.getActionSize()):
+            if valids[a] and (s, a) in self.Qsa:
+                best_value = max(best_value, self.Qsa[(s, a)])
+        
+        return best_value if best_value != float('-inf') else 0
