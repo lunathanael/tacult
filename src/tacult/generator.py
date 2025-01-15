@@ -8,6 +8,11 @@ from tacult.base.mcts import RawMCTS
 from collections import deque
 from tacult.utils import dotdict
 from pickle import Pickler
+import torch.nn.functional as F
+import torch._dynamo
+
+torch._dynamo.config.capture_scalar_outputs = True
+
 log = logging.getLogger(__name__)
 
 args = dotdict({
@@ -29,6 +34,9 @@ class Generator():
         self.game = game
         self.args = args
         self.mcts = RawMCTS(game, args)
+        # Pre-allocate tensors
+        self.pi_tensor = torch.zeros(game.getActionSize(), dtype=torch.float32)
+        self.action_tensor = torch.zeros(1, dtype=torch.long)
 
     @torch.compile
     def execute_episode(self):
@@ -48,23 +56,31 @@ class Generator():
             canonical_board = self.game.getCanonicalForm(board, current_player)
             
             pi = self.mcts.getActionProb(canonical_board, temp=1)
+            # Convert pi to tensor
+            self.pi_tensor.copy_(torch.tensor(pi))
+            
+            # Use torch.multinomial instead of np.random.choice
+            self.action_tensor = torch.multinomial(self.pi_tensor, 1)
+            action = int(self.action_tensor.item())  # Convert to int outside the critical path
+            
+            board, current_player = self.game.getNextState(board, current_player, action)
             
             sym = self.game.getSymmetries(canonical_board, pi)
             for b, p in sym:
                 train_examples.append([
-                    self.game._get_obs(b),
-                    current_player,
-                    p,
+                    torch.tensor(self.game._get_obs(b), dtype=torch.float32),
+                    torch.tensor(current_player, dtype=torch.int32),
+                    torch.tensor(p, dtype=torch.float32),
                 ])
 
-            action = np.random.choice(len(pi), p=pi)
-            board, current_player = self.game.getNextState(board, current_player, action)
-            
             r = self.game.getGameEnded(board, current_player)
             if r != 0:
-                # Update all examples with the game result
-                return [(x[0], x[1], x[2], r * ((-1) ** (x[1] != current_player))) 
-                        for x in train_examples]
+                # Vectorize the result calculation
+                results = torch.full((len(train_examples),), r, dtype=torch.float32)
+                player_diff = torch.tensor([x[1].item() != current_player for x in train_examples], dtype=torch.float32)
+                results *= torch.pow(-1, player_diff)
+                
+                return [(x[0], x[1], x[2], r) for x, r in zip(train_examples, results)]
 
     @torch.compile
     def generate_games(self, num_games, output_path):
