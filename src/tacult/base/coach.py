@@ -176,7 +176,7 @@ class Coach():
             log.info(f"Training on {len(self.trainExamplesHistory)} examples")
 
             # training new network, keeping a copy of the old one
-            # self.nnet.save_checkpoint(folder=self.args.checkpoint, filename='temp.pt')
+            self.nnet.save_checkpoint(folder=self.args.checkpoint, filename='temp.pt')
 
             self.nnet.train(self.trainExamplesHistory)
 

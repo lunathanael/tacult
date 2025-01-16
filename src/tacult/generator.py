@@ -93,8 +93,7 @@ class Generator():
             self.iterationTrainExamples.extend(self.execute_episode())
         
         log.info(f"Saving {len(self.iterationTrainExamples)} examples to {output_path}")
-        print(self.iterationTrainExamples)
-        # self.saveTrainExamples(self.iterationTrainExamples, output_path)
+        self.saveTrainExamples(self.iterationTrainExamples, output_path)
 
     def saveTrainExamples(self, game_history, output_path):
         folder = os.path.dirname(output_path)
@@ -107,7 +106,7 @@ class Generator():
 def main():
     game = Game()
     generator = Generator(game, args)
-    generator.generate_games(1, './temp/data.examples')
+    generator.generate_games(1, './temp/run1/best.pt.examples')
 
 if __name__ == '__main__':
     main()
