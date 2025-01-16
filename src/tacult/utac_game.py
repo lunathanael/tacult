@@ -171,18 +171,18 @@ class UtacGame(Game):
         symmetries = []
 
         state = GameState(board)._get_gs()
-        for i in range(1, 5):
-            for j in [True, False]:
-                # Extract bitboards from state
-                occ_arrays = array_of_bitboards_to_array(state.occ)
-                board_arrays = array_of_bitboards_to_array(state.board)
+        # Extract bitboards from state
+        occ_arrays = array_of_bitboards_to_array(state.occ)
+        board_arrays = array_of_bitboards_to_array(state.board)
 
-                game_occ_array = bitboard_to_array(state.game_occ).reshape(3, 3)
-                main_occ_array = bitboard_to_array(state.main_occ).reshape(3, 3)
-                main_board_array = bitboard_to_array(state.main_board).reshape(3, 3)
-                last_square_array = np.zeros(9, dtype=bool)
-                if state.last_square != -1:
-                    last_square_array[state.last_square] = 1
+        game_occ_array = bitboard_to_array(state.game_occ).reshape(3, 3)
+        main_occ_array = bitboard_to_array(state.main_occ).reshape(3, 3)
+        main_board_array = bitboard_to_array(state.main_board).reshape(3, 3)
+        last_square_array = np.zeros(9, dtype=bool)
+        if state.last_square != -1:
+            last_square_array[state.last_square] = 1
+        for i in range(0, 4):
+            for j in [False, True]:
 
                 (
                     state_occ,
@@ -249,6 +249,12 @@ class UtacGame(Game):
         return torch.from_numpy(obs).float()
 
 
+def array_to_bitboard(array: np.ndarray):
+    arr = array.ravel()
+    result = np.packbits(arr[:-1], bitorder="little")[0].astype(np.uint16) + (bool(arr[-1]) << 8)
+    return result
+
+
 def bitboard_to_array(_bitboard: int):
     last_bit = bool(_bitboard & 0x100)
     _bitboard = _bitboard & 0xFF
@@ -256,23 +262,6 @@ def bitboard_to_array(_bitboard: int):
     arr = np.unpackbits(bitboard, bitorder="little", count=9)
     arr[8] = last_bit
     return arr
-
-
-def array_to_bitboard(array: np.ndarray):
-    return np.packbits(array.ravel(), bitorder="little")[0]
-
-
-
-def array_of_bitboards_to_array(array_of_bitboards: np.ndarray):
-    arrays = [bitboard_to_array(bitboard) for bitboard in array_of_bitboards]
-    result = np.zeros((9, 9), dtype=np.int8)
-    for i, arr in enumerate(arrays):
-        grid_row = (i // 3) * 3
-        grid_col = (i % 3) * 3
-        # Place the 9 elements into their corresponding 3x3 subgrid
-        result[grid_row : grid_row + 3, grid_col : grid_col + 3] = arr.reshape(3, 3)
-    return result
-
 
 
 def array_to_array_of_bitboards(array: np.ndarray):
@@ -288,3 +277,14 @@ def array_to_array_of_bitboards(array: np.ndarray):
             bitboard = array_to_bitboard(subgrid)
             bitboards.append(bitboard)
     return np.array(bitboards)
+
+
+def array_of_bitboards_to_array(array_of_bitboards: np.ndarray):
+    arrays = [bitboard_to_array(bitboard) for bitboard in array_of_bitboards]
+    result = np.zeros((9, 9), dtype=np.int8)
+    for i, arr in enumerate(arrays):
+        grid_row = (i // 3) * 3
+        grid_col = (i % 3) * 3
+        # Place the 9 elements into their corresponding 3x3 subgrid
+        result[grid_row : grid_row + 3, grid_col : grid_col + 3] = arr.reshape(3, 3)
+    return result
