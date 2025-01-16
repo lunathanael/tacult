@@ -241,7 +241,7 @@ class VectorizedArena():
             ),
             end="\r"
         )
-        while num_games_played < num:
+        while True:
             for result in self.playGame(verbose=verbose):
                 if result == 1:
                     oneWon += 1
@@ -261,6 +261,8 @@ class VectorizedArena():
                     ),
                     end="\r"
                 )
+                if num_games_played >= num:
+                    break
         print()
 
         self.player1, self.player2 = self.player2, self.player1
@@ -277,7 +279,7 @@ class VectorizedArena():
             ),
             end="\r"
         )
-        while num_games_played < num:
+        while True:
             for result in self.playGame(verbose=verbose):
                 if result == -1:
                     oneWon += 1
@@ -297,6 +299,8 @@ class VectorizedArena():
                     ),
                     end="\r"
                 )
+                if num_games_played >= num:
+                    break
         print()
 
         return oneWon, twoWon, draws

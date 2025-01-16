@@ -22,7 +22,7 @@ _args = dotdict({
     'numMCTSSims': 30,          # Number of games moves for MCTS to simulate.
     'cpuct': 1,
 
-    'arenaCompare': 20,         # Number of games to play during arena play to determine if new net will be accepted.
+    'arenaCompare': 256,         # Number of games to play during arena play to determine if new net will be accepted.
     'verbose': False,            # Whether to print verbose output for Arena.
 
     'saveAllModels': True,

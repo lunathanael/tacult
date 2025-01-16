@@ -180,15 +180,16 @@ class Coach():
 
             self.nnet.train(self.trainExamplesHistory)
 
-            pmcts = SingleMCTS(self.game, self.pnet, self.args)
-            nmcts = SingleMCTS(self.game, self.nnet, self.args)
+            pmcts = MCTS(self.game, self.pnet, self.args)
+            nmcts = MCTS(self.game, self.nnet, self.args)
 
             log.info('PITTING AGAINST PREVIOUS VERSION')
-            arena = SingleArena(
-                lambda x: np.argmax(pmcts.getActionProb(x, temp=0)),
-                lambda x: np.argmax(nmcts.getActionProb(x, temp=0)),
+            arena = Arena(
+                lambda x: np.argmax(pmcts.getActionProbs(x, temps=np.zeros(self.args.numEnvs)), axis=1),
+                lambda x: np.argmax(nmcts.getActionProbs(x, temps=np.zeros(self.args.numEnvs)), axis=1),
                 self.game,
                 lambda x: x.print(),
+                self.args.numEnvs
             )
             pwins, nwins, draws = arena.playGames(self.args.arenaCompare, verbose=self.args.verbose)
 
