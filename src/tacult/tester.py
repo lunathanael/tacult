@@ -20,7 +20,7 @@ _args = dotdict({
     'numMCTSSims': 2,          # Number of games moves for MCTS to simulate.
     'cpuct': 1,
     'cuda': False,
-    'model_file': ('./temp/rerun_1','best.pt'),
+    'model_file': ('./temp/run1','best.pt'),
     'ignore_optimizer': True,
     'numRollouts': 50,
 
@@ -56,8 +56,8 @@ def main(args=_args):
     log.info('Loading %s...', UtacNNet.__name__)
     nnet = NNetWrapper(UtacNNet(args.cuda, onnx_export=True), args)
 
-    log.info('Loading checkpoint "%s/%s"...', args.model_file[0], args.model_file[1])
-    nnet.load_checkpoint(args.model_file[0], args.model_file[1])
+    # log.info('Loading checkpoint "%s/%s"...', args.model_file[0], args.model_file[1])
+    # nnet.load_checkpoint(args.model_file[0], args.model_file[1])
 
     board = g.getInitBoard()
 
@@ -79,6 +79,8 @@ def main(args=_args):
     for b, p in sym:
         b.print()
         print(p.reshape(9, 9))
+    
+    print(g._get_obs(board))
     return
     # nnet = UtacNN(args)
 

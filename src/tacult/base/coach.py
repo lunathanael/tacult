@@ -233,7 +233,8 @@ class Coach():
         else:
             log.info("File with trainExamples found. Loading it...")
             with open(examplesFile, "rb") as f:
-                self.trainExamplesHistory = Unpickler(f).load()
+                self.trainExamplesHistory = deque(Unpickler(f).load(), maxlen=self.args.maxlenOfQueue)
+                self.trainExamplesSizes = deque([len(self.trainExamplesHistory)], maxlen=self.args.numItersForTrainExamplesHistory + 1)
             log.info('Loading done!')
 
             # examples based on the model were already collected (loaded)
