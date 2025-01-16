@@ -173,13 +173,6 @@ class Coach():
                 for _ in range(self.trainExamplesSizes.popleft()):
                     self.trainExamplesHistory.popleft()
 
-            # backup history to a file
-            # NB! the examples were collected using the model from the previous iteration, so (i-1)
-            if self.args.saveTrainExamples:
-                self.saveTrainExamples(i - 1)
-                self.deleteTrainExamples(i - 2)
-            # shuffle examples before training
-
             log.info(f"Training on {len(self.trainExamplesHistory)} examples")
 
             # training new network, keeping a copy of the old one

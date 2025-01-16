@@ -161,7 +161,19 @@ class NNetWrapper(NeuralNet):
             raise FileNotFoundError(f"No model found at {filepath}")
 
         checkpoint = torch.load(filepath, map_location=self.device, weights_only=False)
-        self.nnet.load_state_dict(checkpoint['state_dict'])
+
+        state_dict = checkpoint['state_dict']
+        policy_value_net_keys = set(self.nnet.state_dict().keys())
+
+        optimizer_deleted = False
+        for key in list(state_dict.keys()):
+            if key not in policy_value_net_keys:
+                del state_dict[key]
+                if not optimizer_deleted:
+                    del checkpoint['optimizer']
+                    optimizer_deleted = True
+
+        self.nnet.load_state_dict(state_dict)
         
         if 'optimizer' in checkpoint:
             self.optimizer.load_state_dict(checkpoint['optimizer'])
