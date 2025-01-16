@@ -16,7 +16,7 @@ _args = dotdict({
     'numIters': 200,
     'minNumEps': 128,              # Minimum number of complete self-play games to simulate during a new iteration, an upper bound over this minimum is the number of environments.
     'numEnvs': 128,
-    'tempThreshold': 10,        #
+    'tempThreshold': 15,        #
     'updateThreshold': 0.6,     # During arena playoff, new neural net will be accepted if threshold or more of games are won.
     'maxlenOfQueue': 331776,    # Number of game examples to train the neural networks. Do (minNumEps + numEnvs) * 81 * 8
     'numMCTSSims': 30,          # Number of games moves for MCTS to simulate.

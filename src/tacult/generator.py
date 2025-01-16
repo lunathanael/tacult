@@ -12,13 +12,6 @@ import torch.nn.functional as F
 
 log = logging.getLogger(__name__)
 
-args = dotdict({
-    'numMCTSSims': 100,
-    'numRollouts': 9,
-    'cpuct': 1.0,
-    'maxlenOfQueue': 331776,
-})
-
 class Generator():
     def __init__(self, game: Game, args: dotdict) -> None:
         """
@@ -103,10 +96,20 @@ class Generator():
             Pickler(f).dump(game_history)
         
 
+
+
+args = dotdict({
+    'numMCTSSims': 200,
+    'numRollouts': 20,
+    'cpuct': 1.0,
+    'maxlenOfQueue': 331776,
+})
+
+
 def main():
     game = Game()
     generator = Generator(game, args)
-    generator.generate_games(1, './temp/run1/best.pt.examples')
+    generator.generate_games(200, './temp/run1/best.pt.examples')
 
 if __name__ == '__main__':
     main()
