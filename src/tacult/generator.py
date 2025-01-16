@@ -99,7 +99,7 @@ class Generator():
 
 
 args = dotdict({
-    'numMCTSSims': 100,
+    'numMCTSSims': 200,
     'numRollouts': 10,
     'cpuct': 1.0,
     'maxlenOfQueue': 331776,
