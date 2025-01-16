@@ -201,7 +201,7 @@ class Coach():
                 # if self.args.saveAllModels:
                 #     self.nnet.save_checkpoint(folder=self.args.checkpoint, filename=self.getCheckpointFile(i))
                 self.nnet.save_checkpoint(folder=self.args.checkpoint, filename='best.pt')
-                self.saveTrainExamples(folder=self.args.checkpoint, filename='best.pt.examples')
+                self.saveTrainExamples(directory=self.args.checkpoint, filename='best.pt.examples')
                 self.pnet.load_checkpoint(folder=self.args.checkpoint, filename='best.pt')
 
     def getCheckpointFile(self, iteration):

@@ -7,7 +7,8 @@ from tacult.utils import dotdict
 
 from tacult.network import UtacNNet
 from tacult.base import NNetWrapper
-from tacult.base import MCTS
+from tacult.base.mcts import MCTS, RawMCTS
+from tacult.base.arena import Arena
 import numpy as np
 
 log = logging.getLogger(__name__)
@@ -15,7 +16,7 @@ log = logging.getLogger(__name__)
 coloredlogs.install(level='INFO')  # Change this to DEBUG to see more info.
 
 _args = dotdict({
-    'numMCTSSims': 400,          # Number of games moves for MCTS to simulate.
+    'numMCTSSims': 40,          # Number of games moves for MCTS to simulate.
     'cpuct': 1,
     'cuda': False,
     'model_file': ('./temp/rerun_1','best.pt'),
@@ -27,6 +28,8 @@ _args = dotdict({
     'epochs': 10,
     'batch_size': 512,
     'numIters': 10,
+    'num_games': 10,
+    'verbose': False,
 })
 
 
@@ -48,20 +51,11 @@ def main(args=_args):
 
     board = g.getInitBoard()
     mcts = MCTS(g, nnet, args)
-    ret = mcts.getActionProb(board, temp=0)
-    obs = g._get_obs(g.getCanonicalForm(board, 1))
-    # obs = np.array([[
+    raw_mcts = RawMCTS(g, args)
 
-    # ],
-    # ])
-    obs = obs.unsqueeze(0)
-    pred = nnet.predict(obs)
-    a, b = pred
-    print(a, b)
-    print(np.round(a.reshape(9, 9), decimals=2))
-    print(np.array(ret).reshape(9, 9))
-
-
+    arena = Arena(lambda x: np.argmax(mcts.getActionProb(x, temp=0)), lambda x: np.argmax(raw_mcts.getActionProb(x, temp=0)), g)
+    a = arena.playGames(args.num_games, verbose=False)
+    print(a)
 def test(args=_args):
     main(args)
 
