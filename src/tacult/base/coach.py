@@ -171,18 +171,19 @@ class Coach():
 
             self.nnet.save_checkpoint(folder=self.args.checkpoint, filename='temp.pt')
 
-            mcts_args = self.args
-            mcts_args.numEnvs = min(self.args.numEnvs, self.args.arenaCompare // 2)
-            pmcts = MCTS(self.game, self.pnet, mcts_args)
-            nmcts = MCTS(self.game, self.nnet, mcts_args)
+            numEnvs = self.args.numEnvs
+            self.args.numEnvs = min(self.args.numEnvs, self.args.arenaCompare // 2)
+            pmcts = MCTS(self.game, self.pnet, self.args)
+            nmcts = MCTS(self.game, self.nnet, self.args)
+            self.args.numEnvs = numEnvs
 
             log.info('PITTING AGAINST PREVIOUS VERSION')
             arena = Arena(
-                lambda x: np.argmax(pmcts.getActionProbs(x, temps=np.zeros(mcts_args.numEnvs)), axis=1),
-                lambda x: np.argmax(nmcts.getActionProbs(x, temps=np.zeros(mcts_args.numEnvs)), axis=1),
+                lambda x: np.argmax(pmcts.getActionProbs(x, temps=np.zeros(self.args.numEnvs)), axis=1),
+                lambda x: np.argmax(nmcts.getActionProbs(x, temps=np.zeros(self.args.numEnvs)), axis=1),
                 self.game,
                 lambda x: x.print(),
-                mcts_args.numEnvs
+                self.args.numEnvs
             )
             pwins, nwins, draws = arena.playGames(self.args.arenaCompare, verbose=self.args.verbose)
 
