@@ -175,7 +175,6 @@ class Coach():
             self.args.numEnvs = min(self.args.numEnvs, self.args.arenaCompare // 2)
             pmcts = MCTS(self.game, self.pnet, self.args)
             nmcts = MCTS(self.game, self.nnet, self.args)
-            self.args.numEnvs = numEnvs
 
             log.info('PITTING AGAINST PREVIOUS VERSION')
             arena = Arena(
@@ -186,6 +185,7 @@ class Coach():
                 self.args.numEnvs
             )
             pwins, nwins, draws = arena.playGames(self.args.arenaCompare, verbose=self.args.verbose)
+            self.args.numEnvs = numEnvs
 
             log.info('NEW/PREV WINS : %d / %d ; DRAWS : %d' % (nwins, pwins, draws))
             if pwins + nwins == 0 or float(nwins) / (pwins + nwins) < self.args.updateThreshold:
@@ -229,7 +229,6 @@ class Coach():
             log.info("File with trainExamples found. Loading it...")
             with open(examplesFile, "rb") as f:
                 self.trainExamplesHistory = deque(Unpickler(f).load(), maxlen=self.args.maxlenOfQueue)
-                self.trainExamplesSizes = deque([len(self.trainExamplesHistory)], maxlen=self.args.numItersForTrainExamplesHistory + 1)
             log.info('Loading done!')
 
             # examples based on the model were already collected (loaded)
