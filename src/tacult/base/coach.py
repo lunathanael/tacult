@@ -32,7 +32,6 @@ class Coach():
         self.pnet = self.nnet.__class__(args)  # the competitor network
         self.args = args
         self.trainExamplesHistory = deque(maxlen=args.maxlenOfQueue)  # history of examples from args.numItersForTrainExamplesHistory latest iterations
-        self.trainExamplesSizes = deque(maxlen=args.numItersForTrainExamplesHistory + 1)
         self.skipFirstSelfPlay = False  # can be overriden in loadTrainExamples()
 
     
@@ -165,13 +164,6 @@ class Coach():
 
                 # save the iteration examples to the history 
                 self.trainExamplesHistory.extend(iterationTrainExamples)
-                self.trainExamplesSizes.append(len(iterationTrainExamples))
-
-            if len(self.trainExamplesSizes) >= self.args.numItersForTrainExamplesHistory:
-                log.warning(
-                    f"Removing the old entries in trainExamples. len(trainExamplesHistory) = {len(self.trainExamplesHistory)}")
-                for _ in range(self.trainExamplesSizes.popleft()):
-                    self.trainExamplesHistory.popleft()
 
             log.info(f"Training on {len(self.trainExamplesHistory)} examples")
 
@@ -179,16 +171,18 @@ class Coach():
 
             self.nnet.save_checkpoint(folder=self.args.checkpoint, filename='temp.pt')
 
-            pmcts = MCTS(self.game, self.pnet, self.args)
-            nmcts = MCTS(self.game, self.nnet, self.args)
+            mcts_args = self.args
+            mcts_args.numEnvs = min(self.args.numEnvs, self.args.arenaCompare // 2)
+            pmcts = MCTS(self.game, self.pnet, mcts_args)
+            nmcts = MCTS(self.game, self.nnet, mcts_args)
 
             log.info('PITTING AGAINST PREVIOUS VERSION')
             arena = Arena(
-                lambda x: np.argmax(pmcts.getActionProbs(x, temps=np.zeros(self.args.numEnvs)), axis=1),
-                lambda x: np.argmax(nmcts.getActionProbs(x, temps=np.zeros(self.args.numEnvs)), axis=1),
+                lambda x: np.argmax(pmcts.getActionProbs(x, temps=np.zeros(mcts_args.numEnvs)), axis=1),
+                lambda x: np.argmax(nmcts.getActionProbs(x, temps=np.zeros(mcts_args.numEnvs)), axis=1),
                 self.game,
                 lambda x: x.print(),
-                self.args.numEnvs
+                mcts_args.numEnvs
             )
             pwins, nwins, draws = arena.playGames(self.args.arenaCompare, verbose=self.args.verbose)
 
