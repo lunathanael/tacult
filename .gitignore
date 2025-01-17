@@ -4,6 +4,7 @@ __pycache__/
 *$py.class
 
 *_cpt/
+*.onnx
 
 # Model files
 *.ckpt
