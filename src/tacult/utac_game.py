@@ -101,6 +101,7 @@ class UtacGame(Game):
             b = state.board
             for i in range(9):
                 b[i] = (~b[i]) & state.occ[i]
+            state.board = b
             state.main_board = (~state.main_board) & state.main_occ
             state.side = 1
             return GameState(state)

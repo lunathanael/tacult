@@ -8,7 +8,7 @@ from tacult.base.coach import Coach
 from tacult.network import UtacNNet
 from tacult.utac_nn import UtacNN
 from tacult.base import NNetWrapper
-from tacult.base.mcts import MCTS, RawMCTS
+from tacult.base.mcts import MCTS, RawMCTS, VectorizedMCTS
 from tacult.base.arena import Arena
 import numpy as np
 import torch
@@ -17,7 +17,7 @@ log = logging.getLogger(__name__)
 coloredlogs.install(level='INFO')  # Change this to DEBUG to see more info.
 
 _args = dotdict({
-    'numMCTSSims': 2,          # Number of games moves for MCTS to simulate.
+    'numMCTSSims': 100,          # Number of games moves for MCTS to simulate.
     'cpuct': 1,
     'cuda': False,
     'model_file': ('./temp/run1','best.pt'),
@@ -54,23 +54,40 @@ def main(args=_args):
     # print(act.round(2))
     # print(mcts.getCurrentEvaluation(g.getInitBoard()))
     log.info('Loading %s...', UtacNNet.__name__)
-    nnet = NNetWrapper(UtacNNet(args.cuda, onnx_export=True), args)
+    # nnet = NNetWrapper(UtacNNet(args.cuda, onnx_export=True), args)
+    nnet = UtacNN(args)
 
     log.info('Loading checkpoint "%s/%s"...', args.model_file[0], args.model_file[1])
     nnet.load_checkpoint(args.model_file[0], args.model_file[1])
 
-    # board = g.getInitBoard()
+    board = g.getInitBoard()
 
-    # current_player = 1
-    # for i in range(30000):
-    #     moves = g.getValidMoves(board, current_player)
-    #     action = np.random.choice(np.where(moves)[0])
-    #     board, current_player = g.getNextState(board, current_player, action)
-    #     if g.getGameEnded(board, current_player) != 0:
-    #         board = g.getInitBoard()
-    #         current_player = 1
+    current_player = 1
+    moves = [40]
+    for action in moves:
+        # moves = g.getValidMoves(board, current_player)
+        # action = np.random.choice(np.where(moves)[0])
+        board, current_player = g.getNextState(board, current_player, action)
+        if g.getGameEnded(board, current_player) != 0:
+            assert False
+            board = g.getInitBoard()
+            current_player = 1
 
-    # board.print()
+    board.print()
+    g.getCanonicalForm(board, current_player).print()
+    print(current_player)
+    # obs = g._get_obs(g.getCanonicalForm(board, current_player))
+    # print(obs)
+    # obs = torch.tensor(obs).reshape(1, 4, 9, 9).float()
+    # pi, v = nnet.predict(obs)
+    # print(pi.reshape(9, 9).round(2))
+    # print(v)
+
+    # print("Thinking...")
+    # mcts = VectorizedMCTS(g, nnet, args)
+    # pi = mcts.getActionProbs([g.getCanonicalForm(board, current_player)], temps=[1])[0]
+    # print(pi.reshape(9, 9).round(2))
+    return
 
     # pi = np.zeros(9*9)
     # pi[action] = 1
@@ -106,7 +123,7 @@ def main(args=_args):
         0,  0,  0,  0,  0,  0,  1,  1,  1,  0,  0,  0, -1, -1, -1,  1,  1,
         1, -1, -1, -1, -1, -1, -1,  1,  1,  1, -1, -1, -1, -1, -1, -1,  1,
         1,  1, -1, -1, -1,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,
-        0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  1,  1,
+        0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  1,  1,----
         1,  0,  0,  0,  0,  0,  0,  1,  1,  1,  0,  0,  0,  0,  0,  0,  1,
         1,  1,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,
         0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,

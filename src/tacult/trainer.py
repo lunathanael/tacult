@@ -18,11 +18,11 @@ _args = dotdict({
     'numEnvs': 128,
     'tempThreshold': 15,        #
     'updateThreshold': 0.6,     # During arena playoff, new neural net will be accepted if threshold or more of games are won.
-    'maxlenOfQueue': 1_000_000,    # Number of game examples to train the neural networks. Do (minNumEps + numEnvs) * 81 * 8
+    'maxlenOfQueue': 300_000,    # Number of game examples to train the neural networks. Do (minNumEps + numEnvs) * 81 * 8
     'numMCTSSims': 80,          # Number of games moves for MCTS to simulate.
     'cpuct': 2,
 
-    'arenaCompare': 32,         # Number of games to play during arena play to determine if new net will be accepted.
+    'arenaCompare': 64,         # Number of games to play during arena play to determine if new net will be accepted.
     'verbose': False,            # Whether to print verbose output for Arena.
 
     'saveAllModels': True,
@@ -39,8 +39,9 @@ _args = dotdict({
 
     'load_checkpoint': True,
     'load_model': True,
-    'checkpoint': './temp/run1/',
-    'load_folder_file': ('./temp/run1','best.pt'),
+
+    'load_folder': './temp/run1_copy/',
+    'checkpoint_folder': './temp/run1/',
 })
 
 
@@ -53,8 +54,8 @@ def main(args=_args):
     nnet = UtacNN(args)
 
     if args.load_model:
-        log.info('Loading checkpoint "%s/%s"...', args.load_folder_file[0], args.load_folder_file[1])
-        nnet.load_checkpoint(args.load_folder_file[0], args.load_folder_file[1])
+        log.info('Loading checkpoint "%s/%s"...', args.load_folder, "best.pt")
+        nnet.load_checkpoint(args.load_folder, "best.pt")
     else:
         log.warning('Not loading a checkpoint!')
 

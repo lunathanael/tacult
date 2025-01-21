@@ -29,7 +29,11 @@ class Coach():
     def __init__(self, game, nnet, args):
         self.game = game
         self.nnet = nnet
-        self.pnet = self.nnet.__class__(args)  # the competitor network
+
+        self.nnet.save_checkpoint(folder=args.checkpoint_folder, filename='best.pt')
+        self.pnet = self.nnet.__class__(args)
+        self.pnet.load_checkpoint(folder=args.checkpoint_folder, filename='best.pt')
+
         self.args = args
         self.trainExamplesHistory = deque(maxlen=args.maxlenOfQueue)  # history of examples from args.numItersForTrainExamplesHistory latest iterations
         self.skipFirstSelfPlay = False  # can be overriden in loadTrainExamples()
@@ -152,9 +156,6 @@ class Coach():
         only if it wins >= updateThreshold fraction of games.
         """
 
-        self.nnet.save_checkpoint(folder=self.args.checkpoint, filename='best.pt')
-        self.pnet.load_checkpoint(folder=self.args.checkpoint, filename='best.pt')
-
         for i in range(1, self.args.numIters + 1):
             # bookkeeping
             log.info(f'Starting Iter #{i} ...')
@@ -169,7 +170,7 @@ class Coach():
 
             self.nnet.train(self.trainExamplesHistory)
 
-            self.nnet.save_checkpoint(folder=self.args.checkpoint, filename='temp.pt')
+            self.nnet.save_checkpoint(folder=self.args.checkpoint_folder, filename='temp.pt')
 
             numEnvs = self.args.numEnvs
             self.args.numEnvs = min(self.args.numEnvs, self.args.arenaCompare // 2)
@@ -195,9 +196,9 @@ class Coach():
                 log.info('ACCEPTING NEW MODEL')
                 # if self.args.saveAllModels:
                 #     self.nnet.save_checkpoint(folder=self.args.checkpoint, filename=self.getCheckpointFile(i))
-                self.nnet.save_checkpoint(folder=self.args.checkpoint, filename='best.pt')
-                self.saveTrainExamples(directory=self.args.checkpoint, filename='best.pt.examples')
-                self.pnet.load_checkpoint(folder=self.args.checkpoint, filename='best.pt')
+                self.nnet.save_checkpoint(folder=self.args.checkpoint_folder, filename='best.pt')
+                self.saveTrainExamples(directory=self.args.checkpoint_folder, filename='best.pt.examples')
+                self.pnet.load_checkpoint(folder=self.args.checkpoint_folder, filename='best.pt')
 
     def getCheckpointFile(self, iteration):
         return 'checkpoint_' + str(iteration) + '.pt'
@@ -218,7 +219,7 @@ class Coach():
         f.closed
 
     def loadTrainExamples(self):
-        modelFile = os.path.join(self.args.load_folder_file[0], self.args.load_folder_file[1])
+        modelFile = os.path.join(self.args.load_folder, "best.pt")
         examplesFile = modelFile + ".examples"
         if not os.path.isfile(examplesFile):
             log.warning(f'File "{examplesFile}" with trainExamples not found!')
