@@ -27,10 +27,6 @@ def load_policy_value_net(state_dict_path: pathlib.Path, device: torch.device) -
     policy_value_net.to(device=device)
     checkpoint = torch.load(state_dict_path, map_location=device, weights_only=False)
     state_dict = checkpoint['state_dict']
-    policy_value_net_keys = set(policy_value_net.state_dict().keys())
-    for key in list(state_dict.keys()):
-        if key not in policy_value_net_keys:
-            del state_dict[key]
     policy_value_net.load_state_dict(state_dict)
     policy_value_net.eval()
     return policy_value_net
@@ -57,6 +53,7 @@ def get_random_uttt(
         action = random.choice(np.where(valids)[0])
         uttt, player = game.getNextState(uttt, player, action)
         d += 1
+    uttt = game.getCanonicalForm(uttt, 1)
     return uttt
 
 
@@ -133,7 +130,7 @@ def compute_onnxruntime_outputs(
             runcount += 1
         onnxruntime_output = [policy_logits, state_value]
         onnxruntime_outputs.append(onnxruntime_output)
-    avg_runtime = runtime / runcount
+    avg_runtime = runtime / max(runcount, 1)
     print(f"compute_onnxruntime_outputs: runtime={avg_runtime:.6f}")
     return onnxruntime_outputs
 
@@ -189,6 +186,12 @@ def main(_args=None) -> None:
         policy_value_net_onnx_path=args.policy_value_net_onnx_path,
         input_arrays=input_arrays,
     )
+    co = compute_onnxruntime_outputs(
+        policy_value_net_onnx_path=args.policy_value_net_onnx_path,
+        input_arrays=[np.expand_dims(UtacGame()._get_obs(UtacGame().getInitBoard()), axis=0)],
+    )[0]
+    print(co[0].reshape(9, 9).round(2))
+    print(co[1])
 
     print(f"len(onnxruntime_outputs) = {len(onnxruntime_outputs)}")
 

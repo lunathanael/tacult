@@ -17,12 +17,13 @@ log = logging.getLogger(__name__)
 coloredlogs.install(level='INFO')  # Change this to DEBUG to see more info.
 
 _args = dotdict({
-    'numMCTSSims': 100,          # Number of games moves for MCTS to simulate.
+    'numMCTSSims': 300,          # Number of games moves for MCTS to simulate.
     'cpuct': 1,
     'cuda': False,
-    'model_file': ('./temp/run1','best.pt'),
+    'model_file': ('./temp/run3','best.pt'),
     'ignore_optimizer': True,
     'numRollouts': 50,
+    'onnx_export': True,
 
     'lr': 0.001, # redundancy
     'steps_per_epoch': 10,
@@ -63,7 +64,7 @@ def main(args=_args):
     board = g.getInitBoard()
 
     current_player = 1
-    moves = [40]
+    moves = []
     for action in moves:
         # moves = g.getValidMoves(board, current_player)
         # action = np.random.choice(np.where(moves)[0])
@@ -76,17 +77,17 @@ def main(args=_args):
     board.print()
     g.getCanonicalForm(board, current_player).print()
     print(current_player)
-    # obs = g._get_obs(g.getCanonicalForm(board, current_player))
-    # print(obs)
-    # obs = torch.tensor(obs).reshape(1, 4, 9, 9).float()
-    # pi, v = nnet.predict(obs)
-    # print(pi.reshape(9, 9).round(2))
-    # print(v)
+    obs = g._get_obs(g.getCanonicalForm(board, current_player))
+    print(obs)
+    obs = torch.tensor(obs).reshape(1, 4, 9, 9).float()
+    pi, v = nnet.predict(obs)
+    print(pi.reshape(9, 9).round(2))
+    print(v)
 
-    # print("Thinking...")
-    # mcts = VectorizedMCTS(g, nnet, args)
-    # pi = mcts.getActionProbs([g.getCanonicalForm(board, current_player)], temps=[1])[0]
-    # print(pi.reshape(9, 9).round(2))
+    print("Thinking...")
+    mcts = VectorizedMCTS(g, nnet, args)
+    pi = mcts.getActionProbs([g.getCanonicalForm(board, current_player)], temps=[1])[0]
+    print(pi.reshape(9, 9).round(2))
     return
 
     # pi = np.zeros(9*9)

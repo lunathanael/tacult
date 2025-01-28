@@ -14,15 +14,15 @@ coloredlogs.install(level='INFO')  # Change this to DEBUG to see more info.
 
 _args = dotdict({
     'numIters': 200,
-    'minNumEps': 128,              # Minimum number of complete self-play games to simulate during a new iteration, an upper bound over this minimum is the number of environments.
-    'numEnvs': 128,
+    'minNumEps': 64,              # Minimum number of complete self-play games to simulate during a new iteration, an upper bound over this minimum is the number of environments.
+    'numEnvs': 64,
     'tempThreshold': 15,        #
     'updateThreshold': 0.6,     # During arena playoff, new neural net will be accepted if threshold or more of games are won.
     'maxlenOfQueue': 300_000,    # Number of game examples to train the neural networks. Do (minNumEps + numEnvs) * 81 * 8
-    'numMCTSSims': 80,          # Number of games moves for MCTS to simulate.
+    'numMCTSSims': 256,          # Number of games moves for MCTS to simulate.
     'cpuct': 2,
 
-    'arenaCompare': 64,         # Number of games to play during arena play to determine if new net will be accepted.
+    'arenaCompare': 32,         # Number of games to play during arena play to determine if new net will be accepted.
     'verbose': False,            # Whether to print verbose output for Arena.
 
     'saveAllModels': True,
@@ -36,12 +36,12 @@ _args = dotdict({
     'lr': 0.001,
     'dropout': 0.3,
     'cuda': False,
-
+    'onnx_export': False,
     'load_checkpoint': True,
     'load_model': True,
 
-    'load_folder': './temp/run1_copy/',
-    'checkpoint_folder': './temp/run1/',
+    'load_folder': './temp/run2/',
+    'checkpoint_folder': './temp/run3/',
 })
 
 

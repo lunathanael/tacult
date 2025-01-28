@@ -10,11 +10,11 @@ sys.path.append('..')
 def UtacNNet(
     cuda: bool = True, dropout: float = 0.3, onnx_export: bool = False
 ) -> nn.Module:
-    if onnx_export:
-        net = _OnnxExportUtacNNet(cuda)
-    else:
-        net = _UtacNNet(cuda, dropout)
+    net = _UtacNNet(cuda, dropout)
+    if not onnx_export:
         net.compile()
+    else:
+        net.eval()
     return net
 
 
