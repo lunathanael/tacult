@@ -12,6 +12,8 @@ from tacult.base.mcts import MCTS, RawMCTS, VectorizedMCTS
 from tacult.base.arena import Arena
 import numpy as np
 import torch
+from tacult.pit import Pit
+
 log = logging.getLogger(__name__)
 
 coloredlogs.install(level='INFO')  # Change this to DEBUG to see more info.
@@ -46,118 +48,58 @@ _args = dotdict({
 
 def main(args=_args):
     log.info('Loading %s...', Game.__name__)
-    g = Game()
 
-    # mcts = RawMCTS(g, args)
-    # act = mcts.getActionProb(g.getInitBoard(), temp=1)
-    # print(act)
-    # act = np.array(act).reshape(9, 9)
-    # print(act.round(2))
-    # print(mcts.getCurrentEvaluation(g.getInitBoard()))
     log.info('Loading %s...', UtacNNet.__name__)
-    # nnet = NNetWrapper(UtacNNet(args.cuda, onnx_export=True), args)
     nnet = UtacNN(args)
 
     log.info('Loading checkpoint "%s/%s"...', args.model_file[0], args.model_file[1])
     nnet.load_checkpoint(args.model_file[0], args.model_file[1])
 
-    board = g.getInitBoard()
+    game = Game()
 
-    current_player = 1
-    moves = []
-    for action in moves:
-        # moves = g.getValidMoves(board, current_player)
-        # action = np.random.choice(np.where(moves)[0])
-        board, current_player = g.getNextState(board, current_player, action)
-        if g.getGameEnded(board, current_player) != 0:
-            assert False
-            board = g.getInitBoard()
-            current_player = 1
+    # First create the MCTS tournament as before
+    num_sims_list = [9, 25, 50, 80, 128]
+    pit = Pit.create_mcts_tournament(
+        game=game,
+        nnet=nnet,
+        num_sims_list=num_sims_list,
+        cpuct=1.0,
+        games_per_match=2,
+        num_rounds=100,
+        temperature=0,
+        verbose=3
+    )
 
-    board.print()
-    g.getCanonicalForm(board, current_player).print()
-    print(current_player)
-    obs = g._get_obs(g.getCanonicalForm(board, current_player))
-    print(obs)
-    obs = torch.tensor(obs).reshape(1, 4, 9, 9).float()
-    pi, v = nnet.predict(obs)
-    print(pi.reshape(9, 9).round(2))
-    print(v)
+    # Create and add random player
+    def random_player(board):
+        valids = game.getValidMoves(board, 1)
+        valids = np.array(valids)
+        valid_moves = np.where(valids)[0]
+        action = np.random.choice(valid_moves)
+        return action
 
-    print("Thinking...")
-    mcts = VectorizedMCTS(g, nnet, args)
-    pi = mcts.getActionProbs([g.getCanonicalForm(board, current_player)], temps=[1])[0]
-    print(pi.reshape(9, 9).round(2))
-    return
+    pit.add_agent(random_player, "Random")
 
-    # pi = np.zeros(9*9)
-    # pi[action] = 1
+    rollouts_list = [1, 5, 10, 50, 128]
+    for num_sims in num_sims_list:
+        for num_rollouts in rollouts_list:
+            _args = {
+                'numMCTSSims': num_sims,
+                'numRollouts': num_rollouts,
+                'cpuct': args.cpuct,
+            }
 
-    # sym = g.getSymmetries(board, pi)
-    # for b, p in sym:
-    #     b.print()
-    #     print(p.reshape(9, 9))
+            _args = dotdict(_args)
+            raw_mcts = RawMCTS(game, _args)
+            def create_raw_mcts_player(mcts):
+                def raw_mcts_player(board):
+                    return np.argmax(mcts.getActionProb(board, temp=0))
+                return raw_mcts_player
+
+            pit.add_agent(create_raw_mcts_player(raw_mcts), f"RawMCTS_sims{num_sims}_rollouts{num_rollouts}")
+
+    pit.play_tournament()
     
-    # print(g._get_obs(board))
-    # return
-    # nnet = UtacNN(args)
-
-    # coach = Coach(g, nnet, args)
-    # q = coach.generateTrainExamples()
-    # print([x[2] for x in q])
-    
-    # canonical_board = g.getCanonicalForm(board, 1)
-    # obs = g._get_obs(canonical_board).unsqueeze(0)
-    
-    obs = [ 0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  1,  0,  0, -1,
-        1,  0,  0,  1,  0,  0,  0, -1, -1,  0,  0,  0,  0,  0,  0,  1,  0,
-        0,  0,  0,  0,  0,  0, -1,  0,  0,  1,  0,  0,  0,  0,  1,  1,  1,
-       -1, -1,  0,  0,  0,  1,  0,  0,  1, -1, -1, -1, -1, -1, -1,  0, -1,
-        1,  0, -1,  0,  0,  0,  1,  0,  0,  1,  0,  0,  0,  0,  0,  0,  0,
-        0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,
-        0,  0,  0,  0,  0,  0,  0,  0,  0,  1,  1,  1,  0,  0,  0,  0,  0,
-        0,  1,  1,  1,  0,  0,  0,  0,  0,  0,  1,  1,  1,  0,  0,  0,  1,
-        1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,
-        1,  1,  1,  1,  1,  1,  1,  1,  1,  0,  0,  0,  0,  0,  0,  0,  0,
-        0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,
-        0,  0,  0,  0,  0,  1,  1,  1,  0,  0,  0,  0,  0,  0,  1,  1,  1,
-        0,  0,  0,  0,  0,  0,  1,  1,  1,  0,  0,  0, -1, -1, -1,  1,  1,
-        1, -1, -1, -1, -1, -1, -1,  1,  1,  1, -1, -1, -1, -1, -1, -1,  1,
-        1,  1, -1, -1, -1,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,
-        0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  1,  1,----
-        1,  0,  0,  0,  0,  0,  0,  1,  1,  1,  0,  0,  0,  0,  0,  0,  1,
-        1,  1,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,
-        0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,
-        0]
-    obs = torch.tensor(obs).reshape(1, 4, 9, 9).float()
-
-    print(obs)
-    # obs[:,0,:,:] *= -1
-    # obs[:,2,:,:] *= -1
-    # print(obs)
-
-    pred = nnet.predict(obs)
-    print(pred)
-    pi, v = pred
-    print(pi.reshape(1, 9, 9).round(2))
-
-    mask = obs[:,-1,:,:].flatten()
-    print(mask.reshape(1, 9, 9))
-
-    pi = pi * mask.numpy()
-    print(pi.reshape(1, 9, 9).round(2))
-
-    sum_pi = np.sum(pi, keepdims=True)
-    pi = pi / sum_pi
-    print(pi.reshape(1, 9, 9).round(2))
-    print(v)
-    # mcts = MCTS(g, nnet, args)
-    # raw_mcts = RawMCTS(g, args)
-
-    # arena = Arena(lambda x: np.argmax(mcts.getActionProb(x, temp=0)), lambda x: np.argmax(raw_mcts.getActionProb(x, temp=0)), g)
-    # a = arena.playGames(args.num_games, verbose=False)
-    # print(a)
-
 def test(args=_args):
     main(args)
 
