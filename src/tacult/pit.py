@@ -231,13 +231,26 @@ class Pit:
             self.stats['draws'][name1] += draws
             self.stats['draws'][name2] += draws
             
-            # Update ELO for each individual game
-            for _ in range(wins1):
-                self._update_glicko2(name1, [name2], [1.0])
-            for _ in range(wins2):
-                self._update_glicko2(name1, [name2], [0.0])
-            for _ in range(draws):
-                self._update_glicko2(name1, [name2], [0.5])
+            # Create series of results for both players
+            series1 = []
+            series2 = []
+            
+            # Add wins
+            series1.extend([(1.0, self.stats['ratings'][name2])] * wins1)
+            series2.extend([(0.0, self.stats['ratings'][name1])] * wins1)
+            
+            # Add losses
+            series1.extend([(0.0, self.stats['ratings'][name2])] * wins2)
+            series2.extend([(1.0, self.stats['ratings'][name1])] * wins2)
+            
+            # Add draws
+            series1.extend([(0.5, self.stats['ratings'][name2])] * draws)
+            series2.extend([(0.5, self.stats['ratings'][name1])] * draws)
+            
+            # Update ratings once for all games
+            if series1:  # Only update if games were played
+                self.stats['ratings'][name1] = self.glicko2.rate(self.stats['ratings'][name1], series1)
+                self.stats['ratings'][name2] = self.glicko2.rate(self.stats['ratings'][name2], series2)
             
             # Store match result
             self.match_history.append({

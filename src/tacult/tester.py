@@ -58,13 +58,13 @@ def main(args=_args):
     game = Game()
 
     # First create the MCTS tournament as before
-    num_sims_list = [9, 25, 50, 80, 128]
+    num_sims_list = [2, 32, 64]
     pit = Pit.create_mcts_tournament(
         game=game,
         nnet=nnet,
         num_sims_list=num_sims_list,
         cpuct=1.0,
-        games_per_match=2,
+        games_per_match=32,
         num_rounds=100,
         temperature=0,
         verbose=3
@@ -80,7 +80,7 @@ def main(args=_args):
 
     pit.add_agent(random_player, "Random")
 
-    rollouts_list = [1, 5, 10, 50, 128]
+    rollouts_list = [1, 8, 64]
     for num_sims in num_sims_list:
         for num_rollouts in rollouts_list:
             _args = {
@@ -90,13 +90,13 @@ def main(args=_args):
             }
 
             _args = dotdict(_args)
-            raw_mcts = RawMCTS(game, _args)
-            def create_raw_mcts_player(mcts):
+            def create_raw_mcts_player(args):
                 def raw_mcts_player(board):
-                    return np.argmax(mcts.getActionProb(board, temp=0))
+                    raw_mcts = RawMCTS(game, args)
+                    return np.argmax(raw_mcts.getActionProb(board, temp=0))
                 return raw_mcts_player
 
-            pit.add_agent(create_raw_mcts_player(raw_mcts), f"RawMCTS_sims{num_sims}_rollouts{num_rollouts}")
+            pit.add_agent(create_raw_mcts_player(_args), f"RawMCTS_sims{num_sims}_rollouts{num_rollouts}")
 
     pit.play_tournament()
     
