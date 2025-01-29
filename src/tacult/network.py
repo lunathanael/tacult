@@ -22,18 +22,23 @@ def UtacNNet(
 class ResidualBlock(nn.Module):
     def __init__(self, channels):
         super(ResidualBlock, self).__init__()
-        self.conv1 = nn.Conv2d(channels, channels, kernel_size=3, padding=1)
-        self.bn1 = nn.BatchNorm2d(channels)
-        self.conv2 = nn.Conv2d(channels, channels, kernel_size=3, padding=1)
-        self.bn2 = nn.BatchNorm2d(channels)
+        self.conv_block1 = nn.Sequential(
+            nn.Conv2d(channels, channels, kernel_size=3, padding=1),
+            nn.BatchNorm2d(channels),
+            nn.ReLU(),
+        )
+        self.conv_block2 = nn.Sequential(
+            nn.Conv2d(channels, channels, kernel_size=3, padding=1),
+            nn.BatchNorm2d(channels),
+        )
 
     def forward(self, x):
         residual = x
-        x = F.relu(self.bn1(self.conv1(x)))
-        x = self.bn2(self.conv2(x))
-        x += residual
-        x = F.relu(x)
-        return x
+        out = self.conv_block1(x)
+        out = self.conv_block2(out)
+        out += residual
+        out = F.relu(out)
+        return out
 
 
 class _UtacNNet(nn.Module):
@@ -55,9 +60,10 @@ class _UtacNNet(nn.Module):
         self.conv_in = nn.Conv2d(self.board_z, channels, kernel_size=3, padding=1)
         self.bn_in = nn.BatchNorm2d(channels)
         
-        self.resnet = nn.Sequential(
-            *[ResidualBlock(channels) for _ in range(num_residual_blocks)]
-        )
+        res_blocks = nn.ModuleList([
+            ResidualBlock(channels) for _ in range(num_residual_blocks)
+        ])
+        self.resnet = nn.Sequential(*res_blocks)
         
         # Policy and value heads
         conv_output_size = self.board_x * self.board_y * channels
@@ -79,7 +85,8 @@ class _UtacNNet(nn.Module):
         x = F.relu(self.bn_in(self.conv_in(x)))
         
         # Residual blocks
-        x = self.resnet(x)
+        for block in self.resnet:
+            x = block(x)
         
         # Flatten
         x = torch.flatten(x, 1)

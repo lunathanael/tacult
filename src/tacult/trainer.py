@@ -19,27 +19,27 @@ _args = dotdict(
         "arenaCompare": 256,  # Number of games to play during arena play to determine if new net will be accepted.
         "verbose": False,  # Whether to print verbose output for Arena.
 
-        "saveAllModels": True,
-        "saveTrainExamples": False,
         "shuffle_data": True,
         "steps_per_epoch": 10,
         "epochs": 10,
         "batch_size": 4096,
+        "lr": 0.2,
+        "num_warm_restarts": 3,
         "model_args": {
-            "channels": 4,
-            "num_residual_blocks": 1,
-            "embedding_size": 512,
+            "channels": 16,
+            "num_residual_blocks": 3,
+            "embedding_size": 256,
             "dropout": 0.3,
             "onnx_export": False,
             "cuda": False,
         },
-        "lr": 0.2,
+        "saveAllModels": True,
+        "saveTrainExamples": False,
         "load_checkpoint": True,
         "load_model": False,
-        "num_warm_restarts": 3,
         "cuda": False,
-        
-        "load_folder": "./temp/run3",
+
+        "load_folder": "./temp/",
         "checkpoint_folder": "./temp/resnet3/",
     }
 )
