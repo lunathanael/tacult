@@ -39,6 +39,8 @@ class NNetWrapper(NeuralNet):
 
         log.info(f"Network {network.__class__.__name__} initialized on device {self.device}")
 
+        self.saved_network_class = False
+
     def training_step(self, boards, pis, vs):
         self.optimizer.zero_grad()
         out_pi, out_v = self.nnet(boards)
@@ -147,6 +149,11 @@ class NNetWrapper(NeuralNet):
             )
             os.mkdir(folder)
         
+        if not self.saved_network_class:
+            classpath = os.path.join(folder, 'network.class')
+            torch.save(self.nnet.__class__, classpath)
+            self.saved_network_class = True
+
         torch.save({
             'state_dict': self.nnet.state_dict(),
             'optimizer': self.optimizer.state_dict(),
@@ -192,3 +199,13 @@ class NNetWrapper(NeuralNet):
     def eval_mode(self):
         """Set the network to evaluation mode"""
         self.nnet.eval()
+
+def load_network_class(folder: str, filename: str):
+    classpath = os.path.join(folder, 'network.class')
+    cls = torch.load(classpath)
+    return cls()
+
+def load_network(folder: str, filename: str):
+    filepath = os.path.join(folder, filename)
+    cls = load_network_class(folder)
+    return cls.load_checkpoint(folder, filename)

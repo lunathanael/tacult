@@ -194,8 +194,8 @@ class Coach():
                 # self.nnet.load_checkpoint(folder=self.args.checkpoint, filename='temp.pt')
             else:
                 log.info('ACCEPTING NEW MODEL')
-                # if self.args.saveAllModels:
-                #     self.nnet.save_checkpoint(folder=self.args.checkpoint, filename=self.getCheckpointFile(i))
+                if self.args.saveAllModels:
+                    self.nnet.save_checkpoint(folder=self.args.checkpoint_folder, filename=self.getCheckpointFile(i))
                 self.nnet.save_checkpoint(folder=self.args.checkpoint_folder, filename='best.pt')
                 self.saveTrainExamples(directory=self.args.checkpoint_folder, filename='best.pt.examples')
                 self.pnet.load_checkpoint(folder=self.args.checkpoint_folder, filename='best.pt')
