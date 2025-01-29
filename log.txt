@@ -2629,3 +2629,15 @@ Statistics After Match: Random vs RawMCTS_sims81_rollouts10
 2025-01-29 17:40:26,767 tacult.pit INFO ----------------------------------------------------------------------------------------------------
 
 2025-01-29 17:40:26,767 tacult.pit INFO Playing match: RawMCTS_sims9_rollouts10 vs RawMCTS_sims81_rollouts10
+2025-01-29 17:41:06,322 tacult.pit INFO 
+Statistics After Match: RawMCTS_sims9_rollouts10 vs RawMCTS_sims81_rollouts10
+2025-01-29 17:41:06,322 tacult.pit INFO ----------------------------------------------------------------------------------------------------
+2025-01-29 17:41:06,322 tacult.pit INFO Agent                          Rating     Games    Wins   Losses Draws  Win Rate Loss Rate Draw Rate
+2025-01-29 17:41:06,322 tacult.pit INFO ----------------------------------------------------------------------------------------------------
+2025-01-29 17:41:06,322 tacult.pit INFO RawMCTS_sims81_rollouts10         1742.2     160   103     23     34    64.4%    14.4%    21.2%
+2025-01-29 17:41:06,323 tacult.pit INFO RawMCTS_sims9_rollouts10          1581.9     168    79     62     27    47.0%    36.9%    16.1%
+2025-01-29 17:41:06,323 tacult.pit INFO temp_resnet3_iter1_sims2          1513.8     160    56     92     12    35.0%    57.5%     7.5%
+2025-01-29 17:41:06,323 tacult.pit INFO Random                            1476.5     168    38     99     31    22.6%    58.9%    18.5%
+2025-01-29 17:41:06,323 tacult.pit INFO ----------------------------------------------------------------------------------------------------
+
+2025-01-29 17:41:06,323 tacult.pit INFO Playing match: temp_resnet3_iter1_sims2 vs RawMCTS_sims81_rollouts10
