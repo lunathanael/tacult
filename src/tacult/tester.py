@@ -1,5 +1,13 @@
 import logging
 
+
+
+logging.basicConfig(filename='log.txt',
+                    filemode='a',
+                    format='%(asctime)s,%(msecs)03d %(name)s %(levelname)s %(message)s',
+                    datefmt='%Y-%m-%d %H:%M:%S',
+                    level=logging.INFO)
+
 import coloredlogs
 
 from tacult.utac_game import UtacGame as Game
@@ -58,14 +66,14 @@ def main(args=_args):
     game = Game()
 
     # First create the MCTS tournament as before
-    num_sims_list = [2, 32, 64]
+    num_sims_list = [2, 4, 8, 16, 32, 64, 128, 256, 512]
     pit = Pit.create_mcts_tournament(
         game=game,
         nnet=nnet,
         num_sims_list=num_sims_list,
         cpuct=1.0,
-        games_per_match=32,
-        num_rounds=100,
+        games_per_match=8,
+        num_rounds=1000,
         temperature=0,
         verbose=3
     )
@@ -80,7 +88,8 @@ def main(args=_args):
 
     pit.add_agent(random_player, "Random")
 
-    rollouts_list = [1, 8, 64]
+    num_sims_list = [64, 256]
+    rollouts_list = [8]
     for num_sims in num_sims_list:
         for num_rollouts in rollouts_list:
             _args = {

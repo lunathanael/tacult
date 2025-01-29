@@ -112,9 +112,7 @@ class Pit:
         sorted_elo = sorted(self.stats['ratings'].items(), key=lambda x: x[1].mu, reverse=True)
         for name, rating in sorted_elo:
             games_played = self.stats['total_games'][name]
-            provisional = games_played < self.provisional_games
-            status = " (provisional)" if provisional else ""
-            log.info(f"{name}: {rating.mu:.1f}{status} ({games_played} games played)")
+            log.info(f"{name}: {rating.mu:.1f} ({games_played} games played)")
         
         # Print win rates
         log.info("\nWin Rates:")
