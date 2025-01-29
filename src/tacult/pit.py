@@ -447,7 +447,6 @@ class Pit:
                 cpuct=cpuct,
                 temperature=temperature,
             )
-        print(self.agent_names)
 
 
     def add_agent(self, agent: Callable, agent_name: str, rating: Rating = None, use_average_rating: bool = False):

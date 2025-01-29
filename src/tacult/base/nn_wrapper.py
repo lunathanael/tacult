@@ -159,11 +159,11 @@ class NNetWrapper(NeuralNet):
         classpath = os.path.join(folder, 'network_class.pkl')
         module_path = os.path.join(folder, 'network_module.pkl')
         if not os.path.exists(classpath) or not os.path.exists(module_path):
-            dill.dump_module(filename=module_path, module=dill.detect.getmodule(self.__class__))
+            dill.dump_module(filename=module_path, module=dill.detect.getmodule(self.nnet.__class__))
             with open(classpath, 'wb') as f:
                 dill.dump({
-                    'module': self.__class__.__module__,
-                    'class': self.__class__.__name__,
+                    'module': self.nnet.__class__.__module__,
+                    'class': self.nnet.__class__.__name__,
                     'args': self.args,
                 }, f)
 
@@ -227,7 +227,13 @@ def load_network_class(folder: str):
     module = dill.load_module(module_path, module_name)
     nnet = getattr(module, class_name)
 
-    return nnet(args)
+    def _NWrap(nnet):
+        class NWrap(NNetWrapper):
+            def __init__(self, args):
+                super().__init__(nnet(**args.model_args), args)
+        return NWrap
+
+    return _NWrap(nnet)(args)
 
 def load_network(folder: str, filename: str):
     cls = load_network_class(folder)

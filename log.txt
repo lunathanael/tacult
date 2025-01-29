@@ -2641,3 +2641,120 @@ Statistics After Match: RawMCTS_sims9_rollouts10 vs RawMCTS_sims81_rollouts10
 2025-01-29 17:41:06,323 tacult.pit INFO ----------------------------------------------------------------------------------------------------
 
 2025-01-29 17:41:06,323 tacult.pit INFO Playing match: temp_resnet3_iter1_sims2 vs RawMCTS_sims81_rollouts10
+2025-01-29 17:41:42,578 tacult.pit INFO 
+Statistics After Match: temp_resnet3_iter1_sims2 vs RawMCTS_sims81_rollouts10
+2025-01-29 17:41:42,578 tacult.pit INFO ----------------------------------------------------------------------------------------------------
+2025-01-29 17:41:42,579 tacult.pit INFO Agent                          Rating     Games    Wins   Losses Draws  Win Rate Loss Rate Draw Rate
+2025-01-29 17:41:42,579 tacult.pit INFO ----------------------------------------------------------------------------------------------------
+2025-01-29 17:41:42,579 tacult.pit INFO RawMCTS_sims81_rollouts10         1744.1     168   109     24     35    64.9%    14.3%    20.8%
+2025-01-29 17:41:42,579 tacult.pit INFO RawMCTS_sims9_rollouts10          1581.9     168    79     62     27    47.0%    36.9%    16.1%
+2025-01-29 17:41:42,579 tacult.pit INFO temp_resnet3_iter1_sims2          1512.0     168    57     98     13    33.9%    58.3%     7.7%
+2025-01-29 17:41:42,579 tacult.pit INFO Random                            1476.5     168    38     99     31    22.6%    58.9%    18.5%
+2025-01-29 17:41:42,579 tacult.pit INFO ----------------------------------------------------------------------------------------------------
+
+2025-01-29 17:41:42,579 tacult.pit INFO 
+Round 7 Statistics:
+2025-01-29 17:41:42,579 tacult.pit INFO --------------------------------------------------
+2025-01-29 17:41:42,579 tacult.pit INFO 
+ELO Ratings:
+2025-01-29 17:41:42,579 tacult.pit INFO RawMCTS_sims81_rollouts10: 1744.1 (168 games played)
+2025-01-29 17:41:42,579 tacult.pit INFO RawMCTS_sims9_rollouts10: 1581.9 (168 games played)
+2025-01-29 17:41:42,580 tacult.pit INFO temp_resnet3_iter1_sims2: 1512.0 (168 games played)
+2025-01-29 17:41:42,580 tacult.pit INFO Random: 1476.5 (168 games played)
+2025-01-29 17:41:42,580 tacult.pit INFO 
+Win Rates:
+2025-01-29 17:41:42,580 tacult.pit INFO temp_resnet3_iter1_sims2: 33.9% (W: 57, L: 98, D: 13) (168 games)
+2025-01-29 17:41:42,580 tacult.pit INFO Random: 22.6% (W: 38, L: 99, D: 31) (168 games)
+2025-01-29 17:41:42,580 tacult.pit INFO RawMCTS_sims9_rollouts10: 47.0% (W: 79, L: 62, D: 27) (168 games)
+2025-01-29 17:41:42,580 tacult.pit INFO RawMCTS_sims81_rollouts10: 64.9% (W: 109, L: 24, D: 35) (168 games)
+2025-01-29 17:41:42,580 tacult.pit INFO --------------------------------------------------
+
+2025-01-29 17:41:42,580 tacult.pit INFO Starting round 8/1000
+2025-01-29 17:41:42,580 tacult.pit INFO Playing match: RawMCTS_sims9_rollouts10 vs RawMCTS_sims81_rollouts10
+2025-01-29 17:42:22,505 tacult.pit INFO 
+Statistics After Match: RawMCTS_sims9_rollouts10 vs RawMCTS_sims81_rollouts10
+2025-01-29 17:42:22,506 tacult.pit INFO ----------------------------------------------------------------------------------------------------
+2025-01-29 17:42:22,506 tacult.pit INFO Agent                          Rating     Games    Wins   Losses Draws  Win Rate Loss Rate Draw Rate
+2025-01-29 17:42:22,506 tacult.pit INFO ----------------------------------------------------------------------------------------------------
+2025-01-29 17:42:22,506 tacult.pit INFO RawMCTS_sims81_rollouts10         1742.0     176   114     26     36    64.8%    14.8%    20.5%
+2025-01-29 17:42:22,506 tacult.pit INFO RawMCTS_sims9_rollouts10          1583.8     176    81     67     28    46.0%    38.1%    15.9%
+2025-01-29 17:42:22,506 tacult.pit INFO temp_resnet3_iter1_sims2          1512.0     168    57     98     13    33.9%    58.3%     7.7%
+2025-01-29 17:42:22,506 tacult.pit INFO Random                            1476.5     168    38     99     31    22.6%    58.9%    18.5%
+2025-01-29 17:42:22,506 tacult.pit INFO ----------------------------------------------------------------------------------------------------
+
+2025-01-29 17:42:22,506 tacult.pit INFO Playing match: temp_resnet3_iter1_sims2 vs Random
+2025-01-29 17:42:22,705 tacult.pit INFO 
+Statistics After Match: temp_resnet3_iter1_sims2 vs Random
+2025-01-29 17:42:22,706 tacult.pit INFO ----------------------------------------------------------------------------------------------------
+2025-01-29 17:42:22,706 tacult.pit INFO Agent                          Rating     Games    Wins   Losses Draws  Win Rate Loss Rate Draw Rate
+2025-01-29 17:42:22,706 tacult.pit INFO ----------------------------------------------------------------------------------------------------
+2025-01-29 17:42:22,706 tacult.pit INFO RawMCTS_sims81_rollouts10         1742.0     176   114     26     36    64.8%    14.8%    20.5%
+2025-01-29 17:42:22,706 tacult.pit INFO RawMCTS_sims9_rollouts10          1583.8     176    81     67     28    46.0%    38.1%    15.9%
+2025-01-29 17:42:22,706 tacult.pit INFO temp_resnet3_iter1_sims2          1529.3     176    63     99     14    35.8%    56.2%     8.0%
+2025-01-29 17:42:22,706 tacult.pit INFO Random                            1458.5     176    39    105     32    22.2%    59.7%    18.2%
+2025-01-29 17:42:22,706 tacult.pit INFO ----------------------------------------------------------------------------------------------------
+
+2025-01-29 17:42:22,706 tacult.pit INFO Playing match: Random vs RawMCTS_sims9_rollouts10
+2025-01-29 17:42:26,500 tacult.pit INFO 
+Statistics After Match: Random vs RawMCTS_sims9_rollouts10
+2025-01-29 17:42:26,500 tacult.pit INFO ----------------------------------------------------------------------------------------------------
+2025-01-29 17:42:26,500 tacult.pit INFO Agent                          Rating     Games    Wins   Losses Draws  Win Rate Loss Rate Draw Rate
+2025-01-29 17:42:26,500 tacult.pit INFO ----------------------------------------------------------------------------------------------------
+2025-01-29 17:42:26,500 tacult.pit INFO RawMCTS_sims81_rollouts10         1742.0     176   114     26     36    64.8%    14.8%    20.5%
+2025-01-29 17:42:26,500 tacult.pit INFO RawMCTS_sims9_rollouts10          1580.8     184    86     70     28    46.7%    38.0%    15.2%
+2025-01-29 17:42:26,501 tacult.pit INFO temp_resnet3_iter1_sims2          1529.3     176    63     99     14    35.8%    56.2%     8.0%
+2025-01-29 17:42:26,501 tacult.pit INFO Random                            1461.7     184    42    110     32    22.8%    59.8%    17.4%
+2025-01-29 17:42:26,501 tacult.pit INFO ----------------------------------------------------------------------------------------------------
+
+2025-01-29 17:42:26,501 tacult.pit INFO Playing match: Random vs RawMCTS_sims81_rollouts10
+2025-01-29 17:42:49,452 __main__ INFO Loading UtacGame...
+2025-01-29 17:44:11,620 __main__ INFO Loading UtacGame...
+2025-01-29 17:44:20,565 __main__ INFO Loading UtacGame...
+2025-01-29 17:44:21,822 tacult.base.nn_wrapper INFO Network _UtacNNet initialized on device cpu
+2025-01-29 17:46:12,979 torch._subclasses.fake_tensor INFO FakeTensor cache stats:
+2025-01-29 17:46:12,979 torch._subclasses.fake_tensor INFO   cache_hits: 0
+2025-01-29 17:46:12,979 torch._subclasses.fake_tensor INFO   cache_misses: 0
+2025-01-29 17:47:00,761 __main__ INFO Loading UtacGame...
+2025-01-29 17:47:02,478 tacult.base.nn_wrapper INFO Network _UtacNNet initialized on device cpu
+2025-01-29 17:49:16,490 __main__ INFO Loading UtacGame...
+2025-01-29 17:51:16,906 torch._subclasses.fake_tensor INFO FakeTensor cache stats:
+2025-01-29 17:51:16,906 torch._subclasses.fake_tensor INFO   cache_hits: 0
+2025-01-29 17:51:16,906 torch._subclasses.fake_tensor INFO   cache_misses: 0
+2025-01-29 17:52:08,059 __main__ INFO Loading UtacGame...
+2025-01-29 17:52:08,680 tacult.base.nn_wrapper INFO Network _UtacNNet initialized on device cpu
+2025-01-29 17:52:08,845 tacult.base.nn_wrapper INFO Loaded network from ./temp/run3/checkpoint_46.pt
+2025-01-29 17:52:08,846 tacult.base.nn_wrapper INFO Network architecture:
+2025-01-29 17:52:08,846 tacult.base.nn_wrapper INFO _UtacNNet(
+  (conv1): Conv2d(4, 256, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1))
+  (conv2): Conv2d(256, 256, kernel_size=(1, 1), stride=(1, 1))
+  (conv3): Conv2d(256, 512, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1))
+  (conv4): Conv2d(512, 512, kernel_size=(1, 1), stride=(1, 1))
+  (bn1): BatchNorm2d(256, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+  (bn2): BatchNorm2d(256, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+  (bn3): BatchNorm2d(512, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+  (bn4): BatchNorm2d(512, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+  (fc1): Linear(in_features=41472, out_features=512, bias=True)
+  (fc_bn1): BatchNorm1d(512, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+  (pi): Linear(in_features=512, out_features=81, bias=True)
+  (v): Linear(in_features=512, out_features=1, bias=True)
+)
+2025-01-29 17:52:08,846 tacult.pit INFO Starting tournament with 1000 rounds and 4 agents
+2025-01-29 17:52:08,846 tacult.pit INFO Agents: 
+	temp_run3_iter46_sims2
+	Random
+	RawMCTS_sims9_rollouts10
+	RawMCTS_sims81_rollouts10
+2025-01-29 17:52:08,846 tacult.pit INFO Starting round 1/1000
+2025-01-29 17:52:08,846 tacult.pit INFO Playing match: Random vs RawMCTS_sims9_rollouts10
+2025-01-29 17:52:13,135 tacult.pit INFO 
+Statistics After Match: Random vs RawMCTS_sims9_rollouts10
+2025-01-29 17:52:13,136 tacult.pit INFO ----------------------------------------------------------------------------------------------------
+2025-01-29 17:52:13,136 tacult.pit INFO Agent                          Rating     Games    Wins   Losses Draws  Win Rate Loss Rate Draw Rate
+2025-01-29 17:52:13,136 tacult.pit INFO ----------------------------------------------------------------------------------------------------
+2025-01-29 17:52:13,136 tacult.pit INFO RawMCTS_sims9_rollouts10          1652.7       8     5      2      1    62.5%    25.0%    12.5%
+2025-01-29 17:52:13,136 tacult.pit INFO temp_run3_iter46_sims2            1500.0       0     0      0      0     0.0%     0.0%     0.0%
+2025-01-29 17:52:13,136 tacult.pit INFO RawMCTS_sims81_rollouts10         1500.0       0     0      0      0     0.0%     0.0%     0.0%
+2025-01-29 17:52:13,136 tacult.pit INFO Random                            1347.3       8     2      5      1    25.0%    62.5%    12.5%
+2025-01-29 17:52:13,136 tacult.pit INFO ----------------------------------------------------------------------------------------------------
+
+2025-01-29 17:52:13,136 tacult.pit INFO Playing match: temp_run3_iter46_sims2 vs RawMCTS_sims81_rollouts10

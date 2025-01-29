@@ -25,12 +25,12 @@ _args = dotdict(
         "batch_size": 4096,
         "lr": 0.2,
         "num_warm_restarts": 3,
+        "onnx_export": False,
         "model_args": {
-            "channels": 16,
-            "num_residual_blocks": 3,
-            "embedding_size": 256,
+            # "channels": 16,
+            # "num_residual_blocks": 3,
+            # "embedding_size": 256,
             "dropout": 0.3,
-            "onnx_export": False,
             "cuda": False,
         },
         "saveAllModels": True,
@@ -40,7 +40,7 @@ _args = dotdict(
         "cuda": False,
 
         "load_folder": "./temp/",
-        "checkpoint_folder": "./temp/resnet2/",
+        "checkpoint_folder": "./temp/t/",
     }
 )
 
