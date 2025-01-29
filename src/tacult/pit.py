@@ -17,7 +17,7 @@ log = logging.getLogger(__name__)
 
 
 
-def load_checkpoints(checkpoint_dir, old=False) -> list:
+def load_checkpoints(checkpoint_dir) -> list:
     checkpoint_files = [f for f in os.listdir(checkpoint_dir) if f.startswith('checkpoint_') and f.endswith('.pt')]
     checkpoint_files.sort(key=lambda x: int(x.split('_')[1].split('.')[0]))
 
@@ -25,7 +25,7 @@ def load_checkpoints(checkpoint_dir, old=False) -> list:
     for file in checkpoint_files:
         nets.append({
             "name": int(file.split('_')[1].split('.')[0]),
-            "net": load_network(checkpoint_dir, file, old)
+            "net": load_network(checkpoint_dir, file)
         })
     return nets
 
@@ -321,7 +321,7 @@ class Pit:
     def play_tournament(self):
         """Play all rounds of the tournament."""
         log.info(f"Starting tournament with {self.num_rounds} rounds and {len(self.agents)} agents")
-        log.info(f"Agents: \n{'\n\t'.join(self.agent_names)}")
+        log.info(f"Agents: \n\t{'\n\t'.join(self.agent_names)}")
         for round_num in range(self.num_rounds):
             log.info(f"Starting round {round_num + 1}/{self.num_rounds}")
             self.play_round()
@@ -434,8 +434,8 @@ class Pit:
             verbose=verbose
         )
     
-    def load_checkpoints_to_pit(self, checkpoint_dir: str, num_sims_list: list = [2, 32], cpuct: float = 1.0, temperature: float = 0, old=False):
-        nets = load_checkpoints(checkpoint_dir, old)
+    def load_checkpoints_to_pit(self, checkpoint_dir: str, num_sims_list: list = [2, 32], cpuct: float = 1.0, temperature: float = 0):
+        nets = load_checkpoints(checkpoint_dir)
 
         safe_prefix = re.sub(r"[/\\?%*:|\"<>\x7F\x00-\x1F]", "_", checkpoint_dir).lstrip("_.-")
         for net in nets:

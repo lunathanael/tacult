@@ -213,7 +213,7 @@ class NNetWrapper(NeuralNet):
         """Set the network to evaluation mode"""
         self.nnet.eval()
 
-def load_network_class(folder: str, old=False):
+def load_network_class(folder: str):
     classpath = os.path.join(folder, 'network_class.pkl')
     module_path = os.path.join(folder, 'network_module.pkl')
 
@@ -227,19 +227,10 @@ def load_network_class(folder: str, old=False):
     module = dill.load_module(module_path, module_name)
     nnet = getattr(module, class_name)
 
-    if old:
-        def _NWrap(nnet):
-            class NWrap(NNetWrapper):
-                def __init__(self, args):
-                    super().__init__(nnet(args), args)
-            return NWrap
-
-        return _NWrap(nnet)(args)
-
     return nnet(args)
 
-def load_network(folder: str, filename: str, old=False):
-    cls = load_network_class(folder, old)
+def load_network(folder: str, filename: str):
+    cls = load_network_class(folder)
     cls.load_checkpoint(folder, filename)
 
     log.info(f'Loaded network from {folder}/{filename}')

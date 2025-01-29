@@ -1257,3 +1257,1375 @@ Statistics After Match: RawMCTS_sims9_rollouts10 vs RawMCTS_sims81_rollouts10
 2025-01-29 17:12:40,708 tacult.pit INFO Playing match: Random vs RawMCTS_sims9_rollouts10
 2025-01-29 17:14:06,182 __main__ INFO Loading UtacGame...
 2025-01-29 17:14:32,278 __main__ INFO Loading UtacGame...
+2025-01-29 17:15:02,929 __main__ INFO Loading UtacGame...
+2025-01-29 17:15:02,930 tacult.base.utils WARNING CUDA requested but not available! Using CPU instead.
+2025-01-29 17:15:03,481 tacult.base.nn_wrapper INFO Network _UtacNNet initialized on device cpu
+2025-01-29 17:15:03,490 tacult.base.nn_wrapper INFO Loaded network from ./temp/resnet/checkpoint_1.pt
+2025-01-29 17:15:03,490 tacult.base.nn_wrapper INFO Network architecture:
+2025-01-29 17:15:03,490 tacult.base.nn_wrapper INFO _UtacNNet(
+  (conv_in): Conv2d(4, 32, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1))
+  (bn_in): BatchNorm2d(32, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+  (res1): ResidualBlock(
+    (conv1): Conv2d(32, 32, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1))
+    (bn1): BatchNorm2d(32, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+    (conv2): Conv2d(32, 32, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1))
+    (bn2): BatchNorm2d(32, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+  )
+  (res2): ResidualBlock(
+    (conv1): Conv2d(32, 32, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1))
+    (bn1): BatchNorm2d(32, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+    (conv2): Conv2d(32, 32, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1))
+    (bn2): BatchNorm2d(32, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+  )
+  (fc1): Linear(in_features=2592, out_features=256, bias=True)
+  (fc_bn1): BatchNorm1d(256, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+  (pi): Linear(in_features=256, out_features=81, bias=True)
+  (v): Linear(in_features=256, out_features=1, bias=True)
+)
+2025-01-29 17:15:03,491 tacult.base.utils WARNING CUDA requested but not available! Using CPU instead.
+2025-01-29 17:15:03,495 tacult.base.nn_wrapper INFO Network _UtacNNet initialized on device cpu
+2025-01-29 17:15:03,506 tacult.base.nn_wrapper INFO Loaded network from ./temp/resnet/checkpoint_2.pt
+2025-01-29 17:15:03,507 tacult.base.nn_wrapper INFO Network architecture:
+2025-01-29 17:15:03,507 tacult.base.nn_wrapper INFO _UtacNNet(
+  (conv_in): Conv2d(4, 32, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1))
+  (bn_in): BatchNorm2d(32, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+  (res1): ResidualBlock(
+    (conv1): Conv2d(32, 32, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1))
+    (bn1): BatchNorm2d(32, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+    (conv2): Conv2d(32, 32, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1))
+    (bn2): BatchNorm2d(32, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+  )
+  (res2): ResidualBlock(
+    (conv1): Conv2d(32, 32, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1))
+    (bn1): BatchNorm2d(32, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+    (conv2): Conv2d(32, 32, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1))
+    (bn2): BatchNorm2d(32, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+  )
+  (fc1): Linear(in_features=2592, out_features=256, bias=True)
+  (fc_bn1): BatchNorm1d(256, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+  (pi): Linear(in_features=256, out_features=81, bias=True)
+  (v): Linear(in_features=256, out_features=1, bias=True)
+)
+2025-01-29 17:15:03,508 tacult.base.utils WARNING CUDA requested but not available! Using CPU instead.
+2025-01-29 17:15:03,512 tacult.base.nn_wrapper INFO Network _UtacNNet initialized on device cpu
+2025-01-29 17:15:03,522 tacult.base.nn_wrapper INFO Loaded network from ./temp/resnet/checkpoint_5.pt
+2025-01-29 17:15:03,522 tacult.base.nn_wrapper INFO Network architecture:
+2025-01-29 17:15:03,522 tacult.base.nn_wrapper INFO _UtacNNet(
+  (conv_in): Conv2d(4, 32, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1))
+  (bn_in): BatchNorm2d(32, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+  (res1): ResidualBlock(
+    (conv1): Conv2d(32, 32, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1))
+    (bn1): BatchNorm2d(32, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+    (conv2): Conv2d(32, 32, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1))
+    (bn2): BatchNorm2d(32, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+  )
+  (res2): ResidualBlock(
+    (conv1): Conv2d(32, 32, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1))
+    (bn1): BatchNorm2d(32, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+    (conv2): Conv2d(32, 32, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1))
+    (bn2): BatchNorm2d(32, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+  )
+  (fc1): Linear(in_features=2592, out_features=256, bias=True)
+  (fc_bn1): BatchNorm1d(256, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+  (pi): Linear(in_features=256, out_features=81, bias=True)
+  (v): Linear(in_features=256, out_features=1, bias=True)
+)
+2025-01-29 17:15:03,523 tacult.base.utils WARNING CUDA requested but not available! Using CPU instead.
+2025-01-29 17:15:03,642 tacult.base.nn_wrapper INFO Network _UtacNNet initialized on device cpu
+2025-01-29 17:15:03,650 tacult.base.nn_wrapper INFO Loaded network from ./temp/resnet/checkpoint_6.pt
+2025-01-29 17:15:03,650 tacult.base.nn_wrapper INFO Network architecture:
+2025-01-29 17:15:03,650 tacult.base.nn_wrapper INFO _UtacNNet(
+  (conv_in): Conv2d(4, 32, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1))
+  (bn_in): BatchNorm2d(32, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+  (res1): ResidualBlock(
+    (conv1): Conv2d(32, 32, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1))
+    (bn1): BatchNorm2d(32, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+    (conv2): Conv2d(32, 32, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1))
+    (bn2): BatchNorm2d(32, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+  )
+  (res2): ResidualBlock(
+    (conv1): Conv2d(32, 32, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1))
+    (bn1): BatchNorm2d(32, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+    (conv2): Conv2d(32, 32, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1))
+    (bn2): BatchNorm2d(32, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+  )
+  (fc1): Linear(in_features=2592, out_features=256, bias=True)
+  (fc_bn1): BatchNorm1d(256, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+  (pi): Linear(in_features=256, out_features=81, bias=True)
+  (v): Linear(in_features=256, out_features=1, bias=True)
+)
+2025-01-29 17:15:03,651 tacult.base.utils WARNING CUDA requested but not available! Using CPU instead.
+2025-01-29 17:15:03,655 tacult.base.nn_wrapper INFO Network _UtacNNet initialized on device cpu
+2025-01-29 17:15:03,666 tacult.base.nn_wrapper INFO Loaded network from ./temp/resnet/checkpoint_9.pt
+2025-01-29 17:15:03,666 tacult.base.nn_wrapper INFO Network architecture:
+2025-01-29 17:15:03,666 tacult.base.nn_wrapper INFO _UtacNNet(
+  (conv_in): Conv2d(4, 32, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1))
+  (bn_in): BatchNorm2d(32, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+  (res1): ResidualBlock(
+    (conv1): Conv2d(32, 32, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1))
+    (bn1): BatchNorm2d(32, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+    (conv2): Conv2d(32, 32, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1))
+    (bn2): BatchNorm2d(32, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+  )
+  (res2): ResidualBlock(
+    (conv1): Conv2d(32, 32, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1))
+    (bn1): BatchNorm2d(32, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+    (conv2): Conv2d(32, 32, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1))
+    (bn2): BatchNorm2d(32, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+  )
+  (fc1): Linear(in_features=2592, out_features=256, bias=True)
+  (fc_bn1): BatchNorm1d(256, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+  (pi): Linear(in_features=256, out_features=81, bias=True)
+  (v): Linear(in_features=256, out_features=1, bias=True)
+)
+2025-01-29 17:15:03,667 tacult.base.utils WARNING CUDA requested but not available! Using CPU instead.
+2025-01-29 17:15:03,671 tacult.base.nn_wrapper INFO Network _UtacNNet initialized on device cpu
+2025-01-29 17:15:03,679 tacult.base.nn_wrapper INFO Loaded network from ./temp/resnet/checkpoint_12.pt
+2025-01-29 17:15:03,679 tacult.base.nn_wrapper INFO Network architecture:
+2025-01-29 17:15:03,679 tacult.base.nn_wrapper INFO _UtacNNet(
+  (conv_in): Conv2d(4, 32, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1))
+  (bn_in): BatchNorm2d(32, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+  (res1): ResidualBlock(
+    (conv1): Conv2d(32, 32, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1))
+    (bn1): BatchNorm2d(32, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+    (conv2): Conv2d(32, 32, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1))
+    (bn2): BatchNorm2d(32, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+  )
+  (res2): ResidualBlock(
+    (conv1): Conv2d(32, 32, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1))
+    (bn1): BatchNorm2d(32, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+    (conv2): Conv2d(32, 32, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1))
+    (bn2): BatchNorm2d(32, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+  )
+  (fc1): Linear(in_features=2592, out_features=256, bias=True)
+  (fc_bn1): BatchNorm1d(256, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+  (pi): Linear(in_features=256, out_features=81, bias=True)
+  (v): Linear(in_features=256, out_features=1, bias=True)
+)
+2025-01-29 17:17:25,044 __main__ INFO Loading UtacGame...
+2025-01-29 17:17:25,046 tacult.base.utils WARNING CUDA requested but not available! Using CPU instead.
+2025-01-29 17:17:25,664 tacult.base.nn_wrapper INFO Network _UtacNNet initialized on device cpu
+2025-01-29 17:17:25,674 tacult.base.nn_wrapper INFO Loaded network from ./temp/resnet/checkpoint_1.pt
+2025-01-29 17:17:25,674 tacult.base.nn_wrapper INFO Network architecture:
+2025-01-29 17:17:25,674 tacult.base.nn_wrapper INFO _UtacNNet(
+  (conv_in): Conv2d(4, 32, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1))
+  (bn_in): BatchNorm2d(32, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+  (res1): ResidualBlock(
+    (conv1): Conv2d(32, 32, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1))
+    (bn1): BatchNorm2d(32, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+    (conv2): Conv2d(32, 32, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1))
+    (bn2): BatchNorm2d(32, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+  )
+  (res2): ResidualBlock(
+    (conv1): Conv2d(32, 32, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1))
+    (bn1): BatchNorm2d(32, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+    (conv2): Conv2d(32, 32, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1))
+    (bn2): BatchNorm2d(32, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+  )
+  (fc1): Linear(in_features=2592, out_features=256, bias=True)
+  (fc_bn1): BatchNorm1d(256, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+  (pi): Linear(in_features=256, out_features=81, bias=True)
+  (v): Linear(in_features=256, out_features=1, bias=True)
+)
+2025-01-29 17:17:25,675 tacult.base.utils WARNING CUDA requested but not available! Using CPU instead.
+2025-01-29 17:17:25,679 tacult.base.nn_wrapper INFO Network _UtacNNet initialized on device cpu
+2025-01-29 17:17:25,689 tacult.base.nn_wrapper INFO Loaded network from ./temp/resnet/checkpoint_2.pt
+2025-01-29 17:17:25,690 tacult.base.nn_wrapper INFO Network architecture:
+2025-01-29 17:17:25,690 tacult.base.nn_wrapper INFO _UtacNNet(
+  (conv_in): Conv2d(4, 32, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1))
+  (bn_in): BatchNorm2d(32, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+  (res1): ResidualBlock(
+    (conv1): Conv2d(32, 32, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1))
+    (bn1): BatchNorm2d(32, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+    (conv2): Conv2d(32, 32, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1))
+    (bn2): BatchNorm2d(32, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+  )
+  (res2): ResidualBlock(
+    (conv1): Conv2d(32, 32, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1))
+    (bn1): BatchNorm2d(32, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+    (conv2): Conv2d(32, 32, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1))
+    (bn2): BatchNorm2d(32, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+  )
+  (fc1): Linear(in_features=2592, out_features=256, bias=True)
+  (fc_bn1): BatchNorm1d(256, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+  (pi): Linear(in_features=256, out_features=81, bias=True)
+  (v): Linear(in_features=256, out_features=1, bias=True)
+)
+2025-01-29 17:17:25,691 tacult.base.utils WARNING CUDA requested but not available! Using CPU instead.
+2025-01-29 17:17:25,695 tacult.base.nn_wrapper INFO Network _UtacNNet initialized on device cpu
+2025-01-29 17:17:25,705 tacult.base.nn_wrapper INFO Loaded network from ./temp/resnet/checkpoint_5.pt
+2025-01-29 17:17:25,705 tacult.base.nn_wrapper INFO Network architecture:
+2025-01-29 17:17:25,705 tacult.base.nn_wrapper INFO _UtacNNet(
+  (conv_in): Conv2d(4, 32, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1))
+  (bn_in): BatchNorm2d(32, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+  (res1): ResidualBlock(
+    (conv1): Conv2d(32, 32, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1))
+    (bn1): BatchNorm2d(32, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+    (conv2): Conv2d(32, 32, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1))
+    (bn2): BatchNorm2d(32, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+  )
+  (res2): ResidualBlock(
+    (conv1): Conv2d(32, 32, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1))
+    (bn1): BatchNorm2d(32, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+    (conv2): Conv2d(32, 32, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1))
+    (bn2): BatchNorm2d(32, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+  )
+  (fc1): Linear(in_features=2592, out_features=256, bias=True)
+  (fc_bn1): BatchNorm1d(256, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+  (pi): Linear(in_features=256, out_features=81, bias=True)
+  (v): Linear(in_features=256, out_features=1, bias=True)
+)
+2025-01-29 17:17:25,706 tacult.base.utils WARNING CUDA requested but not available! Using CPU instead.
+2025-01-29 17:17:25,852 tacult.base.nn_wrapper INFO Network _UtacNNet initialized on device cpu
+2025-01-29 17:17:25,860 tacult.base.nn_wrapper INFO Loaded network from ./temp/resnet/checkpoint_6.pt
+2025-01-29 17:17:25,860 tacult.base.nn_wrapper INFO Network architecture:
+2025-01-29 17:17:25,860 tacult.base.nn_wrapper INFO _UtacNNet(
+  (conv_in): Conv2d(4, 32, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1))
+  (bn_in): BatchNorm2d(32, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+  (res1): ResidualBlock(
+    (conv1): Conv2d(32, 32, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1))
+    (bn1): BatchNorm2d(32, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+    (conv2): Conv2d(32, 32, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1))
+    (bn2): BatchNorm2d(32, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+  )
+  (res2): ResidualBlock(
+    (conv1): Conv2d(32, 32, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1))
+    (bn1): BatchNorm2d(32, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+    (conv2): Conv2d(32, 32, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1))
+    (bn2): BatchNorm2d(32, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+  )
+  (fc1): Linear(in_features=2592, out_features=256, bias=True)
+  (fc_bn1): BatchNorm1d(256, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+  (pi): Linear(in_features=256, out_features=81, bias=True)
+  (v): Linear(in_features=256, out_features=1, bias=True)
+)
+2025-01-29 17:17:25,861 tacult.base.utils WARNING CUDA requested but not available! Using CPU instead.
+2025-01-29 17:17:25,865 tacult.base.nn_wrapper INFO Network _UtacNNet initialized on device cpu
+2025-01-29 17:17:25,878 tacult.base.nn_wrapper INFO Loaded network from ./temp/resnet/checkpoint_9.pt
+2025-01-29 17:17:25,878 tacult.base.nn_wrapper INFO Network architecture:
+2025-01-29 17:17:25,878 tacult.base.nn_wrapper INFO _UtacNNet(
+  (conv_in): Conv2d(4, 32, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1))
+  (bn_in): BatchNorm2d(32, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+  (res1): ResidualBlock(
+    (conv1): Conv2d(32, 32, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1))
+    (bn1): BatchNorm2d(32, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+    (conv2): Conv2d(32, 32, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1))
+    (bn2): BatchNorm2d(32, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+  )
+  (res2): ResidualBlock(
+    (conv1): Conv2d(32, 32, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1))
+    (bn1): BatchNorm2d(32, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+    (conv2): Conv2d(32, 32, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1))
+    (bn2): BatchNorm2d(32, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+  )
+  (fc1): Linear(in_features=2592, out_features=256, bias=True)
+  (fc_bn1): BatchNorm1d(256, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+  (pi): Linear(in_features=256, out_features=81, bias=True)
+  (v): Linear(in_features=256, out_features=1, bias=True)
+)
+2025-01-29 17:17:25,879 tacult.base.utils WARNING CUDA requested but not available! Using CPU instead.
+2025-01-29 17:17:25,883 tacult.base.nn_wrapper INFO Network _UtacNNet initialized on device cpu
+2025-01-29 17:17:25,895 tacult.base.nn_wrapper INFO Loaded network from ./temp/resnet/checkpoint_12.pt
+2025-01-29 17:17:25,895 tacult.base.nn_wrapper INFO Network architecture:
+2025-01-29 17:17:25,895 tacult.base.nn_wrapper INFO _UtacNNet(
+  (conv_in): Conv2d(4, 32, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1))
+  (bn_in): BatchNorm2d(32, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+  (res1): ResidualBlock(
+    (conv1): Conv2d(32, 32, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1))
+    (bn1): BatchNorm2d(32, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+    (conv2): Conv2d(32, 32, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1))
+    (bn2): BatchNorm2d(32, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+  )
+  (res2): ResidualBlock(
+    (conv1): Conv2d(32, 32, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1))
+    (bn1): BatchNorm2d(32, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+    (conv2): Conv2d(32, 32, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1))
+    (bn2): BatchNorm2d(32, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+  )
+  (fc1): Linear(in_features=2592, out_features=256, bias=True)
+  (fc_bn1): BatchNorm1d(256, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+  (pi): Linear(in_features=256, out_features=81, bias=True)
+  (v): Linear(in_features=256, out_features=1, bias=True)
+)
+2025-01-29 17:18:14,746 __main__ INFO Loading UtacGame...
+2025-01-29 17:18:14,747 tacult.base.utils WARNING CUDA requested but not available! Using CPU instead.
+2025-01-29 17:18:15,285 tacult.base.nn_wrapper INFO Network _UtacNNet initialized on device cpu
+2025-01-29 17:18:15,293 tacult.base.nn_wrapper INFO Loaded network from ./temp/resnet/checkpoint_1.pt
+2025-01-29 17:18:15,293 tacult.base.nn_wrapper INFO Network architecture:
+2025-01-29 17:18:15,294 tacult.base.nn_wrapper INFO _UtacNNet(
+  (conv_in): Conv2d(4, 32, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1))
+  (bn_in): BatchNorm2d(32, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+  (res1): ResidualBlock(
+    (conv1): Conv2d(32, 32, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1))
+    (bn1): BatchNorm2d(32, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+    (conv2): Conv2d(32, 32, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1))
+    (bn2): BatchNorm2d(32, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+  )
+  (res2): ResidualBlock(
+    (conv1): Conv2d(32, 32, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1))
+    (bn1): BatchNorm2d(32, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+    (conv2): Conv2d(32, 32, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1))
+    (bn2): BatchNorm2d(32, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+  )
+  (fc1): Linear(in_features=2592, out_features=256, bias=True)
+  (fc_bn1): BatchNorm1d(256, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+  (pi): Linear(in_features=256, out_features=81, bias=True)
+  (v): Linear(in_features=256, out_features=1, bias=True)
+)
+2025-01-29 17:18:15,295 tacult.base.utils WARNING CUDA requested but not available! Using CPU instead.
+2025-01-29 17:18:15,300 tacult.base.nn_wrapper INFO Network _UtacNNet initialized on device cpu
+2025-01-29 17:18:15,310 tacult.base.nn_wrapper INFO Loaded network from ./temp/resnet/checkpoint_2.pt
+2025-01-29 17:18:15,311 tacult.base.nn_wrapper INFO Network architecture:
+2025-01-29 17:18:15,311 tacult.base.nn_wrapper INFO _UtacNNet(
+  (conv_in): Conv2d(4, 32, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1))
+  (bn_in): BatchNorm2d(32, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+  (res1): ResidualBlock(
+    (conv1): Conv2d(32, 32, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1))
+    (bn1): BatchNorm2d(32, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+    (conv2): Conv2d(32, 32, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1))
+    (bn2): BatchNorm2d(32, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+  )
+  (res2): ResidualBlock(
+    (conv1): Conv2d(32, 32, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1))
+    (bn1): BatchNorm2d(32, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+    (conv2): Conv2d(32, 32, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1))
+    (bn2): BatchNorm2d(32, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+  )
+  (fc1): Linear(in_features=2592, out_features=256, bias=True)
+  (fc_bn1): BatchNorm1d(256, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+  (pi): Linear(in_features=256, out_features=81, bias=True)
+  (v): Linear(in_features=256, out_features=1, bias=True)
+)
+2025-01-29 17:18:15,312 tacult.base.utils WARNING CUDA requested but not available! Using CPU instead.
+2025-01-29 17:18:15,317 tacult.base.nn_wrapper INFO Network _UtacNNet initialized on device cpu
+2025-01-29 17:18:15,438 tacult.base.nn_wrapper INFO Loaded network from ./temp/resnet/checkpoint_5.pt
+2025-01-29 17:18:15,438 tacult.base.nn_wrapper INFO Network architecture:
+2025-01-29 17:18:15,438 tacult.base.nn_wrapper INFO _UtacNNet(
+  (conv_in): Conv2d(4, 32, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1))
+  (bn_in): BatchNorm2d(32, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+  (res1): ResidualBlock(
+    (conv1): Conv2d(32, 32, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1))
+    (bn1): BatchNorm2d(32, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+    (conv2): Conv2d(32, 32, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1))
+    (bn2): BatchNorm2d(32, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+  )
+  (res2): ResidualBlock(
+    (conv1): Conv2d(32, 32, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1))
+    (bn1): BatchNorm2d(32, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+    (conv2): Conv2d(32, 32, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1))
+    (bn2): BatchNorm2d(32, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+  )
+  (fc1): Linear(in_features=2592, out_features=256, bias=True)
+  (fc_bn1): BatchNorm1d(256, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+  (pi): Linear(in_features=256, out_features=81, bias=True)
+  (v): Linear(in_features=256, out_features=1, bias=True)
+)
+2025-01-29 17:18:15,439 tacult.base.utils WARNING CUDA requested but not available! Using CPU instead.
+2025-01-29 17:18:15,443 tacult.base.nn_wrapper INFO Network _UtacNNet initialized on device cpu
+2025-01-29 17:18:15,451 tacult.base.nn_wrapper INFO Loaded network from ./temp/resnet/checkpoint_6.pt
+2025-01-29 17:18:15,451 tacult.base.nn_wrapper INFO Network architecture:
+2025-01-29 17:18:15,451 tacult.base.nn_wrapper INFO _UtacNNet(
+  (conv_in): Conv2d(4, 32, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1))
+  (bn_in): BatchNorm2d(32, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+  (res1): ResidualBlock(
+    (conv1): Conv2d(32, 32, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1))
+    (bn1): BatchNorm2d(32, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+    (conv2): Conv2d(32, 32, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1))
+    (bn2): BatchNorm2d(32, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+  )
+  (res2): ResidualBlock(
+    (conv1): Conv2d(32, 32, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1))
+    (bn1): BatchNorm2d(32, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+    (conv2): Conv2d(32, 32, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1))
+    (bn2): BatchNorm2d(32, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+  )
+  (fc1): Linear(in_features=2592, out_features=256, bias=True)
+  (fc_bn1): BatchNorm1d(256, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+  (pi): Linear(in_features=256, out_features=81, bias=True)
+  (v): Linear(in_features=256, out_features=1, bias=True)
+)
+2025-01-29 17:18:15,452 tacult.base.utils WARNING CUDA requested but not available! Using CPU instead.
+2025-01-29 17:18:15,458 tacult.base.nn_wrapper INFO Network _UtacNNet initialized on device cpu
+2025-01-29 17:18:15,466 tacult.base.nn_wrapper INFO Loaded network from ./temp/resnet/checkpoint_9.pt
+2025-01-29 17:18:15,466 tacult.base.nn_wrapper INFO Network architecture:
+2025-01-29 17:18:15,466 tacult.base.nn_wrapper INFO _UtacNNet(
+  (conv_in): Conv2d(4, 32, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1))
+  (bn_in): BatchNorm2d(32, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+  (res1): ResidualBlock(
+    (conv1): Conv2d(32, 32, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1))
+    (bn1): BatchNorm2d(32, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+    (conv2): Conv2d(32, 32, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1))
+    (bn2): BatchNorm2d(32, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+  )
+  (res2): ResidualBlock(
+    (conv1): Conv2d(32, 32, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1))
+    (bn1): BatchNorm2d(32, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+    (conv2): Conv2d(32, 32, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1))
+    (bn2): BatchNorm2d(32, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+  )
+  (fc1): Linear(in_features=2592, out_features=256, bias=True)
+  (fc_bn1): BatchNorm1d(256, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+  (pi): Linear(in_features=256, out_features=81, bias=True)
+  (v): Linear(in_features=256, out_features=1, bias=True)
+)
+2025-01-29 17:18:15,467 tacult.base.utils WARNING CUDA requested but not available! Using CPU instead.
+2025-01-29 17:18:15,472 tacult.base.nn_wrapper INFO Network _UtacNNet initialized on device cpu
+2025-01-29 17:18:15,480 tacult.base.nn_wrapper INFO Loaded network from ./temp/resnet/checkpoint_12.pt
+2025-01-29 17:18:15,481 tacult.base.nn_wrapper INFO Network architecture:
+2025-01-29 17:18:15,481 tacult.base.nn_wrapper INFO _UtacNNet(
+  (conv_in): Conv2d(4, 32, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1))
+  (bn_in): BatchNorm2d(32, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+  (res1): ResidualBlock(
+    (conv1): Conv2d(32, 32, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1))
+    (bn1): BatchNorm2d(32, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+    (conv2): Conv2d(32, 32, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1))
+    (bn2): BatchNorm2d(32, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+  )
+  (res2): ResidualBlock(
+    (conv1): Conv2d(32, 32, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1))
+    (bn1): BatchNorm2d(32, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+    (conv2): Conv2d(32, 32, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1))
+    (bn2): BatchNorm2d(32, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+  )
+  (fc1): Linear(in_features=2592, out_features=256, bias=True)
+  (fc_bn1): BatchNorm1d(256, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+  (pi): Linear(in_features=256, out_features=81, bias=True)
+  (v): Linear(in_features=256, out_features=1, bias=True)
+)
+2025-01-29 17:18:28,980 __main__ INFO Loading UtacGame...
+2025-01-29 17:18:28,982 tacult.base.utils WARNING CUDA requested but not available! Using CPU instead.
+2025-01-29 17:18:29,588 tacult.base.nn_wrapper INFO Network _UtacNNet initialized on device cpu
+2025-01-29 17:18:29,600 tacult.base.nn_wrapper INFO Loaded network from ./temp/resnet/checkpoint_1.pt
+2025-01-29 17:18:29,600 tacult.base.nn_wrapper INFO Network architecture:
+2025-01-29 17:18:29,600 tacult.base.nn_wrapper INFO _UtacNNet(
+  (conv_in): Conv2d(4, 32, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1))
+  (bn_in): BatchNorm2d(32, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+  (res1): ResidualBlock(
+    (conv1): Conv2d(32, 32, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1))
+    (bn1): BatchNorm2d(32, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+    (conv2): Conv2d(32, 32, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1))
+    (bn2): BatchNorm2d(32, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+  )
+  (res2): ResidualBlock(
+    (conv1): Conv2d(32, 32, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1))
+    (bn1): BatchNorm2d(32, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+    (conv2): Conv2d(32, 32, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1))
+    (bn2): BatchNorm2d(32, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+  )
+  (fc1): Linear(in_features=2592, out_features=256, bias=True)
+  (fc_bn1): BatchNorm1d(256, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+  (pi): Linear(in_features=256, out_features=81, bias=True)
+  (v): Linear(in_features=256, out_features=1, bias=True)
+)
+2025-01-29 17:18:29,601 tacult.base.utils WARNING CUDA requested but not available! Using CPU instead.
+2025-01-29 17:18:29,606 tacult.base.nn_wrapper INFO Network _UtacNNet initialized on device cpu
+2025-01-29 17:18:29,622 tacult.base.nn_wrapper INFO Loaded network from ./temp/resnet/checkpoint_2.pt
+2025-01-29 17:18:29,622 tacult.base.nn_wrapper INFO Network architecture:
+2025-01-29 17:18:29,622 tacult.base.nn_wrapper INFO _UtacNNet(
+  (conv_in): Conv2d(4, 32, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1))
+  (bn_in): BatchNorm2d(32, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+  (res1): ResidualBlock(
+    (conv1): Conv2d(32, 32, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1))
+    (bn1): BatchNorm2d(32, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+    (conv2): Conv2d(32, 32, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1))
+    (bn2): BatchNorm2d(32, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+  )
+  (res2): ResidualBlock(
+    (conv1): Conv2d(32, 32, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1))
+    (bn1): BatchNorm2d(32, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+    (conv2): Conv2d(32, 32, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1))
+    (bn2): BatchNorm2d(32, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+  )
+  (fc1): Linear(in_features=2592, out_features=256, bias=True)
+  (fc_bn1): BatchNorm1d(256, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+  (pi): Linear(in_features=256, out_features=81, bias=True)
+  (v): Linear(in_features=256, out_features=1, bias=True)
+)
+2025-01-29 17:18:29,623 tacult.base.utils WARNING CUDA requested but not available! Using CPU instead.
+2025-01-29 17:18:29,628 tacult.base.nn_wrapper INFO Network _UtacNNet initialized on device cpu
+2025-01-29 17:18:29,760 tacult.base.nn_wrapper INFO Loaded network from ./temp/resnet/checkpoint_5.pt
+2025-01-29 17:18:29,760 tacult.base.nn_wrapper INFO Network architecture:
+2025-01-29 17:18:29,760 tacult.base.nn_wrapper INFO _UtacNNet(
+  (conv_in): Conv2d(4, 32, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1))
+  (bn_in): BatchNorm2d(32, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+  (res1): ResidualBlock(
+    (conv1): Conv2d(32, 32, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1))
+    (bn1): BatchNorm2d(32, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+    (conv2): Conv2d(32, 32, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1))
+    (bn2): BatchNorm2d(32, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+  )
+  (res2): ResidualBlock(
+    (conv1): Conv2d(32, 32, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1))
+    (bn1): BatchNorm2d(32, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+    (conv2): Conv2d(32, 32, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1))
+    (bn2): BatchNorm2d(32, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+  )
+  (fc1): Linear(in_features=2592, out_features=256, bias=True)
+  (fc_bn1): BatchNorm1d(256, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+  (pi): Linear(in_features=256, out_features=81, bias=True)
+  (v): Linear(in_features=256, out_features=1, bias=True)
+)
+2025-01-29 17:18:29,761 tacult.base.utils WARNING CUDA requested but not available! Using CPU instead.
+2025-01-29 17:18:29,765 tacult.base.nn_wrapper INFO Network _UtacNNet initialized on device cpu
+2025-01-29 17:18:29,776 tacult.base.nn_wrapper INFO Loaded network from ./temp/resnet/checkpoint_6.pt
+2025-01-29 17:18:29,776 tacult.base.nn_wrapper INFO Network architecture:
+2025-01-29 17:18:29,776 tacult.base.nn_wrapper INFO _UtacNNet(
+  (conv_in): Conv2d(4, 32, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1))
+  (bn_in): BatchNorm2d(32, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+  (res1): ResidualBlock(
+    (conv1): Conv2d(32, 32, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1))
+    (bn1): BatchNorm2d(32, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+    (conv2): Conv2d(32, 32, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1))
+    (bn2): BatchNorm2d(32, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+  )
+  (res2): ResidualBlock(
+    (conv1): Conv2d(32, 32, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1))
+    (bn1): BatchNorm2d(32, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+    (conv2): Conv2d(32, 32, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1))
+    (bn2): BatchNorm2d(32, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+  )
+  (fc1): Linear(in_features=2592, out_features=256, bias=True)
+  (fc_bn1): BatchNorm1d(256, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+  (pi): Linear(in_features=256, out_features=81, bias=True)
+  (v): Linear(in_features=256, out_features=1, bias=True)
+)
+2025-01-29 17:18:29,777 tacult.base.utils WARNING CUDA requested but not available! Using CPU instead.
+2025-01-29 17:18:29,782 tacult.base.nn_wrapper INFO Network _UtacNNet initialized on device cpu
+2025-01-29 17:18:29,793 tacult.base.nn_wrapper INFO Loaded network from ./temp/resnet/checkpoint_9.pt
+2025-01-29 17:18:29,793 tacult.base.nn_wrapper INFO Network architecture:
+2025-01-29 17:18:29,793 tacult.base.nn_wrapper INFO _UtacNNet(
+  (conv_in): Conv2d(4, 32, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1))
+  (bn_in): BatchNorm2d(32, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+  (res1): ResidualBlock(
+    (conv1): Conv2d(32, 32, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1))
+    (bn1): BatchNorm2d(32, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+    (conv2): Conv2d(32, 32, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1))
+    (bn2): BatchNorm2d(32, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+  )
+  (res2): ResidualBlock(
+    (conv1): Conv2d(32, 32, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1))
+    (bn1): BatchNorm2d(32, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+    (conv2): Conv2d(32, 32, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1))
+    (bn2): BatchNorm2d(32, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+  )
+  (fc1): Linear(in_features=2592, out_features=256, bias=True)
+  (fc_bn1): BatchNorm1d(256, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+  (pi): Linear(in_features=256, out_features=81, bias=True)
+  (v): Linear(in_features=256, out_features=1, bias=True)
+)
+2025-01-29 17:18:29,794 tacult.base.utils WARNING CUDA requested but not available! Using CPU instead.
+2025-01-29 17:18:29,799 tacult.base.nn_wrapper INFO Network _UtacNNet initialized on device cpu
+2025-01-29 17:18:29,807 tacult.base.nn_wrapper INFO Loaded network from ./temp/resnet/checkpoint_12.pt
+2025-01-29 17:18:29,808 tacult.base.nn_wrapper INFO Network architecture:
+2025-01-29 17:18:29,808 tacult.base.nn_wrapper INFO _UtacNNet(
+  (conv_in): Conv2d(4, 32, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1))
+  (bn_in): BatchNorm2d(32, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+  (res1): ResidualBlock(
+    (conv1): Conv2d(32, 32, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1))
+    (bn1): BatchNorm2d(32, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+    (conv2): Conv2d(32, 32, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1))
+    (bn2): BatchNorm2d(32, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+  )
+  (res2): ResidualBlock(
+    (conv1): Conv2d(32, 32, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1))
+    (bn1): BatchNorm2d(32, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+    (conv2): Conv2d(32, 32, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1))
+    (bn2): BatchNorm2d(32, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+  )
+  (fc1): Linear(in_features=2592, out_features=256, bias=True)
+  (fc_bn1): BatchNorm1d(256, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+  (pi): Linear(in_features=256, out_features=81, bias=True)
+  (v): Linear(in_features=256, out_features=1, bias=True)
+)
+2025-01-29 17:18:44,834 __main__ INFO Loading UtacGame...
+2025-01-29 17:18:44,835 tacult.base.utils WARNING CUDA requested but not available! Using CPU instead.
+2025-01-29 17:18:45,386 tacult.base.nn_wrapper INFO Network _UtacNNet initialized on device cpu
+2025-01-29 17:18:45,394 tacult.base.nn_wrapper INFO Loaded network from ./temp/resnet/checkpoint_1.pt
+2025-01-29 17:18:45,394 tacult.base.nn_wrapper INFO Network architecture:
+2025-01-29 17:18:45,395 tacult.base.nn_wrapper INFO _UtacNNet(
+  (conv_in): Conv2d(4, 32, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1))
+  (bn_in): BatchNorm2d(32, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+  (res1): ResidualBlock(
+    (conv1): Conv2d(32, 32, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1))
+    (bn1): BatchNorm2d(32, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+    (conv2): Conv2d(32, 32, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1))
+    (bn2): BatchNorm2d(32, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+  )
+  (res2): ResidualBlock(
+    (conv1): Conv2d(32, 32, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1))
+    (bn1): BatchNorm2d(32, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+    (conv2): Conv2d(32, 32, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1))
+    (bn2): BatchNorm2d(32, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+  )
+  (fc1): Linear(in_features=2592, out_features=256, bias=True)
+  (fc_bn1): BatchNorm1d(256, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+  (pi): Linear(in_features=256, out_features=81, bias=True)
+  (v): Linear(in_features=256, out_features=1, bias=True)
+)
+2025-01-29 17:18:45,396 tacult.base.utils WARNING CUDA requested but not available! Using CPU instead.
+2025-01-29 17:18:45,402 tacult.base.nn_wrapper INFO Network _UtacNNet initialized on device cpu
+2025-01-29 17:18:45,416 tacult.base.nn_wrapper INFO Loaded network from ./temp/resnet/checkpoint_2.pt
+2025-01-29 17:18:45,417 tacult.base.nn_wrapper INFO Network architecture:
+2025-01-29 17:18:45,417 tacult.base.nn_wrapper INFO _UtacNNet(
+  (conv_in): Conv2d(4, 32, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1))
+  (bn_in): BatchNorm2d(32, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+  (res1): ResidualBlock(
+    (conv1): Conv2d(32, 32, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1))
+    (bn1): BatchNorm2d(32, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+    (conv2): Conv2d(32, 32, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1))
+    (bn2): BatchNorm2d(32, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+  )
+  (res2): ResidualBlock(
+    (conv1): Conv2d(32, 32, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1))
+    (bn1): BatchNorm2d(32, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+    (conv2): Conv2d(32, 32, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1))
+    (bn2): BatchNorm2d(32, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+  )
+  (fc1): Linear(in_features=2592, out_features=256, bias=True)
+  (fc_bn1): BatchNorm1d(256, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+  (pi): Linear(in_features=256, out_features=81, bias=True)
+  (v): Linear(in_features=256, out_features=1, bias=True)
+)
+2025-01-29 17:18:45,418 tacult.base.utils WARNING CUDA requested but not available! Using CPU instead.
+2025-01-29 17:18:45,423 tacult.base.nn_wrapper INFO Network _UtacNNet initialized on device cpu
+2025-01-29 17:18:45,551 tacult.base.nn_wrapper INFO Loaded network from ./temp/resnet/checkpoint_5.pt
+2025-01-29 17:18:45,551 tacult.base.nn_wrapper INFO Network architecture:
+2025-01-29 17:18:45,551 tacult.base.nn_wrapper INFO _UtacNNet(
+  (conv_in): Conv2d(4, 32, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1))
+  (bn_in): BatchNorm2d(32, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+  (res1): ResidualBlock(
+    (conv1): Conv2d(32, 32, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1))
+    (bn1): BatchNorm2d(32, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+    (conv2): Conv2d(32, 32, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1))
+    (bn2): BatchNorm2d(32, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+  )
+  (res2): ResidualBlock(
+    (conv1): Conv2d(32, 32, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1))
+    (bn1): BatchNorm2d(32, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+    (conv2): Conv2d(32, 32, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1))
+    (bn2): BatchNorm2d(32, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+  )
+  (fc1): Linear(in_features=2592, out_features=256, bias=True)
+  (fc_bn1): BatchNorm1d(256, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+  (pi): Linear(in_features=256, out_features=81, bias=True)
+  (v): Linear(in_features=256, out_features=1, bias=True)
+)
+2025-01-29 17:18:45,552 tacult.base.utils WARNING CUDA requested but not available! Using CPU instead.
+2025-01-29 17:18:45,556 tacult.base.nn_wrapper INFO Network _UtacNNet initialized on device cpu
+2025-01-29 17:18:45,569 tacult.base.nn_wrapper INFO Loaded network from ./temp/resnet/checkpoint_6.pt
+2025-01-29 17:18:45,569 tacult.base.nn_wrapper INFO Network architecture:
+2025-01-29 17:18:45,569 tacult.base.nn_wrapper INFO _UtacNNet(
+  (conv_in): Conv2d(4, 32, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1))
+  (bn_in): BatchNorm2d(32, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+  (res1): ResidualBlock(
+    (conv1): Conv2d(32, 32, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1))
+    (bn1): BatchNorm2d(32, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+    (conv2): Conv2d(32, 32, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1))
+    (bn2): BatchNorm2d(32, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+  )
+  (res2): ResidualBlock(
+    (conv1): Conv2d(32, 32, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1))
+    (bn1): BatchNorm2d(32, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+    (conv2): Conv2d(32, 32, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1))
+    (bn2): BatchNorm2d(32, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+  )
+  (fc1): Linear(in_features=2592, out_features=256, bias=True)
+  (fc_bn1): BatchNorm1d(256, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+  (pi): Linear(in_features=256, out_features=81, bias=True)
+  (v): Linear(in_features=256, out_features=1, bias=True)
+)
+2025-01-29 17:18:45,570 tacult.base.utils WARNING CUDA requested but not available! Using CPU instead.
+2025-01-29 17:18:45,576 tacult.base.nn_wrapper INFO Network _UtacNNet initialized on device cpu
+2025-01-29 17:18:45,587 tacult.base.nn_wrapper INFO Loaded network from ./temp/resnet/checkpoint_9.pt
+2025-01-29 17:18:45,587 tacult.base.nn_wrapper INFO Network architecture:
+2025-01-29 17:18:45,587 tacult.base.nn_wrapper INFO _UtacNNet(
+  (conv_in): Conv2d(4, 32, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1))
+  (bn_in): BatchNorm2d(32, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+  (res1): ResidualBlock(
+    (conv1): Conv2d(32, 32, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1))
+    (bn1): BatchNorm2d(32, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+    (conv2): Conv2d(32, 32, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1))
+    (bn2): BatchNorm2d(32, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+  )
+  (res2): ResidualBlock(
+    (conv1): Conv2d(32, 32, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1))
+    (bn1): BatchNorm2d(32, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+    (conv2): Conv2d(32, 32, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1))
+    (bn2): BatchNorm2d(32, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+  )
+  (fc1): Linear(in_features=2592, out_features=256, bias=True)
+  (fc_bn1): BatchNorm1d(256, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+  (pi): Linear(in_features=256, out_features=81, bias=True)
+  (v): Linear(in_features=256, out_features=1, bias=True)
+)
+2025-01-29 17:18:45,589 tacult.base.utils WARNING CUDA requested but not available! Using CPU instead.
+2025-01-29 17:18:45,593 tacult.base.nn_wrapper INFO Network _UtacNNet initialized on device cpu
+2025-01-29 17:18:45,602 tacult.base.nn_wrapper INFO Loaded network from ./temp/resnet/checkpoint_12.pt
+2025-01-29 17:18:45,602 tacult.base.nn_wrapper INFO Network architecture:
+2025-01-29 17:18:45,602 tacult.base.nn_wrapper INFO _UtacNNet(
+  (conv_in): Conv2d(4, 32, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1))
+  (bn_in): BatchNorm2d(32, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+  (res1): ResidualBlock(
+    (conv1): Conv2d(32, 32, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1))
+    (bn1): BatchNorm2d(32, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+    (conv2): Conv2d(32, 32, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1))
+    (bn2): BatchNorm2d(32, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+  )
+  (res2): ResidualBlock(
+    (conv1): Conv2d(32, 32, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1))
+    (bn1): BatchNorm2d(32, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+    (conv2): Conv2d(32, 32, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1))
+    (bn2): BatchNorm2d(32, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+  )
+  (fc1): Linear(in_features=2592, out_features=256, bias=True)
+  (fc_bn1): BatchNorm1d(256, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+  (pi): Linear(in_features=256, out_features=81, bias=True)
+  (v): Linear(in_features=256, out_features=1, bias=True)
+)
+2025-01-29 17:23:11,754 __main__ INFO Loading UtacGame...
+2025-01-29 17:23:25,861 __main__ INFO Loading UtacGame...
+2025-01-29 17:24:31,362 __main__ INFO Loading UtacGame...
+2025-01-29 17:24:49,638 __main__ INFO Loading UtacGame...
+2025-01-29 17:26:35,829 __main__ INFO Loading UtacGame...
+2025-01-29 17:26:37,601 tacult.base.nn_wrapper INFO Network _UtacNNet initialized on device cpu
+2025-01-29 17:26:37,616 tacult.base.nn_wrapper INFO Loaded network from ./temp/resnet3/checkpoint_1.pt
+2025-01-29 17:26:37,617 tacult.base.nn_wrapper INFO Network architecture:
+2025-01-29 17:26:37,617 tacult.base.nn_wrapper INFO _UtacNNet(
+  (conv_in): Conv2d(4, 16, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1))
+  (bn_in): BatchNorm2d(16, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+  (resnet): Sequential(
+    (0): ResidualBlock(
+      (conv_block1): Sequential(
+        (0): Conv2d(16, 16, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1))
+        (1): BatchNorm2d(16, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+        (2): ReLU()
+      )
+      (conv_block2): Sequential(
+        (0): Conv2d(16, 16, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1))
+        (1): BatchNorm2d(16, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+      )
+    )
+    (1): ResidualBlock(
+      (conv_block1): Sequential(
+        (0): Conv2d(16, 16, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1))
+        (1): BatchNorm2d(16, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+        (2): ReLU()
+      )
+      (conv_block2): Sequential(
+        (0): Conv2d(16, 16, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1))
+        (1): BatchNorm2d(16, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+      )
+    )
+    (2): ResidualBlock(
+      (conv_block1): Sequential(
+        (0): Conv2d(16, 16, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1))
+        (1): BatchNorm2d(16, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+        (2): ReLU()
+      )
+      (conv_block2): Sequential(
+        (0): Conv2d(16, 16, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1))
+        (1): BatchNorm2d(16, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+      )
+    )
+  )
+  (fc1): Linear(in_features=1296, out_features=256, bias=True)
+  (fc_bn1): BatchNorm1d(256, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+  (pi): Linear(in_features=256, out_features=81, bias=True)
+  (v): Linear(in_features=256, out_features=1, bias=True)
+)
+2025-01-29 17:26:37,618 tacult.pit INFO Starting tournament with 1000 rounds and 4 agents
+2025-01-29 17:26:37,618 tacult.pit INFO Agents: 
+temp_resnet3_iter1_sims2
+	Random
+	RawMCTS_sims9_rollouts10
+	RawMCTS_sims81_rollouts10
+2025-01-29 17:26:37,618 tacult.pit INFO Starting round 1/1000
+2025-01-29 17:26:37,618 tacult.pit INFO Playing match: temp_resnet3_iter1_sims2 vs Random
+2025-01-29 17:26:43,198 tacult.pit INFO 
+Statistics After Match: temp_resnet3_iter1_sims2 vs Random
+2025-01-29 17:26:43,198 tacult.pit INFO ----------------------------------------------------------------------------------------------------
+2025-01-29 17:26:43,199 tacult.pit INFO Agent                          Rating     Games    Wins   Losses Draws  Win Rate Loss Rate Draw Rate
+2025-01-29 17:26:43,199 tacult.pit INFO ----------------------------------------------------------------------------------------------------
+2025-01-29 17:26:43,199 tacult.pit INFO temp_resnet3_iter1_sims2          1601.8       8     5      3      0    62.5%    37.5%     0.0%
+2025-01-29 17:26:43,199 tacult.pit INFO RawMCTS_sims9_rollouts10          1500.0       0     0      0      0     0.0%     0.0%     0.0%
+2025-01-29 17:26:43,199 tacult.pit INFO RawMCTS_sims81_rollouts10         1500.0       0     0      0      0     0.0%     0.0%     0.0%
+2025-01-29 17:26:43,199 tacult.pit INFO Random                            1398.2       8     3      5      0    37.5%    62.5%     0.0%
+2025-01-29 17:26:43,200 tacult.pit INFO ----------------------------------------------------------------------------------------------------
+
+2025-01-29 17:26:43,200 tacult.pit INFO Playing match: temp_resnet3_iter1_sims2 vs RawMCTS_sims9_rollouts10
+2025-01-29 17:26:53,624 tacult.pit INFO 
+Statistics After Match: temp_resnet3_iter1_sims2 vs RawMCTS_sims9_rollouts10
+2025-01-29 17:26:53,624 tacult.pit INFO ----------------------------------------------------------------------------------------------------
+2025-01-29 17:26:53,625 tacult.pit INFO Agent                          Rating     Games    Wins   Losses Draws  Win Rate Loss Rate Draw Rate
+2025-01-29 17:26:53,625 tacult.pit INFO ----------------------------------------------------------------------------------------------------
+2025-01-29 17:26:53,625 tacult.pit INFO RawMCTS_sims9_rollouts10          1770.5       8     6      2      0    75.0%    25.0%     0.0%
+2025-01-29 17:26:53,625 tacult.pit INFO RawMCTS_sims81_rollouts10         1500.0       0     0      0      0     0.0%     0.0%     0.0%
+2025-01-29 17:26:53,625 tacult.pit INFO temp_resnet3_iter1_sims2          1440.5      16     7      9      0    43.8%    56.2%     0.0%
+2025-01-29 17:26:53,625 tacult.pit INFO Random                            1398.2       8     3      5      0    37.5%    62.5%     0.0%
+2025-01-29 17:26:53,625 tacult.pit INFO ----------------------------------------------------------------------------------------------------
+
+2025-01-29 17:26:53,625 tacult.pit INFO Playing match: RawMCTS_sims9_rollouts10 vs RawMCTS_sims81_rollouts10
+2025-01-29 17:27:37,882 tacult.pit INFO 
+Statistics After Match: RawMCTS_sims9_rollouts10 vs RawMCTS_sims81_rollouts10
+2025-01-29 17:27:37,882 tacult.pit INFO ----------------------------------------------------------------------------------------------------
+2025-01-29 17:27:37,882 tacult.pit INFO Agent                          Rating     Games    Wins   Losses Draws  Win Rate Loss Rate Draw Rate
+2025-01-29 17:27:37,882 tacult.pit INFO ----------------------------------------------------------------------------------------------------
+2025-01-29 17:27:37,882 tacult.pit INFO RawMCTS_sims81_rollouts10         1802.8       8     3      3      2    37.5%    37.5%    25.0%
+2025-01-29 17:27:37,882 tacult.pit INFO RawMCTS_sims9_rollouts10          1677.9      16     9      5      2    56.2%    31.2%    12.5%
+2025-01-29 17:27:37,882 tacult.pit INFO temp_resnet3_iter1_sims2          1440.5      16     7      9      0    43.8%    56.2%     0.0%
+2025-01-29 17:27:37,882 tacult.pit INFO Random                            1398.2       8     3      5      0    37.5%    62.5%     0.0%
+2025-01-29 17:27:37,882 tacult.pit INFO ----------------------------------------------------------------------------------------------------
+
+2025-01-29 17:27:37,882 tacult.pit INFO Playing match: Random vs RawMCTS_sims81_rollouts10
+2025-01-29 17:28:15,121 tacult.pit INFO 
+Statistics After Match: Random vs RawMCTS_sims81_rollouts10
+2025-01-29 17:28:15,121 tacult.pit INFO ----------------------------------------------------------------------------------------------------
+2025-01-29 17:28:15,122 tacult.pit INFO Agent                          Rating     Games    Wins   Losses Draws  Win Rate Loss Rate Draw Rate
+2025-01-29 17:28:15,122 tacult.pit INFO ----------------------------------------------------------------------------------------------------
+2025-01-29 17:28:15,122 tacult.pit INFO RawMCTS_sims81_rollouts10         1754.4      16     8      3      5    50.0%    18.8%    31.2%
+2025-01-29 17:28:15,122 tacult.pit INFO RawMCTS_sims9_rollouts10          1677.9      16     9      5      2    56.2%    31.2%    12.5%
+2025-01-29 17:28:15,122 tacult.pit INFO Random                            1453.5      16     3     10      3    18.8%    62.5%    18.8%
+2025-01-29 17:28:15,122 tacult.pit INFO temp_resnet3_iter1_sims2          1440.5      16     7      9      0    43.8%    56.2%     0.0%
+2025-01-29 17:28:15,122 tacult.pit INFO ----------------------------------------------------------------------------------------------------
+
+2025-01-29 17:28:15,122 tacult.pit INFO Playing match: temp_resnet3_iter1_sims2 vs RawMCTS_sims81_rollouts10
+2025-01-29 17:28:53,448 tacult.pit INFO 
+Statistics After Match: temp_resnet3_iter1_sims2 vs RawMCTS_sims81_rollouts10
+2025-01-29 17:28:53,448 tacult.pit INFO ----------------------------------------------------------------------------------------------------
+2025-01-29 17:28:53,448 tacult.pit INFO Agent                          Rating     Games    Wins   Losses Draws  Win Rate Loss Rate Draw Rate
+2025-01-29 17:28:53,448 tacult.pit INFO ----------------------------------------------------------------------------------------------------
+2025-01-29 17:28:53,448 tacult.pit INFO RawMCTS_sims81_rollouts10         1740.3      24    14      4      6    58.3%    16.7%    25.0%
+2025-01-29 17:28:53,448 tacult.pit INFO RawMCTS_sims9_rollouts10          1677.9      16     9      5      2    56.2%    31.2%    12.5%
+2025-01-29 17:28:53,448 tacult.pit INFO temp_resnet3_iter1_sims2          1454.0      24     8     15      1    33.3%    62.5%     4.2%
+2025-01-29 17:28:53,448 tacult.pit INFO Random                            1453.5      16     3     10      3    18.8%    62.5%    18.8%
+2025-01-29 17:28:53,448 tacult.pit INFO ----------------------------------------------------------------------------------------------------
+
+2025-01-29 17:28:53,448 tacult.pit INFO Playing match: Random vs RawMCTS_sims9_rollouts10
+2025-01-29 17:28:57,574 tacult.pit INFO 
+Statistics After Match: Random vs RawMCTS_sims9_rollouts10
+2025-01-29 17:28:57,574 tacult.pit INFO ----------------------------------------------------------------------------------------------------
+2025-01-29 17:28:57,574 tacult.pit INFO Agent                          Rating     Games    Wins   Losses Draws  Win Rate Loss Rate Draw Rate
+2025-01-29 17:28:57,574 tacult.pit INFO ----------------------------------------------------------------------------------------------------
+2025-01-29 17:28:57,574 tacult.pit INFO RawMCTS_sims81_rollouts10         1740.3      24    14      4      6    58.3%    16.7%    25.0%
+2025-01-29 17:28:57,574 tacult.pit INFO RawMCTS_sims9_rollouts10          1604.9      24    13      8      3    54.2%    33.3%    12.5%
+2025-01-29 17:28:57,575 tacult.pit INFO Random                            1544.5      24     6     14      4    25.0%    58.3%    16.7%
+2025-01-29 17:28:57,575 tacult.pit INFO temp_resnet3_iter1_sims2          1454.0      24     8     15      1    33.3%    62.5%     4.2%
+2025-01-29 17:28:57,575 tacult.pit INFO ----------------------------------------------------------------------------------------------------
+
+2025-01-29 17:28:57,575 tacult.pit INFO 
+Round 1 Statistics:
+2025-01-29 17:28:57,575 tacult.pit INFO --------------------------------------------------
+2025-01-29 17:28:57,575 tacult.pit INFO 
+ELO Ratings:
+2025-01-29 17:28:57,575 tacult.pit INFO RawMCTS_sims81_rollouts10: 1740.3 (24 games played)
+2025-01-29 17:28:57,575 tacult.pit INFO RawMCTS_sims9_rollouts10: 1604.9 (24 games played)
+2025-01-29 17:28:57,575 tacult.pit INFO Random: 1544.5 (24 games played)
+2025-01-29 17:28:57,575 tacult.pit INFO temp_resnet3_iter1_sims2: 1454.0 (24 games played)
+2025-01-29 17:28:57,575 tacult.pit INFO 
+Win Rates:
+2025-01-29 17:28:57,575 tacult.pit INFO temp_resnet3_iter1_sims2: 33.3% (W: 8, L: 15, D: 1) (24 games)
+2025-01-29 17:28:57,575 tacult.pit INFO Random: 25.0% (W: 6, L: 14, D: 4) (24 games)
+2025-01-29 17:28:57,575 tacult.pit INFO RawMCTS_sims9_rollouts10: 54.2% (W: 13, L: 8, D: 3) (24 games)
+2025-01-29 17:28:57,576 tacult.pit INFO RawMCTS_sims81_rollouts10: 58.3% (W: 14, L: 4, D: 6) (24 games)
+2025-01-29 17:28:57,576 tacult.pit INFO --------------------------------------------------
+
+2025-01-29 17:28:57,576 tacult.pit INFO Starting round 2/1000
+2025-01-29 17:28:57,576 tacult.pit INFO Playing match: temp_resnet3_iter1_sims2 vs RawMCTS_sims9_rollouts10
+2025-01-29 17:29:01,411 tacult.pit INFO 
+Statistics After Match: temp_resnet3_iter1_sims2 vs RawMCTS_sims9_rollouts10
+2025-01-29 17:29:01,412 tacult.pit INFO ----------------------------------------------------------------------------------------------------
+2025-01-29 17:29:01,412 tacult.pit INFO Agent                          Rating     Games    Wins   Losses Draws  Win Rate Loss Rate Draw Rate
+2025-01-29 17:29:01,412 tacult.pit INFO ----------------------------------------------------------------------------------------------------
+2025-01-29 17:29:01,412 tacult.pit INFO RawMCTS_sims81_rollouts10         1740.3      24    14      4      6    58.3%    16.7%    25.0%
+2025-01-29 17:29:01,412 tacult.pit INFO RawMCTS_sims9_rollouts10          1602.8      32    18     10      4    56.2%    31.2%    12.5%
+2025-01-29 17:29:01,412 tacult.pit INFO Random                            1544.5      24     6     14      4    25.0%    58.3%    16.7%
+2025-01-29 17:29:01,412 tacult.pit INFO temp_resnet3_iter1_sims2          1456.9      32    10     20      2    31.2%    62.5%     6.2%
+2025-01-29 17:29:01,412 tacult.pit INFO ----------------------------------------------------------------------------------------------------
+
+2025-01-29 17:29:01,412 tacult.pit INFO Playing match: Random vs RawMCTS_sims9_rollouts10
+2025-01-29 17:29:05,095 tacult.pit INFO 
+Statistics After Match: Random vs RawMCTS_sims9_rollouts10
+2025-01-29 17:29:05,095 tacult.pit INFO ----------------------------------------------------------------------------------------------------
+2025-01-29 17:29:05,095 tacult.pit INFO Agent                          Rating     Games    Wins   Losses Draws  Win Rate Loss Rate Draw Rate
+2025-01-29 17:29:05,095 tacult.pit INFO ----------------------------------------------------------------------------------------------------
+2025-01-29 17:29:05,095 tacult.pit INFO RawMCTS_sims81_rollouts10         1740.3      24    14      4      6    58.3%    16.7%    25.0%
+2025-01-29 17:29:05,095 tacult.pit INFO RawMCTS_sims9_rollouts10          1611.7      40    22     12      6    55.0%    30.0%    15.0%
+2025-01-29 17:29:05,095 tacult.pit INFO Random                            1532.1      32     8     18      6    25.0%    56.2%    18.8%
+2025-01-29 17:29:05,095 tacult.pit INFO temp_resnet3_iter1_sims2          1456.9      32    10     20      2    31.2%    62.5%     6.2%
+2025-01-29 17:29:05,095 tacult.pit INFO ----------------------------------------------------------------------------------------------------
+
+2025-01-29 17:29:05,095 tacult.pit INFO Playing match: RawMCTS_sims9_rollouts10 vs RawMCTS_sims81_rollouts10
+2025-01-29 17:29:47,558 tacult.pit INFO 
+Statistics After Match: RawMCTS_sims9_rollouts10 vs RawMCTS_sims81_rollouts10
+2025-01-29 17:29:47,558 tacult.pit INFO ----------------------------------------------------------------------------------------------------
+2025-01-29 17:29:47,558 tacult.pit INFO Agent                          Rating     Games    Wins   Losses Draws  Win Rate Loss Rate Draw Rate
+2025-01-29 17:29:47,558 tacult.pit INFO ----------------------------------------------------------------------------------------------------
+2025-01-29 17:29:47,559 tacult.pit INFO RawMCTS_sims81_rollouts10         1725.6      32    18      6      8    56.2%    18.8%    25.0%
+2025-01-29 17:29:47,559 tacult.pit INFO RawMCTS_sims9_rollouts10          1618.8      48    24     16      8    50.0%    33.3%    16.7%
+2025-01-29 17:29:47,559 tacult.pit INFO Random                            1532.1      32     8     18      6    25.0%    56.2%    18.8%
+2025-01-29 17:29:47,559 tacult.pit INFO temp_resnet3_iter1_sims2          1456.9      32    10     20      2    31.2%    62.5%     6.2%
+2025-01-29 17:29:47,559 tacult.pit INFO ----------------------------------------------------------------------------------------------------
+
+2025-01-29 17:29:47,559 tacult.pit INFO Playing match: temp_resnet3_iter1_sims2 vs RawMCTS_sims81_rollouts10
+2025-01-29 17:30:22,847 tacult.pit INFO 
+Statistics After Match: temp_resnet3_iter1_sims2 vs RawMCTS_sims81_rollouts10
+2025-01-29 17:30:22,847 tacult.pit INFO ----------------------------------------------------------------------------------------------------
+2025-01-29 17:30:22,847 tacult.pit INFO Agent                          Rating     Games    Wins   Losses Draws  Win Rate Loss Rate Draw Rate
+2025-01-29 17:30:22,847 tacult.pit INFO ----------------------------------------------------------------------------------------------------
+2025-01-29 17:30:22,847 tacult.pit INFO RawMCTS_sims81_rollouts10         1724.5      40    24      7      9    60.0%    17.5%    22.5%
+2025-01-29 17:30:22,847 tacult.pit INFO RawMCTS_sims9_rollouts10          1618.8      48    24     16      8    50.0%    33.3%    16.7%
+2025-01-29 17:30:22,848 tacult.pit INFO Random                            1532.1      32     8     18      6    25.0%    56.2%    18.8%
+2025-01-29 17:30:22,848 tacult.pit INFO temp_resnet3_iter1_sims2          1458.0      40    11     26      3    27.5%    65.0%     7.5%
+2025-01-29 17:30:22,848 tacult.pit INFO ----------------------------------------------------------------------------------------------------
+
+2025-01-29 17:30:22,848 tacult.pit INFO Playing match: temp_resnet3_iter1_sims2 vs Random
+2025-01-29 17:30:23,096 tacult.pit INFO 
+Statistics After Match: temp_resnet3_iter1_sims2 vs Random
+2025-01-29 17:30:23,096 tacult.pit INFO ----------------------------------------------------------------------------------------------------
+2025-01-29 17:30:23,096 tacult.pit INFO Agent                          Rating     Games    Wins   Losses Draws  Win Rate Loss Rate Draw Rate
+2025-01-29 17:30:23,096 tacult.pit INFO ----------------------------------------------------------------------------------------------------
+2025-01-29 17:30:23,096 tacult.pit INFO RawMCTS_sims81_rollouts10         1724.5      40    24      7      9    60.0%    17.5%    22.5%
+2025-01-29 17:30:23,096 tacult.pit INFO RawMCTS_sims9_rollouts10          1618.8      48    24     16      8    50.0%    33.3%    16.7%
+2025-01-29 17:30:23,096 tacult.pit INFO temp_resnet3_iter1_sims2          1524.1      48    16     27      5    33.3%    56.2%    10.4%
+2025-01-29 17:30:23,096 tacult.pit INFO Random                            1459.3      40     9     23      8    22.5%    57.5%    20.0%
+2025-01-29 17:30:23,096 tacult.pit INFO ----------------------------------------------------------------------------------------------------
+
+2025-01-29 17:30:23,097 tacult.pit INFO Playing match: Random vs RawMCTS_sims81_rollouts10
+2025-01-29 17:31:03,056 tacult.pit INFO 
+Statistics After Match: Random vs RawMCTS_sims81_rollouts10
+2025-01-29 17:31:03,056 tacult.pit INFO ----------------------------------------------------------------------------------------------------
+2025-01-29 17:31:03,056 tacult.pit INFO Agent                          Rating     Games    Wins   Losses Draws  Win Rate Loss Rate Draw Rate
+2025-01-29 17:31:03,056 tacult.pit INFO ----------------------------------------------------------------------------------------------------
+2025-01-29 17:31:03,056 tacult.pit INFO RawMCTS_sims81_rollouts10         1672.0      48    27      9     12    56.2%    18.8%    25.0%
+2025-01-29 17:31:03,056 tacult.pit INFO RawMCTS_sims9_rollouts10          1618.8      48    24     16      8    50.0%    33.3%    16.7%
+2025-01-29 17:31:03,056 tacult.pit INFO temp_resnet3_iter1_sims2          1524.1      48    16     27      5    33.3%    56.2%    10.4%
+2025-01-29 17:31:03,057 tacult.pit INFO Random                            1504.7      48    11     26     11    22.9%    54.2%    22.9%
+2025-01-29 17:31:03,057 tacult.pit INFO ----------------------------------------------------------------------------------------------------
+
+2025-01-29 17:31:03,057 tacult.pit INFO 
+Round 2 Statistics:
+2025-01-29 17:31:03,057 tacult.pit INFO --------------------------------------------------
+2025-01-29 17:31:03,057 tacult.pit INFO 
+ELO Ratings:
+2025-01-29 17:31:03,057 tacult.pit INFO RawMCTS_sims81_rollouts10: 1672.0 (48 games played)
+2025-01-29 17:31:03,057 tacult.pit INFO RawMCTS_sims9_rollouts10: 1618.8 (48 games played)
+2025-01-29 17:31:03,057 tacult.pit INFO temp_resnet3_iter1_sims2: 1524.1 (48 games played)
+2025-01-29 17:31:03,057 tacult.pit INFO Random: 1504.7 (48 games played)
+2025-01-29 17:31:03,058 tacult.pit INFO 
+Win Rates:
+2025-01-29 17:31:03,058 tacult.pit INFO temp_resnet3_iter1_sims2: 33.3% (W: 16, L: 27, D: 5) (48 games)
+2025-01-29 17:31:03,058 tacult.pit INFO Random: 22.9% (W: 11, L: 26, D: 11) (48 games)
+2025-01-29 17:31:03,058 tacult.pit INFO RawMCTS_sims9_rollouts10: 50.0% (W: 24, L: 16, D: 8) (48 games)
+2025-01-29 17:31:03,058 tacult.pit INFO RawMCTS_sims81_rollouts10: 56.2% (W: 27, L: 9, D: 12) (48 games)
+2025-01-29 17:31:03,058 tacult.pit INFO --------------------------------------------------
+
+2025-01-29 17:31:03,058 tacult.pit INFO Starting round 3/1000
+2025-01-29 17:31:03,058 tacult.pit INFO Playing match: Random vs RawMCTS_sims9_rollouts10
+2025-01-29 17:31:07,612 tacult.pit INFO 
+Statistics After Match: Random vs RawMCTS_sims9_rollouts10
+2025-01-29 17:31:07,613 tacult.pit INFO ----------------------------------------------------------------------------------------------------
+2025-01-29 17:31:07,613 tacult.pit INFO Agent                          Rating     Games    Wins   Losses Draws  Win Rate Loss Rate Draw Rate
+2025-01-29 17:31:07,614 tacult.pit INFO ----------------------------------------------------------------------------------------------------
+2025-01-29 17:31:07,615 tacult.pit INFO RawMCTS_sims81_rollouts10         1672.0      48    27      9     12    56.2%    18.8%    25.0%
+2025-01-29 17:31:07,615 tacult.pit INFO RawMCTS_sims9_rollouts10          1605.7      56    28     19      9    50.0%    33.9%    16.1%
+2025-01-29 17:31:07,616 tacult.pit INFO temp_resnet3_iter1_sims2          1524.1      48    16     27      5    33.3%    56.2%    10.4%
+2025-01-29 17:31:07,617 tacult.pit INFO Random                            1518.7      56    14     30     12    25.0%    53.6%    21.4%
+2025-01-29 17:31:07,618 tacult.pit INFO ----------------------------------------------------------------------------------------------------
+
+2025-01-29 17:31:07,619 tacult.pit INFO Playing match: temp_resnet3_iter1_sims2 vs RawMCTS_sims9_rollouts10
+2025-01-29 17:31:11,994 tacult.pit INFO 
+Statistics After Match: temp_resnet3_iter1_sims2 vs RawMCTS_sims9_rollouts10
+2025-01-29 17:31:11,994 tacult.pit INFO ----------------------------------------------------------------------------------------------------
+2025-01-29 17:31:11,994 tacult.pit INFO Agent                          Rating     Games    Wins   Losses Draws  Win Rate Loss Rate Draw Rate
+2025-01-29 17:31:11,994 tacult.pit INFO ----------------------------------------------------------------------------------------------------
+2025-01-29 17:31:11,994 tacult.pit INFO RawMCTS_sims81_rollouts10         1672.0      48    27      9     12    56.2%    18.8%    25.0%
+2025-01-29 17:31:11,994 tacult.pit INFO RawMCTS_sims9_rollouts10          1637.6      64    35     20      9    54.7%    31.2%    14.1%
+2025-01-29 17:31:11,994 tacult.pit INFO Random                            1518.7      56    14     30     12    25.0%    53.6%    21.4%
+2025-01-29 17:31:11,994 tacult.pit INFO temp_resnet3_iter1_sims2          1483.6      56    17     34      5    30.4%    60.7%     8.9%
+2025-01-29 17:31:11,994 tacult.pit INFO ----------------------------------------------------------------------------------------------------
+
+2025-01-29 17:31:11,994 tacult.pit INFO Playing match: temp_resnet3_iter1_sims2 vs Random
+2025-01-29 17:31:12,182 tacult.pit INFO 
+Statistics After Match: temp_resnet3_iter1_sims2 vs Random
+2025-01-29 17:31:12,182 tacult.pit INFO ----------------------------------------------------------------------------------------------------
+2025-01-29 17:31:12,182 tacult.pit INFO Agent                          Rating     Games    Wins   Losses Draws  Win Rate Loss Rate Draw Rate
+2025-01-29 17:31:12,182 tacult.pit INFO ----------------------------------------------------------------------------------------------------
+2025-01-29 17:31:12,182 tacult.pit INFO RawMCTS_sims81_rollouts10         1672.0      48    27      9     12    56.2%    18.8%    25.0%
+2025-01-29 17:31:12,182 tacult.pit INFO RawMCTS_sims9_rollouts10          1637.6      64    35     20      9    54.7%    31.2%    14.1%
+2025-01-29 17:31:12,182 tacult.pit INFO temp_resnet3_iter1_sims2          1522.7      64    23     36      5    35.9%    56.2%     7.8%
+2025-01-29 17:31:12,182 tacult.pit INFO Random                            1480.5      64    16     36     12    25.0%    56.2%    18.8%
+2025-01-29 17:31:12,182 tacult.pit INFO ----------------------------------------------------------------------------------------------------
+
+2025-01-29 17:31:12,182 tacult.pit INFO Playing match: temp_resnet3_iter1_sims2 vs RawMCTS_sims81_rollouts10
+2025-01-29 17:31:47,651 tacult.pit INFO 
+Statistics After Match: temp_resnet3_iter1_sims2 vs RawMCTS_sims81_rollouts10
+2025-01-29 17:31:47,652 tacult.pit INFO ----------------------------------------------------------------------------------------------------
+2025-01-29 17:31:47,652 tacult.pit INFO Agent                          Rating     Games    Wins   Losses Draws  Win Rate Loss Rate Draw Rate
+2025-01-29 17:31:47,652 tacult.pit INFO ----------------------------------------------------------------------------------------------------
+2025-01-29 17:31:47,652 tacult.pit INFO RawMCTS_sims81_rollouts10         1691.1      56    33     10     13    58.9%    17.9%    23.2%
+2025-01-29 17:31:47,652 tacult.pit INFO RawMCTS_sims9_rollouts10          1637.6      64    35     20      9    54.7%    31.2%    14.1%
+2025-01-29 17:31:47,652 tacult.pit INFO temp_resnet3_iter1_sims2          1509.5      72    24     42      6    33.3%    58.3%     8.3%
+2025-01-29 17:31:47,652 tacult.pit INFO Random                            1480.5      64    16     36     12    25.0%    56.2%    18.8%
+2025-01-29 17:31:47,652 tacult.pit INFO ----------------------------------------------------------------------------------------------------
+
+2025-01-29 17:31:47,652 tacult.pit INFO Playing match: Random vs RawMCTS_sims81_rollouts10
+2025-01-29 17:32:28,848 tacult.pit INFO 
+Statistics After Match: Random vs RawMCTS_sims81_rollouts10
+2025-01-29 17:32:28,848 tacult.pit INFO ----------------------------------------------------------------------------------------------------
+2025-01-29 17:32:28,848 tacult.pit INFO Agent                          Rating     Games    Wins   Losses Draws  Win Rate Loss Rate Draw Rate
+2025-01-29 17:32:28,849 tacult.pit INFO ----------------------------------------------------------------------------------------------------
+2025-01-29 17:32:28,849 tacult.pit INFO RawMCTS_sims81_rollouts10         1669.9      64    37     12     15    57.8%    18.8%    23.4%
+2025-01-29 17:32:28,849 tacult.pit INFO RawMCTS_sims9_rollouts10          1637.6      64    35     20      9    54.7%    31.2%    14.1%
+2025-01-29 17:32:28,849 tacult.pit INFO temp_resnet3_iter1_sims2          1509.5      72    24     42      6    33.3%    58.3%     8.3%
+2025-01-29 17:32:28,849 tacult.pit INFO Random                            1497.1      72    18     40     14    25.0%    55.6%    19.4%
+2025-01-29 17:32:28,849 tacult.pit INFO ----------------------------------------------------------------------------------------------------
+
+2025-01-29 17:32:28,849 tacult.pit INFO Playing match: RawMCTS_sims9_rollouts10 vs RawMCTS_sims81_rollouts10
+2025-01-29 17:33:09,772 tacult.pit INFO 
+Statistics After Match: RawMCTS_sims9_rollouts10 vs RawMCTS_sims81_rollouts10
+2025-01-29 17:33:09,772 tacult.pit INFO ----------------------------------------------------------------------------------------------------
+2025-01-29 17:33:09,772 tacult.pit INFO Agent                          Rating     Games    Wins   Losses Draws  Win Rate Loss Rate Draw Rate
+2025-01-29 17:33:09,772 tacult.pit INFO ----------------------------------------------------------------------------------------------------
+2025-01-29 17:33:09,772 tacult.pit INFO RawMCTS_sims81_rollouts10         1679.9      72    41     14     17    56.9%    19.4%    23.6%
+2025-01-29 17:33:09,773 tacult.pit INFO RawMCTS_sims9_rollouts10          1629.0      72    37     24     11    51.4%    33.3%    15.3%
+2025-01-29 17:33:09,773 tacult.pit INFO temp_resnet3_iter1_sims2          1509.5      72    24     42      6    33.3%    58.3%     8.3%
+2025-01-29 17:33:09,773 tacult.pit INFO Random                            1497.1      72    18     40     14    25.0%    55.6%    19.4%
+2025-01-29 17:33:09,773 tacult.pit INFO ----------------------------------------------------------------------------------------------------
+
+2025-01-29 17:33:09,773 tacult.pit INFO 
+Round 3 Statistics:
+2025-01-29 17:33:09,773 tacult.pit INFO --------------------------------------------------
+2025-01-29 17:33:09,773 tacult.pit INFO 
+ELO Ratings:
+2025-01-29 17:33:09,773 tacult.pit INFO RawMCTS_sims81_rollouts10: 1679.9 (72 games played)
+2025-01-29 17:33:09,773 tacult.pit INFO RawMCTS_sims9_rollouts10: 1629.0 (72 games played)
+2025-01-29 17:33:09,773 tacult.pit INFO temp_resnet3_iter1_sims2: 1509.5 (72 games played)
+2025-01-29 17:33:09,773 tacult.pit INFO Random: 1497.1 (72 games played)
+2025-01-29 17:33:09,774 tacult.pit INFO 
+Win Rates:
+2025-01-29 17:33:09,774 tacult.pit INFO temp_resnet3_iter1_sims2: 33.3% (W: 24, L: 42, D: 6) (72 games)
+2025-01-29 17:33:09,774 tacult.pit INFO Random: 25.0% (W: 18, L: 40, D: 14) (72 games)
+2025-01-29 17:33:09,774 tacult.pit INFO RawMCTS_sims9_rollouts10: 51.4% (W: 37, L: 24, D: 11) (72 games)
+2025-01-29 17:33:09,774 tacult.pit INFO RawMCTS_sims81_rollouts10: 56.9% (W: 41, L: 14, D: 17) (72 games)
+2025-01-29 17:33:09,774 tacult.pit INFO --------------------------------------------------
+
+2025-01-29 17:33:09,774 tacult.pit INFO Starting round 4/1000
+2025-01-29 17:33:09,774 tacult.pit INFO Playing match: RawMCTS_sims9_rollouts10 vs RawMCTS_sims81_rollouts10
+2025-01-29 17:33:52,559 tacult.pit INFO 
+Statistics After Match: RawMCTS_sims9_rollouts10 vs RawMCTS_sims81_rollouts10
+2025-01-29 17:33:52,559 tacult.pit INFO ----------------------------------------------------------------------------------------------------
+2025-01-29 17:33:52,559 tacult.pit INFO Agent                          Rating     Games    Wins   Losses Draws  Win Rate Loss Rate Draw Rate
+2025-01-29 17:33:52,559 tacult.pit INFO ----------------------------------------------------------------------------------------------------
+2025-01-29 17:33:52,559 tacult.pit INFO RawMCTS_sims81_rollouts10         1678.9      80    45     17     18    56.2%    21.2%    22.5%
+2025-01-29 17:33:52,559 tacult.pit INFO RawMCTS_sims9_rollouts10          1629.9      80    40     28     12    50.0%    35.0%    15.0%
+2025-01-29 17:33:52,559 tacult.pit INFO temp_resnet3_iter1_sims2          1509.5      72    24     42      6    33.3%    58.3%     8.3%
+2025-01-29 17:33:52,559 tacult.pit INFO Random                            1497.1      72    18     40     14    25.0%    55.6%    19.4%
+2025-01-29 17:33:52,559 tacult.pit INFO ----------------------------------------------------------------------------------------------------
+
+2025-01-29 17:33:52,560 tacult.pit INFO Playing match: Random vs RawMCTS_sims81_rollouts10
+2025-01-29 17:34:30,845 tacult.pit INFO 
+Statistics After Match: Random vs RawMCTS_sims81_rollouts10
+2025-01-29 17:34:30,845 tacult.pit INFO ----------------------------------------------------------------------------------------------------
+2025-01-29 17:34:30,845 tacult.pit INFO Agent                          Rating     Games    Wins   Losses Draws  Win Rate Loss Rate Draw Rate
+2025-01-29 17:34:30,845 tacult.pit INFO ----------------------------------------------------------------------------------------------------
+2025-01-29 17:34:30,845 tacult.pit INFO RawMCTS_sims81_rollouts10         1680.1      88    50     18     20    56.8%    20.5%    22.7%
+2025-01-29 17:34:30,845 tacult.pit INFO RawMCTS_sims9_rollouts10          1629.9      80    40     28     12    50.0%    35.0%    15.0%
+2025-01-29 17:34:30,846 tacult.pit INFO temp_resnet3_iter1_sims2          1509.5      72    24     42      6    33.3%    58.3%     8.3%
+2025-01-29 17:34:30,846 tacult.pit INFO Random                            1495.7      80    19     45     16    23.8%    56.2%    20.0%
+2025-01-29 17:34:30,846 tacult.pit INFO ----------------------------------------------------------------------------------------------------
+
+2025-01-29 17:34:30,846 tacult.pit INFO Playing match: Random vs RawMCTS_sims9_rollouts10
+2025-01-29 17:34:35,211 tacult.pit INFO 
+Statistics After Match: Random vs RawMCTS_sims9_rollouts10
+2025-01-29 17:34:35,211 tacult.pit INFO ----------------------------------------------------------------------------------------------------
+2025-01-29 17:34:35,211 tacult.pit INFO Agent                          Rating     Games    Wins   Losses Draws  Win Rate Loss Rate Draw Rate
+2025-01-29 17:34:35,211 tacult.pit INFO ----------------------------------------------------------------------------------------------------
+2025-01-29 17:34:35,211 tacult.pit INFO RawMCTS_sims81_rollouts10         1680.1      88    50     18     20    56.8%    20.5%    22.7%
+2025-01-29 17:34:35,211 tacult.pit INFO RawMCTS_sims9_rollouts10          1641.8      88    46     29     13    52.3%    33.0%    14.8%
+2025-01-29 17:34:35,211 tacult.pit INFO temp_resnet3_iter1_sims2          1509.5      72    24     42      6    33.3%    58.3%     8.3%
+2025-01-29 17:34:35,212 tacult.pit INFO Random                            1482.8      88    20     51     17    22.7%    58.0%    19.3%
+2025-01-29 17:34:35,212 tacult.pit INFO ----------------------------------------------------------------------------------------------------
+
+2025-01-29 17:34:35,212 tacult.pit INFO Playing match: temp_resnet3_iter1_sims2 vs RawMCTS_sims81_rollouts10
+2025-01-29 17:35:12,535 tacult.pit INFO 
+Statistics After Match: temp_resnet3_iter1_sims2 vs RawMCTS_sims81_rollouts10
+2025-01-29 17:35:12,535 tacult.pit INFO ----------------------------------------------------------------------------------------------------
+2025-01-29 17:35:12,536 tacult.pit INFO Agent                          Rating     Games    Wins   Losses Draws  Win Rate Loss Rate Draw Rate
+2025-01-29 17:35:12,536 tacult.pit INFO ----------------------------------------------------------------------------------------------------
+2025-01-29 17:35:12,536 tacult.pit INFO RawMCTS_sims81_rollouts10         1706.6      96    58     18     20    60.4%    18.8%    20.8%
+2025-01-29 17:35:12,536 tacult.pit INFO RawMCTS_sims9_rollouts10          1641.8      88    46     29     13    52.3%    33.0%    14.8%
+2025-01-29 17:35:12,536 tacult.pit INFO Random                            1482.8      88    20     51     17    22.7%    58.0%    19.3%
+2025-01-29 17:35:12,536 tacult.pit INFO temp_resnet3_iter1_sims2          1480.0      80    24     50      6    30.0%    62.5%     7.5%
+2025-01-29 17:35:12,536 tacult.pit INFO ----------------------------------------------------------------------------------------------------
+
+2025-01-29 17:35:12,536 tacult.pit INFO Playing match: temp_resnet3_iter1_sims2 vs RawMCTS_sims9_rollouts10
+2025-01-29 17:35:16,453 tacult.pit INFO 
+Statistics After Match: temp_resnet3_iter1_sims2 vs RawMCTS_sims9_rollouts10
+2025-01-29 17:35:16,454 tacult.pit INFO ----------------------------------------------------------------------------------------------------
+2025-01-29 17:35:16,454 tacult.pit INFO Agent                          Rating     Games    Wins   Losses Draws  Win Rate Loss Rate Draw Rate
+2025-01-29 17:35:16,454 tacult.pit INFO ----------------------------------------------------------------------------------------------------
+2025-01-29 17:35:16,454 tacult.pit INFO RawMCTS_sims81_rollouts10         1706.6      96    58     18     20    60.4%    18.8%    20.8%
+2025-01-29 17:35:16,454 tacult.pit INFO RawMCTS_sims9_rollouts10          1644.8      96    52     31     13    54.2%    32.3%    13.5%
+2025-01-29 17:35:16,454 tacult.pit INFO Random                            1482.8      88    20     51     17    22.7%    58.0%    19.3%
+2025-01-29 17:35:16,454 tacult.pit INFO temp_resnet3_iter1_sims2          1476.5      88    26     56      6    29.5%    63.6%     6.8%
+2025-01-29 17:35:16,455 tacult.pit INFO ----------------------------------------------------------------------------------------------------
+
+2025-01-29 17:35:16,455 tacult.pit INFO Playing match: temp_resnet3_iter1_sims2 vs Random
+2025-01-29 17:35:16,642 tacult.pit INFO 
+Statistics After Match: temp_resnet3_iter1_sims2 vs Random
+2025-01-29 17:35:16,642 tacult.pit INFO ----------------------------------------------------------------------------------------------------
+2025-01-29 17:35:16,642 tacult.pit INFO Agent                          Rating     Games    Wins   Losses Draws  Win Rate Loss Rate Draw Rate
+2025-01-29 17:35:16,643 tacult.pit INFO ----------------------------------------------------------------------------------------------------
+2025-01-29 17:35:16,643 tacult.pit INFO RawMCTS_sims81_rollouts10         1706.6      96    58     18     20    60.4%    18.8%    20.8%
+2025-01-29 17:35:16,643 tacult.pit INFO RawMCTS_sims9_rollouts10          1644.8      96    52     31     13    54.2%    32.3%    13.5%
+2025-01-29 17:35:16,643 tacult.pit INFO temp_resnet3_iter1_sims2          1494.4      96    31     58      7    32.3%    60.4%     7.3%
+2025-01-29 17:35:16,643 tacult.pit INFO Random                            1465.0      96    22     56     18    22.9%    58.3%    18.8%
+2025-01-29 17:35:16,643 tacult.pit INFO ----------------------------------------------------------------------------------------------------
+
+2025-01-29 17:35:16,643 tacult.pit INFO 
+Round 4 Statistics:
+2025-01-29 17:35:16,643 tacult.pit INFO --------------------------------------------------
+2025-01-29 17:35:16,643 tacult.pit INFO 
+ELO Ratings:
+2025-01-29 17:35:16,643 tacult.pit INFO RawMCTS_sims81_rollouts10: 1706.6 (96 games played)
+2025-01-29 17:35:16,643 tacult.pit INFO RawMCTS_sims9_rollouts10: 1644.8 (96 games played)
+2025-01-29 17:35:16,643 tacult.pit INFO temp_resnet3_iter1_sims2: 1494.4 (96 games played)
+2025-01-29 17:35:16,643 tacult.pit INFO Random: 1465.0 (96 games played)
+2025-01-29 17:35:16,643 tacult.pit INFO 
+Win Rates:
+2025-01-29 17:35:16,643 tacult.pit INFO temp_resnet3_iter1_sims2: 32.3% (W: 31, L: 58, D: 7) (96 games)
+2025-01-29 17:35:16,643 tacult.pit INFO Random: 22.9% (W: 22, L: 56, D: 18) (96 games)
+2025-01-29 17:35:16,643 tacult.pit INFO RawMCTS_sims9_rollouts10: 54.2% (W: 52, L: 31, D: 13) (96 games)
+2025-01-29 17:35:16,643 tacult.pit INFO RawMCTS_sims81_rollouts10: 60.4% (W: 58, L: 18, D: 20) (96 games)
+2025-01-29 17:35:16,643 tacult.pit INFO --------------------------------------------------
+
+2025-01-29 17:35:16,643 tacult.pit INFO Starting round 5/1000
+2025-01-29 17:35:16,643 tacult.pit INFO Playing match: temp_resnet3_iter1_sims2 vs RawMCTS_sims9_rollouts10
+2025-01-29 17:35:21,325 tacult.pit INFO 
+Statistics After Match: temp_resnet3_iter1_sims2 vs RawMCTS_sims9_rollouts10
+2025-01-29 17:35:21,325 tacult.pit INFO ----------------------------------------------------------------------------------------------------
+2025-01-29 17:35:21,326 tacult.pit INFO Agent                          Rating     Games    Wins   Losses Draws  Win Rate Loss Rate Draw Rate
+2025-01-29 17:35:21,326 tacult.pit INFO ----------------------------------------------------------------------------------------------------
+2025-01-29 17:35:21,326 tacult.pit INFO RawMCTS_sims81_rollouts10         1706.6      96    58     18     20    60.4%    18.8%    20.8%
+2025-01-29 17:35:21,326 tacult.pit INFO RawMCTS_sims9_rollouts10          1638.5     104    57     34     13    54.8%    32.7%    12.5%
+2025-01-29 17:35:21,326 tacult.pit INFO temp_resnet3_iter1_sims2          1501.1     104    34     63      7    32.7%    60.6%     6.7%
+2025-01-29 17:35:21,326 tacult.pit INFO Random                            1465.0      96    22     56     18    22.9%    58.3%    18.8%
+2025-01-29 17:35:21,326 tacult.pit INFO ----------------------------------------------------------------------------------------------------
+
+2025-01-29 17:35:21,326 tacult.pit INFO Playing match: temp_resnet3_iter1_sims2 vs Random
+2025-01-29 17:35:21,644 tacult.pit INFO 
+Statistics After Match: temp_resnet3_iter1_sims2 vs Random
+2025-01-29 17:35:21,645 tacult.pit INFO ----------------------------------------------------------------------------------------------------
+2025-01-29 17:35:21,645 tacult.pit INFO Agent                          Rating     Games    Wins   Losses Draws  Win Rate Loss Rate Draw Rate
+2025-01-29 17:35:21,645 tacult.pit INFO ----------------------------------------------------------------------------------------------------
+2025-01-29 17:35:21,645 tacult.pit INFO RawMCTS_sims81_rollouts10         1706.6      96    58     18     20    60.4%    18.8%    20.8%
+2025-01-29 17:35:21,645 tacult.pit INFO RawMCTS_sims9_rollouts10          1638.5     104    57     34     13    54.8%    32.7%    12.5%
+2025-01-29 17:35:21,645 tacult.pit INFO temp_resnet3_iter1_sims2          1527.2     112    41     64      7    36.6%    57.1%     6.2%
+2025-01-29 17:35:21,645 tacult.pit INFO Random                            1437.7     104    23     63     18    22.1%    60.6%    17.3%
+2025-01-29 17:35:21,645 tacult.pit INFO ----------------------------------------------------------------------------------------------------
+
+2025-01-29 17:35:21,645 tacult.pit INFO Playing match: Random vs RawMCTS_sims81_rollouts10
+2025-01-29 17:36:02,754 tacult.pit INFO 
+Statistics After Match: Random vs RawMCTS_sims81_rollouts10
+2025-01-29 17:36:02,754 tacult.pit INFO ----------------------------------------------------------------------------------------------------
+2025-01-29 17:36:02,754 tacult.pit INFO Agent                          Rating     Games    Wins   Losses Draws  Win Rate Loss Rate Draw Rate
+2025-01-29 17:36:02,754 tacult.pit INFO ----------------------------------------------------------------------------------------------------
+2025-01-29 17:36:02,754 tacult.pit INFO RawMCTS_sims81_rollouts10         1717.3     104    65     18     21    62.5%    17.3%    20.2%
+2025-01-29 17:36:02,754 tacult.pit INFO RawMCTS_sims9_rollouts10          1638.5     104    57     34     13    54.8%    32.7%    12.5%
+2025-01-29 17:36:02,754 tacult.pit INFO temp_resnet3_iter1_sims2          1527.2     112    41     64      7    36.6%    57.1%     6.2%
+2025-01-29 17:36:02,754 tacult.pit INFO Random                            1428.1     112    23     70     19    20.5%    62.5%    17.0%
+2025-01-29 17:36:02,754 tacult.pit INFO ----------------------------------------------------------------------------------------------------
+
+2025-01-29 17:36:02,754 tacult.pit INFO Playing match: Random vs RawMCTS_sims9_rollouts10
+2025-01-29 17:36:06,721 tacult.pit INFO 
+Statistics After Match: Random vs RawMCTS_sims9_rollouts10
+2025-01-29 17:36:06,722 tacult.pit INFO ----------------------------------------------------------------------------------------------------
+2025-01-29 17:36:06,722 tacult.pit INFO Agent                          Rating     Games    Wins   Losses Draws  Win Rate Loss Rate Draw Rate
+2025-01-29 17:36:06,722 tacult.pit INFO ----------------------------------------------------------------------------------------------------
+2025-01-29 17:36:06,722 tacult.pit INFO RawMCTS_sims81_rollouts10         1717.3     104    65     18     21    62.5%    17.3%    20.2%
+2025-01-29 17:36:06,722 tacult.pit INFO RawMCTS_sims9_rollouts10          1631.9     112    61     35     16    54.5%    31.2%    14.3%
+2025-01-29 17:36:06,722 tacult.pit INFO temp_resnet3_iter1_sims2          1527.2     112    41     64      7    36.6%    57.1%     6.2%
+2025-01-29 17:36:06,722 tacult.pit INFO Random                            1434.7     120    24     74     22    20.0%    61.7%    18.3%
+2025-01-29 17:36:06,722 tacult.pit INFO ----------------------------------------------------------------------------------------------------
+
+2025-01-29 17:36:06,722 tacult.pit INFO Playing match: RawMCTS_sims9_rollouts10 vs RawMCTS_sims81_rollouts10
+2025-01-29 17:36:53,077 tacult.pit INFO 
+Statistics After Match: RawMCTS_sims9_rollouts10 vs RawMCTS_sims81_rollouts10
+2025-01-29 17:36:53,077 tacult.pit INFO ----------------------------------------------------------------------------------------------------
+2025-01-29 17:36:53,077 tacult.pit INFO Agent                          Rating     Games    Wins   Losses Draws  Win Rate Loss Rate Draw Rate
+2025-01-29 17:36:53,077 tacult.pit INFO ----------------------------------------------------------------------------------------------------
+2025-01-29 17:36:53,077 tacult.pit INFO RawMCTS_sims81_rollouts10         1734.1     112    70     18     24    62.5%    16.1%    21.4%
+2025-01-29 17:36:53,077 tacult.pit INFO RawMCTS_sims9_rollouts10          1617.2     120    61     40     19    50.8%    33.3%    15.8%
+2025-01-29 17:36:53,077 tacult.pit INFO temp_resnet3_iter1_sims2          1527.2     112    41     64      7    36.6%    57.1%     6.2%
+2025-01-29 17:36:53,077 tacult.pit INFO Random                            1434.7     120    24     74     22    20.0%    61.7%    18.3%
+2025-01-29 17:36:53,078 tacult.pit INFO ----------------------------------------------------------------------------------------------------
+
+2025-01-29 17:36:53,078 tacult.pit INFO Playing match: temp_resnet3_iter1_sims2 vs RawMCTS_sims81_rollouts10
+2025-01-29 17:37:33,060 tacult.pit INFO 
+Statistics After Match: temp_resnet3_iter1_sims2 vs RawMCTS_sims81_rollouts10
+2025-01-29 17:37:33,060 tacult.pit INFO ----------------------------------------------------------------------------------------------------
+2025-01-29 17:37:33,061 tacult.pit INFO Agent                          Rating     Games    Wins   Losses Draws  Win Rate Loss Rate Draw Rate
+2025-01-29 17:37:33,061 tacult.pit INFO ----------------------------------------------------------------------------------------------------
+2025-01-29 17:37:33,061 tacult.pit INFO RawMCTS_sims81_rollouts10         1748.6     120    77     18     25    64.2%    15.0%    20.8%
+2025-01-29 17:37:33,061 tacult.pit INFO RawMCTS_sims9_rollouts10          1617.2     120    61     40     19    50.8%    33.3%    15.8%
+2025-01-29 17:37:33,061 tacult.pit INFO temp_resnet3_iter1_sims2          1513.6     120    41     71      8    34.2%    59.2%     6.7%
+2025-01-29 17:37:33,061 tacult.pit INFO Random                            1434.7     120    24     74     22    20.0%    61.7%    18.3%
+2025-01-29 17:37:33,061 tacult.pit INFO ----------------------------------------------------------------------------------------------------
+
+2025-01-29 17:37:33,061 tacult.pit INFO 
+Round 5 Statistics:
+2025-01-29 17:37:33,061 tacult.pit INFO --------------------------------------------------
+2025-01-29 17:37:33,061 tacult.pit INFO 
+ELO Ratings:
+2025-01-29 17:37:33,061 tacult.pit INFO RawMCTS_sims81_rollouts10: 1748.6 (120 games played)
+2025-01-29 17:37:33,061 tacult.pit INFO RawMCTS_sims9_rollouts10: 1617.2 (120 games played)
+2025-01-29 17:37:33,061 tacult.pit INFO temp_resnet3_iter1_sims2: 1513.6 (120 games played)
+2025-01-29 17:37:33,061 tacult.pit INFO Random: 1434.7 (120 games played)
+2025-01-29 17:37:33,061 tacult.pit INFO 
+Win Rates:
+2025-01-29 17:37:33,061 tacult.pit INFO temp_resnet3_iter1_sims2: 34.2% (W: 41, L: 71, D: 8) (120 games)
+2025-01-29 17:37:33,061 tacult.pit INFO Random: 20.0% (W: 24, L: 74, D: 22) (120 games)
+2025-01-29 17:37:33,062 tacult.pit INFO RawMCTS_sims9_rollouts10: 50.8% (W: 61, L: 40, D: 19) (120 games)
+2025-01-29 17:37:33,062 tacult.pit INFO RawMCTS_sims81_rollouts10: 64.2% (W: 77, L: 18, D: 25) (120 games)
+2025-01-29 17:37:33,062 tacult.pit INFO --------------------------------------------------
+
+2025-01-29 17:37:33,062 tacult.pit INFO Starting round 6/1000
+2025-01-29 17:37:33,062 tacult.pit INFO Playing match: temp_resnet3_iter1_sims2 vs Random
+2025-01-29 17:37:33,362 tacult.pit INFO 
+Statistics After Match: temp_resnet3_iter1_sims2 vs Random
+2025-01-29 17:37:33,362 tacult.pit INFO ----------------------------------------------------------------------------------------------------
+2025-01-29 17:37:33,362 tacult.pit INFO Agent                          Rating     Games    Wins   Losses Draws  Win Rate Loss Rate Draw Rate
+2025-01-29 17:37:33,362 tacult.pit INFO ----------------------------------------------------------------------------------------------------
+2025-01-29 17:37:33,362 tacult.pit INFO RawMCTS_sims81_rollouts10         1748.6     120    77     18     25    64.2%    15.0%    20.8%
+2025-01-29 17:37:33,363 tacult.pit INFO RawMCTS_sims9_rollouts10          1617.2     120    61     40     19    50.8%    33.3%    15.8%
+2025-01-29 17:37:33,363 tacult.pit INFO temp_resnet3_iter1_sims2          1505.3     128    44     74     10    34.4%    57.8%     7.8%
+2025-01-29 17:37:33,363 tacult.pit INFO Random                            1443.2     128    27     77     24    21.1%    60.2%    18.8%
+2025-01-29 17:37:33,363 tacult.pit INFO ----------------------------------------------------------------------------------------------------
+
+2025-01-29 17:37:33,363 tacult.pit INFO Playing match: Random vs RawMCTS_sims81_rollouts10
+2025-01-29 17:38:11,018 tacult.pit INFO 
+Statistics After Match: Random vs RawMCTS_sims81_rollouts10
+2025-01-29 17:38:11,018 tacult.pit INFO ----------------------------------------------------------------------------------------------------
+2025-01-29 17:38:11,018 tacult.pit INFO Agent                          Rating     Games    Wins   Losses Draws  Win Rate Loss Rate Draw Rate
+2025-01-29 17:38:11,018 tacult.pit INFO ----------------------------------------------------------------------------------------------------
+2025-01-29 17:38:11,019 tacult.pit INFO RawMCTS_sims81_rollouts10         1740.1     128    82     19     27    64.1%    14.8%    21.1%
+2025-01-29 17:38:11,019 tacult.pit INFO RawMCTS_sims9_rollouts10          1617.2     120    61     40     19    50.8%    33.3%    15.8%
+2025-01-29 17:38:11,019 tacult.pit INFO temp_resnet3_iter1_sims2          1505.3     128    44     74     10    34.4%    57.8%     7.8%
+2025-01-29 17:38:11,019 tacult.pit INFO Random                            1451.0     136    28     82     26    20.6%    60.3%    19.1%
+2025-01-29 17:38:11,019 tacult.pit INFO ----------------------------------------------------------------------------------------------------
+
+2025-01-29 17:38:11,019 tacult.pit INFO Playing match: Random vs RawMCTS_sims9_rollouts10
+2025-01-29 17:38:14,902 tacult.pit INFO 
+Statistics After Match: Random vs RawMCTS_sims9_rollouts10
+2025-01-29 17:38:14,902 tacult.pit INFO ----------------------------------------------------------------------------------------------------
+2025-01-29 17:38:14,902 tacult.pit INFO Agent                          Rating     Games    Wins   Losses Draws  Win Rate Loss Rate Draw Rate
+2025-01-29 17:38:14,902 tacult.pit INFO ----------------------------------------------------------------------------------------------------
+2025-01-29 17:38:14,902 tacult.pit INFO RawMCTS_sims81_rollouts10         1740.1     128    82     19     27    64.1%    14.8%    21.1%
+2025-01-29 17:38:14,902 tacult.pit INFO RawMCTS_sims9_rollouts10          1605.3     128    65     43     20    50.8%    33.6%    15.6%
+2025-01-29 17:38:14,902 tacult.pit INFO temp_resnet3_iter1_sims2          1505.3     128    44     74     10    34.4%    57.8%     7.8%
+2025-01-29 17:38:14,902 tacult.pit INFO Random                            1462.9     144    31     86     27    21.5%    59.7%    18.8%
+2025-01-29 17:38:14,902 tacult.pit INFO ----------------------------------------------------------------------------------------------------
+
+2025-01-29 17:38:14,902 tacult.pit INFO Playing match: temp_resnet3_iter1_sims2 vs RawMCTS_sims81_rollouts10
+2025-01-29 17:38:52,762 tacult.pit INFO 
+Statistics After Match: temp_resnet3_iter1_sims2 vs RawMCTS_sims81_rollouts10
+2025-01-29 17:38:52,762 tacult.pit INFO ----------------------------------------------------------------------------------------------------
+2025-01-29 17:38:52,762 tacult.pit INFO Agent                          Rating     Games    Wins   Losses Draws  Win Rate Loss Rate Draw Rate
+2025-01-29 17:38:52,762 tacult.pit INFO ----------------------------------------------------------------------------------------------------
+2025-01-29 17:38:52,763 tacult.pit INFO RawMCTS_sims81_rollouts10         1752.0     136    89     19     28    65.4%    14.0%    20.6%
+2025-01-29 17:38:52,763 tacult.pit INFO RawMCTS_sims9_rollouts10          1605.3     128    65     43     20    50.8%    33.6%    15.6%
+2025-01-29 17:38:52,763 tacult.pit INFO temp_resnet3_iter1_sims2          1494.4     136    44     81     11    32.4%    59.6%     8.1%
+2025-01-29 17:38:52,763 tacult.pit INFO Random                            1462.9     144    31     86     27    21.5%    59.7%    18.8%
+2025-01-29 17:38:52,763 tacult.pit INFO ----------------------------------------------------------------------------------------------------
+
+2025-01-29 17:38:52,763 tacult.pit INFO Playing match: RawMCTS_sims9_rollouts10 vs RawMCTS_sims81_rollouts10
+2025-01-29 17:39:33,273 tacult.pit INFO 
+Statistics After Match: RawMCTS_sims9_rollouts10 vs RawMCTS_sims81_rollouts10
+2025-01-29 17:39:33,273 tacult.pit INFO ----------------------------------------------------------------------------------------------------
+2025-01-29 17:39:33,273 tacult.pit INFO Agent                          Rating     Games    Wins   Losses Draws  Win Rate Loss Rate Draw Rate
+2025-01-29 17:39:33,273 tacult.pit INFO ----------------------------------------------------------------------------------------------------
+2025-01-29 17:39:33,273 tacult.pit INFO RawMCTS_sims81_rollouts10         1756.1     144    94     20     30    65.3%    13.9%    20.8%
+2025-01-29 17:39:33,273 tacult.pit INFO RawMCTS_sims9_rollouts10          1601.6     136    66     48     22    48.5%    35.3%    16.2%
+2025-01-29 17:39:33,273 tacult.pit INFO temp_resnet3_iter1_sims2          1494.4     136    44     81     11    32.4%    59.6%     8.1%
+2025-01-29 17:39:33,273 tacult.pit INFO Random                            1462.9     144    31     86     27    21.5%    59.7%    18.8%
+2025-01-29 17:39:33,273 tacult.pit INFO ----------------------------------------------------------------------------------------------------
+
+2025-01-29 17:39:33,273 tacult.pit INFO Playing match: temp_resnet3_iter1_sims2 vs RawMCTS_sims9_rollouts10
+2025-01-29 17:39:37,049 tacult.pit INFO 
+Statistics After Match: temp_resnet3_iter1_sims2 vs RawMCTS_sims9_rollouts10
+2025-01-29 17:39:37,049 tacult.pit INFO ----------------------------------------------------------------------------------------------------
+2025-01-29 17:39:37,049 tacult.pit INFO Agent                          Rating     Games    Wins   Losses Draws  Win Rate Loss Rate Draw Rate
+2025-01-29 17:39:37,049 tacult.pit INFO ----------------------------------------------------------------------------------------------------
+2025-01-29 17:39:37,049 tacult.pit INFO RawMCTS_sims81_rollouts10         1756.1     144    94     20     30    65.3%    13.9%    20.8%
+2025-01-29 17:39:37,049 tacult.pit INFO RawMCTS_sims9_rollouts10          1582.3     144    69     53     22    47.9%    36.8%    15.3%
+2025-01-29 17:39:37,049 tacult.pit INFO temp_resnet3_iter1_sims2          1514.2     144    49     84     11    34.0%    58.3%     7.6%
+2025-01-29 17:39:37,049 tacult.pit INFO Random                            1462.9     144    31     86     27    21.5%    59.7%    18.8%
+2025-01-29 17:39:37,049 tacult.pit INFO ----------------------------------------------------------------------------------------------------
+
+2025-01-29 17:39:37,049 tacult.pit INFO 
+Round 6 Statistics:
+2025-01-29 17:39:37,049 tacult.pit INFO --------------------------------------------------
+2025-01-29 17:39:37,049 tacult.pit INFO 
+ELO Ratings:
+2025-01-29 17:39:37,049 tacult.pit INFO RawMCTS_sims81_rollouts10: 1756.1 (144 games played)
+2025-01-29 17:39:37,049 tacult.pit INFO RawMCTS_sims9_rollouts10: 1582.3 (144 games played)
+2025-01-29 17:39:37,049 tacult.pit INFO temp_resnet3_iter1_sims2: 1514.2 (144 games played)
+2025-01-29 17:39:37,049 tacult.pit INFO Random: 1462.9 (144 games played)
+2025-01-29 17:39:37,049 tacult.pit INFO 
+Win Rates:
+2025-01-29 17:39:37,049 tacult.pit INFO temp_resnet3_iter1_sims2: 34.0% (W: 49, L: 84, D: 11) (144 games)
+2025-01-29 17:39:37,049 tacult.pit INFO Random: 21.5% (W: 31, L: 86, D: 27) (144 games)
+2025-01-29 17:39:37,049 tacult.pit INFO RawMCTS_sims9_rollouts10: 47.9% (W: 69, L: 53, D: 22) (144 games)
+2025-01-29 17:39:37,049 tacult.pit INFO RawMCTS_sims81_rollouts10: 65.3% (W: 94, L: 20, D: 30) (144 games)
+2025-01-29 17:39:37,049 tacult.pit INFO --------------------------------------------------
+
+2025-01-29 17:39:37,049 tacult.pit INFO Starting round 7/1000
+2025-01-29 17:39:37,049 tacult.pit INFO Playing match: temp_resnet3_iter1_sims2 vs RawMCTS_sims9_rollouts10
+2025-01-29 17:39:40,805 tacult.pit INFO 
+Statistics After Match: temp_resnet3_iter1_sims2 vs RawMCTS_sims9_rollouts10
+2025-01-29 17:39:40,805 tacult.pit INFO ----------------------------------------------------------------------------------------------------
+2025-01-29 17:39:40,805 tacult.pit INFO Agent                          Rating     Games    Wins   Losses Draws  Win Rate Loss Rate Draw Rate
+2025-01-29 17:39:40,805 tacult.pit INFO ----------------------------------------------------------------------------------------------------
+2025-01-29 17:39:40,805 tacult.pit INFO RawMCTS_sims81_rollouts10         1756.1     144    94     20     30    65.3%    13.9%    20.8%
+2025-01-29 17:39:40,805 tacult.pit INFO RawMCTS_sims9_rollouts10          1597.1     152    75     54     23    49.3%    35.5%    15.1%
+2025-01-29 17:39:40,805 tacult.pit INFO temp_resnet3_iter1_sims2          1499.1     152    50     90     12    32.9%    59.2%     7.9%
+2025-01-29 17:39:40,805 tacult.pit INFO Random                            1462.9     144    31     86     27    21.5%    59.7%    18.8%
+2025-01-29 17:39:40,805 tacult.pit INFO ----------------------------------------------------------------------------------------------------
+
+2025-01-29 17:39:40,805 tacult.pit INFO Playing match: Random vs RawMCTS_sims9_rollouts10
+2025-01-29 17:39:47,385 tacult.pit INFO 
+Statistics After Match: Random vs RawMCTS_sims9_rollouts10
+2025-01-29 17:39:47,385 tacult.pit INFO ----------------------------------------------------------------------------------------------------
+2025-01-29 17:39:47,385 tacult.pit INFO Agent                          Rating     Games    Wins   Losses Draws  Win Rate Loss Rate Draw Rate
+2025-01-29 17:39:47,385 tacult.pit INFO ----------------------------------------------------------------------------------------------------
+2025-01-29 17:39:47,385 tacult.pit INFO RawMCTS_sims81_rollouts10         1756.1     144    94     20     30    65.3%    13.9%    20.8%
+2025-01-29 17:39:47,385 tacult.pit INFO RawMCTS_sims9_rollouts10          1584.8     160    78     57     25    48.8%    35.6%    15.6%
+2025-01-29 17:39:47,385 tacult.pit INFO temp_resnet3_iter1_sims2          1499.1     152    50     90     12    32.9%    59.2%     7.9%
+2025-01-29 17:39:47,385 tacult.pit INFO Random                            1476.2     152    34     89     29    22.4%    58.6%    19.1%
+2025-01-29 17:39:47,385 tacult.pit INFO ----------------------------------------------------------------------------------------------------
+
+2025-01-29 17:39:47,385 tacult.pit INFO Playing match: temp_resnet3_iter1_sims2 vs Random
+2025-01-29 17:39:47,591 tacult.pit INFO 
+Statistics After Match: temp_resnet3_iter1_sims2 vs Random
+2025-01-29 17:39:47,592 tacult.pit INFO ----------------------------------------------------------------------------------------------------
+2025-01-29 17:39:47,592 tacult.pit INFO Agent                          Rating     Games    Wins   Losses Draws  Win Rate Loss Rate Draw Rate
+2025-01-29 17:39:47,592 tacult.pit INFO ----------------------------------------------------------------------------------------------------
+2025-01-29 17:39:47,592 tacult.pit INFO RawMCTS_sims81_rollouts10         1756.1     144    94     20     30    65.3%    13.9%    20.8%
+2025-01-29 17:39:47,592 tacult.pit INFO RawMCTS_sims9_rollouts10          1584.8     160    78     57     25    48.8%    35.6%    15.6%
+2025-01-29 17:39:47,592 tacult.pit INFO temp_resnet3_iter1_sims2          1513.8     160    56     92     12    35.0%    57.5%     7.5%
+2025-01-29 17:39:47,592 tacult.pit INFO Random                            1461.0     160    36     95     29    22.5%    59.4%    18.1%
+2025-01-29 17:39:47,592 tacult.pit INFO ----------------------------------------------------------------------------------------------------
+
+2025-01-29 17:39:47,592 tacult.pit INFO Playing match: Random vs RawMCTS_sims81_rollouts10
+2025-01-29 17:40:26,767 tacult.pit INFO 
+Statistics After Match: Random vs RawMCTS_sims81_rollouts10
+2025-01-29 17:40:26,767 tacult.pit INFO ----------------------------------------------------------------------------------------------------
+2025-01-29 17:40:26,767 tacult.pit INFO Agent                          Rating     Games    Wins   Losses Draws  Win Rate Loss Rate Draw Rate
+2025-01-29 17:40:26,767 tacult.pit INFO ----------------------------------------------------------------------------------------------------
+2025-01-29 17:40:26,767 tacult.pit INFO RawMCTS_sims81_rollouts10         1738.9     152    98     22     32    64.5%    14.5%    21.1%
+2025-01-29 17:40:26,767 tacult.pit INFO RawMCTS_sims9_rollouts10          1584.8     160    78     57     25    48.8%    35.6%    15.6%
+2025-01-29 17:40:26,767 tacult.pit INFO temp_resnet3_iter1_sims2          1513.8     160    56     92     12    35.0%    57.5%     7.5%
+2025-01-29 17:40:26,767 tacult.pit INFO Random                            1476.5     168    38     99     31    22.6%    58.9%    18.5%
+2025-01-29 17:40:26,767 tacult.pit INFO ----------------------------------------------------------------------------------------------------
+
+2025-01-29 17:40:26,767 tacult.pit INFO Playing match: RawMCTS_sims9_rollouts10 vs RawMCTS_sims81_rollouts10
