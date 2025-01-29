@@ -15,7 +15,7 @@ from tacult.utils import dotdict
 from tacult.base.coach import Coach
 from tacult.network import UtacNNet
 from tacult.utac_nn import UtacNN
-from tacult.base import NNetWrapper
+from tacult.base import NNetWrapper, load_network
 from tacult.base.mcts import MCTS, RawMCTS, VectorizedMCTS
 from tacult.base.arena import Arena
 import numpy as np
@@ -66,10 +66,11 @@ def main(args=_args):
     game = Game()
 
     # First create the MCTS tournament as before
-    num_sims_list = [2, 4, 8, 16, 32, 64, 128, 256, 512]
+    num_sims_list = [2, 64]
     pit = Pit.create_mcts_tournament(
         game=game,
         nnet=nnet,
+        prefix="r3",
         num_sims_list=num_sims_list,
         cpuct=1.0,
         games_per_match=8,
@@ -77,6 +78,22 @@ def main(args=_args):
         temperature=0,
         verbose=3
     )
+
+    onet = load_network("./temp/resnet", "best.pt")
+
+    opit = Pit.create_mcts_tournament(
+        game=game,
+        nnet=onet,
+        prefix="resnet",
+        num_sims_list=num_sims_list,
+        cpuct=1.0,
+        games_per_match=8,
+        num_rounds=1000,
+        temperature=0,
+        verbose=3
+    )
+
+    pit += opit
 
     # Create and add random player
     def random_player(board):
@@ -88,25 +105,7 @@ def main(args=_args):
 
     pit.add_agent(random_player, "Random")
 
-    num_sims_list = [64, 256]
-    rollouts_list = [8]
-    for num_sims in num_sims_list:
-        for num_rollouts in rollouts_list:
-            _args = {
-                'numMCTSSims': num_sims,
-                'numRollouts': num_rollouts,
-                'cpuct': args.cpuct,
-            }
-
-            _args = dotdict(_args)
-            def create_raw_mcts_player(args):
-                def raw_mcts_player(board):
-                    raw_mcts = RawMCTS(game, args)
-                    return np.argmax(raw_mcts.getActionProb(board, temp=0))
-                return raw_mcts_player
-
-            pit.add_agent(create_raw_mcts_player(_args), f"RawMCTS_sims{num_sims}_rollouts{num_rollouts}")
-
+    
     pit.play_tournament()
     
 def test(args=_args):

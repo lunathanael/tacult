@@ -1,16 +1,7 @@
 import logging
-
 import coloredlogs
 
-from tacult.base.coach import Coach
-from tacult.utac_game import UtacGame as Game
 from tacult.utils import dotdict
-
-from tacult.utac_nn import UtacNN
-
-log = logging.getLogger(__name__)
-
-coloredlogs.install(level='INFO')  # Change this to DEBUG to see more info.
 
 _args = dotdict({
     'numIters': 200,
@@ -43,6 +34,23 @@ _args = dotdict({
     'load_folder': None,
     'checkpoint_folder': './temp/resnet/',
 })
+
+logging.basicConfig(
+    filename=f'{_args.checkpoint_folder}/trainer.log',
+    filemode='w',
+    format='%(asctime)s - %(name)s - %(levelname)s - %(message)s',
+    datefmt='%Y-%m-%d %H:%M:%S',
+    level=logging.INFO,
+)
+log = logging.getLogger(__name__)
+
+coloredlogs.install(level='INFO')  # Change this to DEBUG to see more info.
+
+
+from tacult.base.coach import Coach
+from tacult.utac_game import UtacGame as Game
+
+from tacult.utac_nn import UtacNN
 
 
 def main(args=_args):

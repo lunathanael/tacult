@@ -2,6 +2,7 @@ import os
 import numpy as np
 import torch
 from tqdm import tqdm
+import dill
 
 from .nn import NeuralNet
 from .utils import get_device
@@ -38,8 +39,6 @@ class NNetWrapper(NeuralNet):
         )
 
         log.info(f"Network {network.__class__.__name__} initialized on device {self.device}")
-
-        self.saved_network_class = False
 
     def training_step(self, boards, pis, vs):
         self.optimizer.zero_grad()
@@ -149,10 +148,16 @@ class NNetWrapper(NeuralNet):
             )
             os.mkdir(folder)
         
-        if not self.saved_network_class:
-            classpath = os.path.join(folder, 'network.class')
-            torch.save(self.nnet.__class__, classpath)
-            self.saved_network_class = True
+        classpath = os.path.join(folder, 'network_class.pkl')
+        module_path = os.path.join(folder, 'network_module.pkl')
+        if not os.path.exists(classpath) or not os.path.exists(module_path):
+            dill.dump_module(filename=module_path, module=dill.detect.getmodule(self.nnet.__class__))
+            with open(classpath, 'wb') as f:
+                dill.dump({
+                    'module': self.nnet.__class__.__module__,
+                    'class': self.nnet.__class__.__name__,
+                    'args': self.args,
+                }, f)
 
         torch.save({
             'state_dict': self.nnet.state_dict(),
@@ -200,12 +205,22 @@ class NNetWrapper(NeuralNet):
         """Set the network to evaluation mode"""
         self.nnet.eval()
 
-def load_network_class(folder: str, filename: str):
-    classpath = os.path.join(folder, 'network.class')
-    cls = torch.load(classpath)
-    return cls()
+def load_network_class(folder: str):
+    classpath = os.path.join(folder, 'network_class.pkl')
+    module_path = os.path.join(folder, 'network_module.pkl')
+
+    with open(classpath, 'rb') as f:
+        state_dict = dill.load(f)
+
+    module_name = state_dict['module']
+    class_name = state_dict['class']
+    args = state_dict['args']
+
+    module = dill.load_module(module_path, module_name)
+    nnet = getattr(module, class_name)
+    return NNetWrapper(nnet(args), args)
 
 def load_network(folder: str, filename: str):
-    filepath = os.path.join(folder, filename)
     cls = load_network_class(folder)
-    return cls.load_checkpoint(folder, filename)
+    cls.load_checkpoint(folder, filename)
+    return cls

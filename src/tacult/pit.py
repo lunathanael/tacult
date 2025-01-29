@@ -314,6 +314,7 @@ class Pit:
         game,
         nnet,
         num_sims_list: List[int],
+        prefix: str = "NNMCTS",
         cpuct: float = 1.0,
         games_per_match: int = 100,
         num_rounds: int = 1,
@@ -366,7 +367,7 @@ class Pit:
                 return agent_fn
             
             agents.append(create_agent(mcts, temperature))
-            agent_names.append(f"NNMCTS_sims{num_sims}")
+            agent_names.append(f"{prefix}_sims{num_sims}")
         
         # Create and return pit instance
         return Pit(
@@ -413,3 +414,65 @@ class Pit:
         self.stats['draws'][agent_name] = 0
         self.stats['total_games'][agent_name] = 0
         self.stats['win_rates'][agent_name] = 0.0
+
+    def __add__(self, other: 'Pit') -> 'Pit':
+        """
+        Merge two Pit instances into a new one.
+        
+        Args:
+            other: Another Pit instance to merge with
+            
+        Returns:
+            Pit: A new Pit instance containing agents and stats from both pits
+            
+        Raises:
+            ValueError: If the games are different or if there are duplicate agent names
+        """
+        if self.game != other.game:
+            raise ValueError("Cannot merge Pits with different games")
+            
+        # Check for duplicate names
+        duplicate_names = set(self.agent_names) & set(other.agent_names)
+        if duplicate_names:
+            raise ValueError(f"Duplicate agent names found: {duplicate_names}")
+            
+        # Create new pit with combined agents
+        new_pit = Pit(
+            agents=self.agents + other.agents,
+            agent_names=self.agent_names + other.agent_names,
+            game=self.game,
+            games_per_match=self.games_per_match,
+            num_rounds=self.num_rounds,
+            display=self.display,
+            mu=self.glicko2.mu,
+            phi=self.glicko2.phi,
+            sigma=self.glicko2.sigma,
+            tau=self.glicko2.tau,
+            verbose=self.verbose
+        )
+        
+        # Merge statistics
+        for name in self.agent_names:
+            new_pit.stats['ratings'][name] = self.stats['ratings'][name]
+            new_pit.stats['wins'][name] = self.stats['wins'][name]
+            new_pit.stats['losses'][name] = self.stats['losses'][name]
+            new_pit.stats['draws'][name] = self.stats['draws'][name]
+            new_pit.stats['total_games'][name] = self.stats['total_games'][name]
+            new_pit.stats['win_rates'][name] = self.stats['win_rates'][name]
+            new_pit.stats['loss_rates'][name] = self.stats['loss_rates'][name]
+            new_pit.stats['draw_rates'][name] = self.stats['draw_rates'][name]
+            
+        for name in other.agent_names:
+            new_pit.stats['ratings'][name] = other.stats['ratings'][name]
+            new_pit.stats['wins'][name] = other.stats['wins'][name]
+            new_pit.stats['losses'][name] = other.stats['losses'][name]
+            new_pit.stats['draws'][name] = other.stats['draws'][name]
+            new_pit.stats['total_games'][name] = other.stats['total_games'][name]
+            new_pit.stats['win_rates'][name] = other.stats['win_rates'][name]
+            new_pit.stats['loss_rates'][name] = other.stats['loss_rates'][name]
+            new_pit.stats['draw_rates'][name] = other.stats['draw_rates'][name]
+            
+        # Merge match history
+        new_pit.match_history = self.match_history + other.match_history
+        
+        return new_pit
