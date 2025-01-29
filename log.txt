@@ -1,0 +1,78 @@
+2025-01-29 02:09:51,267 __main__ INFO Loading UtacGame...
+2025-01-29 02:09:51,269 tacult.base.utils WARNING CUDA requested but not available! Using CPU instead.
+2025-01-29 02:09:52,552 tacult.base.nn_wrapper INFO Network _UtacNNet initialized on device cpu
+2025-01-29 02:09:52,834 tacult.base.utils WARNING CUDA requested but not available! Using CPU instead.
+2025-01-29 02:09:52,840 tacult.base.nn_wrapper INFO Network _UtacNNet initialized on device cpu
+2025-01-29 02:09:52,850 tacult.pit INFO Starting round 1/1000
+2025-01-29 02:09:52,857 tacult.pit INFO Playing match: r3_sims2 vs resnet_sims2
+2025-01-29 02:10:02,736 tacult.pit INFO 
+Statistics After Match: r3_sims2 vs resnet_sims2
+2025-01-29 02:10:02,737 tacult.pit INFO ----------------------------------------------------------------------------------------------------
+2025-01-29 02:10:02,737 tacult.pit INFO Agent                          Rating     Games    Wins   Losses Draws  Win Rate Loss Rate Draw Rate
+2025-01-29 02:10:02,737 tacult.pit INFO ----------------------------------------------------------------------------------------------------
+2025-01-29 02:10:02,737 tacult.pit INFO r3_sims2                          1907.3       8     8      0      0   100.0%     0.0%     0.0%
+2025-01-29 02:10:02,737 tacult.pit INFO r3_sims64                         1500.0       0     0      0      0     0.0%     0.0%     0.0%
+2025-01-29 02:10:02,737 tacult.pit INFO resnet_sims64                     1500.0       0     0      0      0     0.0%     0.0%     0.0%
+2025-01-29 02:10:02,738 tacult.pit INFO Random                            1500.0       0     0      0      0     0.0%     0.0%     0.0%
+2025-01-29 02:10:02,738 tacult.pit INFO resnet_sims2                      1092.7       8     0      8      0     0.0%   100.0%     0.0%
+2025-01-29 02:10:02,738 tacult.pit INFO ----------------------------------------------------------------------------------------------------
+
+2025-01-29 02:10:02,738 tacult.pit INFO Playing match: resnet_sims2 vs resnet_sims64
+2025-01-29 02:10:14,214 tacult.pit INFO 
+Statistics After Match: resnet_sims2 vs resnet_sims64
+2025-01-29 02:10:14,214 tacult.pit INFO ----------------------------------------------------------------------------------------------------
+2025-01-29 02:10:14,214 tacult.pit INFO Agent                          Rating     Games    Wins   Losses Draws  Win Rate Loss Rate Draw Rate
+2025-01-29 02:10:14,214 tacult.pit INFO ----------------------------------------------------------------------------------------------------
+2025-01-29 02:10:14,215 tacult.pit INFO r3_sims2                          1907.3       8     8      0      0   100.0%     0.0%     0.0%
+2025-01-29 02:10:14,215 tacult.pit INFO resnet_sims64                     1657.5       8     8      0      0   100.0%     0.0%     0.0%
+2025-01-29 02:10:14,215 tacult.pit INFO r3_sims64                         1500.0       0     0      0      0     0.0%     0.0%     0.0%
+2025-01-29 02:10:14,215 tacult.pit INFO Random                            1500.0       0     0      0      0     0.0%     0.0%     0.0%
+2025-01-29 02:10:14,215 tacult.pit INFO resnet_sims2                       995.4      16     0     16      0     0.0%   100.0%     0.0%
+2025-01-29 02:10:14,215 tacult.pit INFO ----------------------------------------------------------------------------------------------------
+
+2025-01-29 02:10:14,216 tacult.pit INFO Playing match: r3_sims2 vs resnet_sims64
+2025-01-29 02:12:52,885 __main__ INFO Loading UtacGame...
+2025-01-29 02:12:52,887 tacult.base.utils WARNING CUDA requested but not available! Using CPU instead.
+2025-01-29 02:12:54,115 tacult.base.nn_wrapper INFO Network _UtacNNet initialized on device cpu
+2025-01-29 02:12:54,365 tacult.base.nn_wrapper INFO Loaded network from ./temp/run3/best.pt
+2025-01-29 02:12:54,365 tacult.base.nn_wrapper INFO Network architecture:
+2025-01-29 02:12:54,366 tacult.base.nn_wrapper INFO _UtacNNet(
+  (conv1): Conv2d(4, 256, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1))
+  (conv2): Conv2d(256, 256, kernel_size=(1, 1), stride=(1, 1))
+  (conv3): Conv2d(256, 512, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1))
+  (conv4): Conv2d(512, 512, kernel_size=(1, 1), stride=(1, 1))
+  (bn1): BatchNorm2d(256, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+  (bn2): BatchNorm2d(256, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+  (bn3): BatchNorm2d(512, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+  (bn4): BatchNorm2d(512, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+  (fc1): Linear(in_features=41472, out_features=512, bias=True)
+  (fc_bn1): BatchNorm1d(512, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+  (pi): Linear(in_features=512, out_features=81, bias=True)
+  (v): Linear(in_features=512, out_features=1, bias=True)
+)
+2025-01-29 02:12:54,367 tacult.base.utils WARNING CUDA requested but not available! Using CPU instead.
+2025-01-29 02:12:54,377 tacult.base.nn_wrapper INFO Network _UtacNNet initialized on device cpu
+2025-01-29 02:12:54,386 tacult.base.nn_wrapper INFO Loaded network from ./temp/resnet/best.pt
+2025-01-29 02:12:54,390 tacult.base.nn_wrapper INFO Network architecture:
+2025-01-29 02:12:54,391 tacult.base.nn_wrapper INFO _UtacNNet(
+  (conv_in): Conv2d(4, 32, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1))
+  (bn_in): BatchNorm2d(32, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+  (res1): ResidualBlock(
+    (conv1): Conv2d(32, 32, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1))
+    (bn1): BatchNorm2d(32, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+    (conv2): Conv2d(32, 32, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1))
+    (bn2): BatchNorm2d(32, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+  )
+  (res2): ResidualBlock(
+    (conv1): Conv2d(32, 32, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1))
+    (bn1): BatchNorm2d(32, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+    (conv2): Conv2d(32, 32, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1))
+    (bn2): BatchNorm2d(32, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+  )
+  (fc1): Linear(in_features=2592, out_features=256, bias=True)
+  (fc_bn1): BatchNorm1d(256, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+  (pi): Linear(in_features=256, out_features=81, bias=True)
+  (v): Linear(in_features=256, out_features=1, bias=True)
+)
+2025-01-29 02:12:54,391 tacult.pit INFO Starting round 1/1000
+2025-01-29 02:12:54,396 tacult.pit INFO Playing match: r3_sims64 vs resnet_sims64

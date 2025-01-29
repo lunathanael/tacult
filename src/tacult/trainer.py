@@ -1,5 +1,6 @@
 import logging
 import coloredlogs
+import os
 
 from tacult.utils import dotdict
 
@@ -35,6 +36,9 @@ _args = dotdict({
     'checkpoint_folder': './temp/resnet/',
 })
 
+if not os.path.exists(_args.checkpoint_folder):
+    os.makedirs(_args.checkpoint_folder)
+
 logging.basicConfig(
     filename=f'{_args.checkpoint_folder}/trainer.log',
     filemode='w',
@@ -43,7 +47,6 @@ logging.basicConfig(
     level=logging.INFO,
 )
 log = logging.getLogger(__name__)
-
 coloredlogs.install(level='INFO')  # Change this to DEBUG to see more info.
 
 
@@ -51,19 +54,19 @@ from tacult.base.coach import Coach
 from tacult.utac_game import UtacGame as Game
 
 from tacult.utac_nn import UtacNN
+from tacult.base.nn_wrapper import load_network
 
 
 def main(args=_args):
     log.info('Loading %s...', Game.__name__)
     g = Game()
-
     
     log.info('Loading %s...', UtacNN.__name__)
     nnet = UtacNN(args)
 
     if args.load_model:
         log.info('Loading checkpoint "%s/%s"...', args.load_folder, "best.pt")
-        nnet.load_checkpoint(args.load_folder, "best.pt")
+        nnet = load_network(args.load_folder, "best.pt")
     else:
         log.warning('Not loading a checkpoint!')
 

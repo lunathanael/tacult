@@ -38,6 +38,10 @@ class Coach():
         self.trainExamplesHistory = deque(maxlen=args.maxlenOfQueue)  # history of examples from args.numItersForTrainExamplesHistory latest iterations
         self.skipFirstSelfPlay = False  # can be overriden in loadTrainExamples()
 
+        # Print args in a more readable format
+        args_str = '\n'.join(f'  {k}: {v}' for k, v in args.items())
+        log.info(f'Coach initialized with arguments:\n{args_str}')
+
     
     def prepExecuteEpisode(self):
         self._trainExamples = [[] for _ in range(self.args.numEnvs)]
@@ -195,6 +199,7 @@ class Coach():
             else:
                 log.info('ACCEPTING NEW MODEL')
                 if self.args.saveAllModels:
+                    log.info(f'Saving new best model {i} to {self.args.checkpoint_folder} as {self.getCheckpointFile(i)}')
                     self.nnet.save_checkpoint(folder=self.args.checkpoint_folder, filename=self.getCheckpointFile(i))
                 self.nnet.save_checkpoint(folder=self.args.checkpoint_folder, filename='best.pt')
                 self.saveTrainExamples(directory=self.args.checkpoint_folder, filename='best.pt.examples')

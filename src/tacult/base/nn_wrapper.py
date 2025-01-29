@@ -223,4 +223,8 @@ def load_network_class(folder: str):
 def load_network(folder: str, filename: str):
     cls = load_network_class(folder)
     cls.load_checkpoint(folder, filename)
+
+    log.info(f'Loaded network from {folder}/{filename}')
+    log.info('Network architecture:')
+    log.info(cls.nnet)
     return cls

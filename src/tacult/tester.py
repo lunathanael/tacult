@@ -57,11 +57,7 @@ _args = dotdict({
 def main(args=_args):
     log.info('Loading %s...', Game.__name__)
 
-    log.info('Loading %s...', UtacNNet.__name__)
-    nnet = UtacNN(args)
-
-    log.info('Loading checkpoint "%s/%s"...', args.model_file[0], args.model_file[1])
-    nnet.load_checkpoint(args.model_file[0], args.model_file[1])
+    nnet = load_network(args.model_file[0], args.model_file[1])
 
     game = Game()
 
