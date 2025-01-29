@@ -1,18 +1,66 @@
+from __future__ import annotations
+
 import logging
 from typing import List, Callable, Dict, Tuple
 import numpy as np
 from collections import defaultdict
 from .base.arena import Arena
 from .base.mcts import MCTS
+from .base.nn_wrapper import load_network
 from .utils import dotdict, Rating, Glicko2
+import os
+import re
+
 
 log = logging.getLogger(__name__)
+
+
+
+
+def load_checkpoints(checkpoint_dir) -> list:
+    checkpoint_files = [f for f in os.listdir(checkpoint_dir) if f.startswith('checkpoint_') and f.endswith('.pt')]
+    checkpoint_files.sort(key=lambda x: int(x.split('_')[1].split('.')[0]))
+
+    nets = []
+    for file in checkpoint_files:
+        nets.append({
+            "name": int(file.split('_')[1].split('.')[0]),
+            "net": load_network(checkpoint_dir, file)
+        })
+    return nets
+
+
 
 class Pit:
     """
     A class to manage tournament-style evaluation between multiple agents,
     tracking statistics and calculating ELO ratings.
     """
+
+    
+    class PitAgent:
+        def __init__(self):
+            pass
+
+        def __call__(self, x):
+            pass
+        
+        def reset(self):
+            pass
+
+    class PitAgentMCTS(PitAgent):
+        def __init__(self, game, nnet, temp, args):
+            self.game = game
+            self.nnet = nnet
+            self.temp = temp
+            self.args = args
+            self.mcts_instance = None
+            
+        def __call__(self, x):
+            return np.argmax(self.mcts_instance.getActionProb(x, temp=self.temp))
+        
+        def reset(self):
+            self.mcts_instance = MCTS(self.game, self.nnet, self.args)
     
     def __init__(
         self,
@@ -47,7 +95,7 @@ class Pit:
         if len(agents) != len(agent_names):
             raise ValueError("Number of agents must match number of agent names")
         
-        self.agents = agents
+        self.agents: list[Pit.PitAgent] = agents
         self.agent_names = agent_names
         self.game = game
         self.games_per_match = games_per_match
@@ -93,6 +141,9 @@ class Pit:
         """Play a match between two agents and return results."""
         agent1 = self.agents[agent1_idx]
         agent2 = self.agents[agent2_idx]
+
+        agent1.reset()
+        agent2.reset()
         
         arena = Arena(agent1, agent2, self.game, self.display)
         oneWon, twoWon, draws = arena.playGames(self.games_per_match)
@@ -269,6 +320,8 @@ class Pit:
 
     def play_tournament(self):
         """Play all rounds of the tournament."""
+        log.info(f"Starting tournament with {self.num_rounds} rounds and {len(self.agents)} agents")
+        log.info(f"Agents: {'\n\t'.join(self.agent_names)}")
         for round_num in range(self.num_rounds):
             log.info(f"Starting round {round_num + 1}/{self.num_rounds}")
             self.play_round()
@@ -358,15 +411,12 @@ class Pit:
                 'cpuct': cpuct,
             })
             
-            mcts = MCTS(game, nnet, args)
-            
-            # Create agent function that uses MCTS
-            def create_agent(mcts_instance, temp):
-                def agent_fn(x):
-                    return np.argmax(mcts_instance.getActionProb(x, temp=temp))
-                return agent_fn
-            
-            agents.append(create_agent(mcts, temperature))
+            agents.append(Pit.PitAgentMCTS(
+                game=game,
+                nnet=nnet,
+                temp=temperature,
+                args=args
+            ))
             agent_names.append(f"{prefix}_sims{num_sims}")
         
         # Create and return pit instance
@@ -383,6 +433,22 @@ class Pit:
             tau=tau,
             verbose=verbose
         )
+    
+    def load_checkpoints_to_pit(self, checkpoint_dir: str, num_sims_list: list = [2, 32], cpuct: float = 1.0, temperature: float = 0):
+        nets = load_checkpoints(checkpoint_dir)
+
+        safe_prefix = re.sub(r"[/\\?%*:|\"<>\x7F\x00-\x1F]", "_", checkpoint_dir).lstrip("_.-")
+        for net in nets:
+            self += Pit.create_mcts_tournament(
+                game=self.game,
+                nnet=net["net"],
+                prefix=f"{safe_prefix}_iter{net['name']}",
+                num_sims_list=num_sims_list,
+                cpuct=cpuct,
+                temperature=temperature,
+            )
+        print(self.agent_names)
+
 
     def add_agent(self, agent: Callable, agent_name: str, rating: Rating = None, use_average_rating: bool = False):
         """
@@ -476,3 +542,45 @@ class Pit:
         new_pit.match_history = self.match_history + other.match_history
         
         return new_pit
+
+
+    def __iadd__(self, other: 'Pit') -> 'Pit':
+        """
+        In-place merge of another Pit instance into this one.
+        
+        Args:
+            other: Another Pit instance to merge with
+            
+        Returns:
+            Pit: Self, with agents and stats merged from other pit
+            
+        Raises:
+            ValueError: If the games are different or if there are duplicate agent names
+        """
+        if self.game != other.game:
+            raise ValueError("Cannot merge Pits with different games")
+            
+        # Check for duplicate names
+        duplicate_names = set(self.agent_names) & set(other.agent_names)
+        if duplicate_names:
+            raise ValueError(f"Duplicate agent names found: {duplicate_names}")
+            
+        # Add agents and names
+        self.agents.extend(other.agents)
+        self.agent_names.extend(other.agent_names)
+        
+        # Merge statistics
+        for name in other.agent_names:
+            self.stats['ratings'][name] = other.stats['ratings'][name]
+            self.stats['wins'][name] = other.stats['wins'][name]
+            self.stats['losses'][name] = other.stats['losses'][name]
+            self.stats['draws'][name] = other.stats['draws'][name]
+            self.stats['total_games'][name] = other.stats['total_games'][name]
+            self.stats['win_rates'][name] = other.stats['win_rates'][name]
+            self.stats['loss_rates'][name] = other.stats['loss_rates'][name]
+            self.stats['draw_rates'][name] = other.stats['draw_rates'][name]
+            
+        # Merge match history
+        self.match_history.extend(other.match_history)
+        
+        return self

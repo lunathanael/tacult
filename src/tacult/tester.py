@@ -1,5 +1,6 @@
 import logging
-
+import os
+import re
 
 
 logging.basicConfig(filename='log.txt',
@@ -57,53 +58,61 @@ _args = dotdict({
 def main(args=_args):
     log.info('Loading %s...', Game.__name__)
 
-    nnet = load_network(args.model_file[0], args.model_file[1])
 
     game = Game()
 
-    # First create the MCTS tournament as before
-    num_sims_list = [2, 64]
-    pit = Pit.create_mcts_tournament(
-        game=game,
-        nnet=nnet,
-        prefix="r3",
-        num_sims_list=num_sims_list,
-        cpuct=1.0,
-        games_per_match=8,
-        num_rounds=1000,
-        temperature=0,
-        verbose=3
-    )
+    pit = Pit([], [], game, games_per_match=8, num_rounds=1000, verbose=3)
 
-    onet = load_network("./temp/resnet", "best.pt")
-
-    opit = Pit.create_mcts_tournament(
-        game=game,
-        nnet=onet,
-        prefix="resnet",
-        num_sims_list=num_sims_list,
-        cpuct=1.0,
-        games_per_match=8,
-        num_rounds=1000,
-        temperature=0,
-        verbose=3
-    )
-
-    pit += opit
+    pit.load_checkpoints_to_pit(checkpoint_dir="./temp/resnet", num_sims_list=[2])
+    pit.load_checkpoints_to_pit(checkpoint_dir="./temp/resnet2", num_sims_list=[2])
+    pit.load_checkpoints_to_pit(checkpoint_dir="./temp/run3", num_sims_list=[2])
 
     # Create and add random player
-    def random_player(board):
-        valids = game.getValidMoves(board, 1)
-        valids = np.array(valids)
-        valid_moves = np.where(valids)[0]
-        action = np.random.choice(valid_moves)
-        return action
+    class RandomPlayer(Pit.PitAgent):
+        def __init__(self, game, args):
+            self.game = game
+            self.args = args
 
-    pit.add_agent(random_player, "Random")
+        def __call__(self, x):
+            valids = game.getValidMoves(x, 1)
+            valids = np.array(valids)
+            valid_moves = np.where(valids)[0]
+            action = np.random.choice(valid_moves)
+            return action
+
+    pit.add_agent(RandomPlayer(game, _args), "Random")
+
+    
+    class RawMCTSAgent(Pit.PitAgent):
+        def __init__(self, game, args, temp):
+            self.game = game
+            self.args = args
+            self.mcts_instance = None
+            self.temp = temp
+
+        def __call__(self, x):
+            return np.argmax(self.mcts_instance.getActionProb(x, temp=self.temp))
+        
+        def reset(self):
+            self.mcts_instance = RawMCTS(self.game, self.args)
+
+    rollouts_list = [10]
+    num_sims_list = [9, 81]
+    for num_sims in num_sims_list:
+        for num_rollouts in rollouts_list:
+            marg = {
+                'numMCTSSims': num_sims,
+                'numRollouts': num_rollouts,
+                'cpuct': args.cpuct,
+            }
+            marg = dotdict(marg)
+
+            pit.add_agent(RawMCTSAgent(game, marg, 0), f"RawMCTS_sims{num_sims}_rollouts{num_rollouts}")
 
     
     pit.play_tournament()
     
+
 def test(args=_args):
     main(args)
 

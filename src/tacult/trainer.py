@@ -4,50 +4,58 @@ import os
 
 from tacult.utils import dotdict
 
-_args = dotdict({
-    'numIters': 200,
-    'minNumEps': 128,              # Minimum number of complete self-play games to simulate during a new iteration, an upper bound over this minimum is the number of environments.
-    'numEnvs': 128,
-    'tempThreshold': 15,        #
-    'updateThreshold': 0.6,     # During arena playoff, new neural net will be accepted if threshold or more of games are won.
-    'maxlenOfQueue': 3_000_000,    # Number of game examples to train the neural networks. Do (minNumEps + numEnvs) * 81 * 8
-    'numMCTSSims': 32,          # Number of games moves for MCTS to simulate.
-    'cpuct': 2,
+_args = dotdict(
+    {
+        "numIters": 300,
+        "minNumEps": 128,  # Minimum number of complete self-play games to simulate during a new iteration, an upper bound over this minimum is the number of environments.
+        "numEnvs": 128,
+        "tempThreshold": 10,  #
+        "updateThreshold": 0.6,  # During arena playoff, new neural net will be accepted if threshold or more of games are won.
+        "maxlenOfQueue": 1_000_000,  # Number of game examples to train the neural networks. Do (minNumEps + numEnvs) * 81 * 8
+        "numMCTSSims": 800,  # Number of games moves for MCTS to simulate.
+        "cpuct": 2.4,
 
-    'arenaCompare': 32,         # Number of games to play during arena play to determine if new net will be accepted.
-    'verbose': False,            # Whether to print verbose output for Arena.
+        "arenaNumMCTSSims": 80,
+        "arenaCompare": 256,  # Number of games to play during arena play to determine if new net will be accepted.
+        "verbose": False,  # Whether to print verbose output for Arena.
 
-    'saveAllModels': True,
-    'saveTrainExamples': False,
-
-    'shuffle_data': True,
-    'steps_per_epoch': 10,   
-    'epochs': 10,
-    'batch_size': 1024,
-
-    'lr': 0.001,
-    'dropout': 0.3,
-    'cuda': False,
-    'onnx_export': False,
-    'load_checkpoint': False,
-    'load_model': False,
-
-    'load_folder': None,
-    'checkpoint_folder': './temp/resnet/',
-})
+        "saveAllModels": True,
+        "saveTrainExamples": False,
+        "shuffle_data": True,
+        "steps_per_epoch": 10,
+        "epochs": 10,
+        "batch_size": 4096,
+        "model_args": {
+            "channels": 4,
+            "num_residual_blocks": 1,
+            "embedding_size": 512,
+            "dropout": 0.3,
+            "onnx_export": False,
+            "cuda": False,
+        },
+        "lr": 0.2,
+        "load_checkpoint": True,
+        "load_model": False,
+        "num_warm_restarts": 3,
+        "cuda": False,
+        
+        "load_folder": "./temp/run3",
+        "checkpoint_folder": "./temp/resnet3/",
+    }
+)
 
 if not os.path.exists(_args.checkpoint_folder):
     os.makedirs(_args.checkpoint_folder)
 
 logging.basicConfig(
-    filename=f'{_args.checkpoint_folder}/trainer.log',
-    filemode='w',
-    format='%(asctime)s - %(name)s - %(levelname)s - %(message)s',
-    datefmt='%Y-%m-%d %H:%M:%S',
+    filename=f"{_args.checkpoint_folder}/trainer.log",
+    filemode="w",
+    format="%(asctime)s - %(name)s - %(levelname)s - %(message)s",
+    datefmt="%Y-%m-%d %H:%M:%S",
     level=logging.INFO,
 )
 log = logging.getLogger(__name__)
-coloredlogs.install(level='INFO')  # Change this to DEBUG to see more info.
+coloredlogs.install(level="INFO")  # Change this to DEBUG to see more info.
 
 
 from tacult.base.coach import Coach
@@ -58,27 +66,30 @@ from tacult.base.nn_wrapper import load_network
 
 
 def main(args=_args):
-    log.info('Loading %s...', Game.__name__)
+    log.info("Loading %s...", Game.__name__)
     g = Game()
-    
-    log.info('Loading %s...', UtacNN.__name__)
+
+    log.info("Loading %s...", UtacNN.__name__)
     nnet = UtacNN(args)
 
     if args.load_model:
         log.info('Loading checkpoint "%s/%s"...', args.load_folder, "best.pt")
         nnet = load_network(args.load_folder, "best.pt")
     else:
-        log.warning('Not loading a checkpoint!')
+        log.warning("Not loading a checkpoint!")
+        log.info("Network architecture:")
+        log.info(nnet.nnet)
 
-    log.info('Loading the Coach...')
+    log.info("Loading the Coach...")
     c = Coach(g, nnet, args)
 
     if args.load_checkpoint:
         log.info("Loading 'trainExamples' from file...")
         c.loadTrainExamples()
 
-    log.info('Starting the learning process 🎉')
+    log.info("Starting the learning process 🎉")
     c.learn()
+
 
 def train(args=_args):
     # main(args)

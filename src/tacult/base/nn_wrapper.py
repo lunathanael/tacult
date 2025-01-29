@@ -32,10 +32,18 @@ class NNetWrapper(NeuralNet):
         # Create optimizer
         self.optimizer = torch.optim.Adam(self.nnet.parameters(), lr=args.lr)
         
+        try:
+            T_max = args.epochs * args.steps_per_epoch * args.numIters / args.num_warm_restarts
+        except KeyError:
+            try:
+                T_max = args.steps_per_warm_restart
+            except KeyError:
+                T_max = args.epochs * args.steps_per_epoch * args.numIters
+
         # Create scheduler
         self.scheduler = torch.optim.lr_scheduler.CosineAnnealingLR(
             self.optimizer,
-            T_max=args.epochs * args.steps_per_epoch * args.numIters
+            T_max=T_max
         )
 
         log.info(f"Network {network.__class__.__name__} initialized on device {self.device}")
@@ -218,7 +226,14 @@ def load_network_class(folder: str):
 
     module = dill.load_module(module_path, module_name)
     nnet = getattr(module, class_name)
-    return NNetWrapper(nnet(args), args)
+
+    def _NWrap(nnet):
+        class NWrap(NNetWrapper):
+            def __init__(self, args):
+                super().__init__(nnet(args), args)
+        return NWrap
+
+    return _NWrap(nnet)(args)
 
 def load_network(folder: str, filename: str):
     cls = load_network_class(folder)

@@ -99,9 +99,9 @@ class Generator():
 
 
 args = dotdict({
-    'numMCTSSims': 200,
+    'numMCTSSims': 800,
     'numRollouts': 10,
-    'cpuct': 1.0,
+    'cpuct': 2.4,
     'maxlenOfQueue': 331776,
 })
 
@@ -109,7 +109,7 @@ args = dotdict({
 def main():
     game = Game()
     generator = Generator(game, args)
-    generator.generate_games(200, './temp/run1/best.pt.examples')
+    generator.generate_games(100, './temp/best.pt.examples')
 
 if __name__ == '__main__':
     main()

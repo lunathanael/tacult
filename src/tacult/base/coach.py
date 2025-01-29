@@ -13,7 +13,7 @@ from .arena import VectorizedArena as Arena
 from .arena import Arena as SingleArena
 from .mcts import VectorizedMCTS as MCTS
 from .mcts import MCTS as SingleMCTS
-
+from ..utils import Rating, Glicko2
 from utac_gym.core import GameState
 from utac_gym.core.types import GAMESTATE
 
@@ -41,6 +41,47 @@ class Coach():
         # Print args in a more readable format
         args_str = '\n'.join(f'  {k}: {v}' for k, v in args.items())
         log.info(f'Coach initialized with arguments:\n{args_str}')
+
+        self.glicko2 = Glicko2()
+
+        self.nnet_elo = self.rate_with_random_player()
+        self.pnet_elo = self.nnet_elo
+
+    def rate_with_random_player(self, random_player_elo: Rating = None):
+        numEnvs = self.args.numEnvs
+        numMCTSSims = self.args.numMCTSSims
+        self.args.numEnvs = min(self.args.numEnvs, self.args.arenaCompare // 2)
+        self.args.numMCTSSims = self.args.arenaNumMCTSSims
+        nmcts = MCTS(self.game, self.nnet, self.args)
+
+        def random_player(states):
+            valids = np.array([self.game.getValidMoves(x, 1) for x in states])
+            valid_moves = [np.where(valid)[0] for valid in valids]
+            actions = np.array([np.random.choice(moves) if len(moves) > 0 else -1 for moves in valid_moves])
+            return actions
+
+        log.info(f'Random player arena with {self.args.numEnvs} environments and {self.args.numMCTSSims} simulations')
+        arena = Arena(
+            random_player,
+            lambda x: np.argmax(nmcts.getActionProbs(x, temps=np.zeros(self.args.numEnvs)), axis=1),
+            self.game,
+            lambda x: x.print(),
+            self.args.numEnvs
+        )
+        rwins, nwins, draws = arena.playGames(self.args.arenaCompare, verbose=self.args.verbose)
+        self.args.numEnvs = numEnvs
+        self.args.numMCTSSims = numMCTSSims
+        log.info(f'Random player arena wins: {nwins}, losses: {rwins}, draws: {draws}')
+
+        if random_player_elo is None:
+            random_player_elo = Rating(mu=750, phi=500, sigma=1)
+
+        nnet_rating = self.glicko2.create_rating()
+        series = [(1.0, random_player_elo)] * nwins + [(0.0, random_player_elo)] * rwins + [(0.5, random_player_elo)] * draws
+
+        nnet_rating = self.glicko2.rate(nnet_rating, series)
+        log.info(f'NNet rating: {nnet_rating.mu:.1f} +- {nnet_rating.phi:.1f}')
+        return nnet_rating
 
     
     def prepExecuteEpisode(self):
@@ -177,11 +218,13 @@ class Coach():
             self.nnet.save_checkpoint(folder=self.args.checkpoint_folder, filename='temp.pt')
 
             numEnvs = self.args.numEnvs
+            numMCTSSims = self.args.numMCTSSims
             self.args.numEnvs = min(self.args.numEnvs, self.args.arenaCompare // 2)
+            self.args.numMCTSSims = self.args.arenaNumMCTSSims
             pmcts = MCTS(self.game, self.pnet, self.args)
             nmcts = MCTS(self.game, self.nnet, self.args)
 
-            log.info('PITTING AGAINST PREVIOUS VERSION')
+            log.info(f'Previous player arena with {self.args.numEnvs} environments and {self.args.numMCTSSims} simulations')
             arena = Arena(
                 lambda x: np.argmax(pmcts.getActionProbs(x, temps=np.zeros(self.args.numEnvs)), axis=1),
                 lambda x: np.argmax(nmcts.getActionProbs(x, temps=np.zeros(self.args.numEnvs)), axis=1),
@@ -191,8 +234,13 @@ class Coach():
             )
             pwins, nwins, draws = arena.playGames(self.args.arenaCompare, verbose=self.args.verbose)
             self.args.numEnvs = numEnvs
+            self.args.numMCTSSims = numMCTSSims
 
-            log.info('NEW/PREV WINS : %d / %d ; DRAWS : %d' % (nwins, pwins, draws))
+            series = [(1.0, self.pnet_elo)] * nwins + [(0.0, self.pnet_elo)] * pwins + [(0.5, self.pnet_elo)] * draws
+            self.nnet_elo = self.glicko2.rate(self.nnet_elo, series)
+            log.info(f'NEW/PREV WINS : {nwins} / {pwins} ; DRAWS : {draws}')
+            log.info(f'Estimated NNet rating: {self.nnet_elo.mu:.1f} +- {self.nnet_elo.phi:.1f}')
+            log.info(f"Change in rating: {self.nnet_elo.mu - self.pnet_elo.mu:.1f}")
             if pwins + nwins == 0 or float(nwins) / (pwins + nwins) < self.args.updateThreshold:
                 log.info('REJECTING NEW MODEL')
                 # self.nnet.load_checkpoint(folder=self.args.checkpoint, filename='temp.pt')
