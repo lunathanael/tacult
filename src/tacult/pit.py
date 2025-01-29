@@ -321,7 +321,7 @@ class Pit:
     def play_tournament(self):
         """Play all rounds of the tournament."""
         log.info(f"Starting tournament with {self.num_rounds} rounds and {len(self.agents)} agents")
-        log.info(f"Agents: {'\n\t'.join(self.agent_names)}")
+        log.info(f"Agents: \n{'\n\t'.join(self.agent_names)}")
         for round_num in range(self.num_rounds):
             log.info(f"Starting round {round_num + 1}/{self.num_rounds}")
             self.play_round()

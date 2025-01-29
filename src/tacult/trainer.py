@@ -40,7 +40,7 @@ _args = dotdict(
         "cuda": False,
 
         "load_folder": "./temp/",
-        "checkpoint_folder": "./temp/resnet3/",
+        "checkpoint_folder": "./temp/resnet4/",
     }
 )
 

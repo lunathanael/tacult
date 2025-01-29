@@ -1,0 +1,1257 @@
+2025-01-29 16:48:01,633 __main__ INFO Loading UtacGame...
+2025-01-29 16:48:01,635 tacult.base.utils WARNING CUDA requested but not available! Using CPU instead.
+2025-01-29 16:48:02,419 tacult.base.nn_wrapper INFO Network _UtacNNet initialized on device cpu
+2025-01-29 16:48:02,469 tacult.base.nn_wrapper INFO Loaded network from ./temp/resnet/checkpoint_1.pt
+2025-01-29 16:48:02,469 tacult.base.nn_wrapper INFO Network architecture:
+2025-01-29 16:48:02,470 tacult.base.nn_wrapper INFO _UtacNNet(
+  (conv_in): Conv2d(4, 32, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1))
+  (bn_in): BatchNorm2d(32, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+  (res1): ResidualBlock(
+    (conv1): Conv2d(32, 32, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1))
+    (bn1): BatchNorm2d(32, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+    (conv2): Conv2d(32, 32, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1))
+    (bn2): BatchNorm2d(32, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+  )
+  (res2): ResidualBlock(
+    (conv1): Conv2d(32, 32, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1))
+    (bn1): BatchNorm2d(32, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+    (conv2): Conv2d(32, 32, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1))
+    (bn2): BatchNorm2d(32, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+  )
+  (fc1): Linear(in_features=2592, out_features=256, bias=True)
+  (fc_bn1): BatchNorm1d(256, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+  (pi): Linear(in_features=256, out_features=81, bias=True)
+  (v): Linear(in_features=256, out_features=1, bias=True)
+)
+2025-01-29 16:48:02,471 tacult.base.utils WARNING CUDA requested but not available! Using CPU instead.
+2025-01-29 16:48:02,477 tacult.base.nn_wrapper INFO Network _UtacNNet initialized on device cpu
+2025-01-29 16:48:02,528 tacult.base.nn_wrapper INFO Loaded network from ./temp/resnet/checkpoint_2.pt
+2025-01-29 16:48:02,528 tacult.base.nn_wrapper INFO Network architecture:
+2025-01-29 16:48:02,528 tacult.base.nn_wrapper INFO _UtacNNet(
+  (conv_in): Conv2d(4, 32, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1))
+  (bn_in): BatchNorm2d(32, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+  (res1): ResidualBlock(
+    (conv1): Conv2d(32, 32, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1))
+    (bn1): BatchNorm2d(32, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+    (conv2): Conv2d(32, 32, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1))
+    (bn2): BatchNorm2d(32, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+  )
+  (res2): ResidualBlock(
+    (conv1): Conv2d(32, 32, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1))
+    (bn1): BatchNorm2d(32, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+    (conv2): Conv2d(32, 32, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1))
+    (bn2): BatchNorm2d(32, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+  )
+  (fc1): Linear(in_features=2592, out_features=256, bias=True)
+  (fc_bn1): BatchNorm1d(256, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+  (pi): Linear(in_features=256, out_features=81, bias=True)
+  (v): Linear(in_features=256, out_features=1, bias=True)
+)
+2025-01-29 16:48:02,529 tacult.base.utils WARNING CUDA requested but not available! Using CPU instead.
+2025-01-29 16:48:02,534 tacult.base.nn_wrapper INFO Network _UtacNNet initialized on device cpu
+2025-01-29 16:48:02,581 tacult.base.nn_wrapper INFO Loaded network from ./temp/resnet/checkpoint_5.pt
+2025-01-29 16:48:02,581 tacult.base.nn_wrapper INFO Network architecture:
+2025-01-29 16:48:02,581 tacult.base.nn_wrapper INFO _UtacNNet(
+  (conv_in): Conv2d(4, 32, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1))
+  (bn_in): BatchNorm2d(32, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+  (res1): ResidualBlock(
+    (conv1): Conv2d(32, 32, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1))
+    (bn1): BatchNorm2d(32, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+    (conv2): Conv2d(32, 32, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1))
+    (bn2): BatchNorm2d(32, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+  )
+  (res2): ResidualBlock(
+    (conv1): Conv2d(32, 32, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1))
+    (bn1): BatchNorm2d(32, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+    (conv2): Conv2d(32, 32, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1))
+    (bn2): BatchNorm2d(32, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+  )
+  (fc1): Linear(in_features=2592, out_features=256, bias=True)
+  (fc_bn1): BatchNorm1d(256, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+  (pi): Linear(in_features=256, out_features=81, bias=True)
+  (v): Linear(in_features=256, out_features=1, bias=True)
+)
+2025-01-29 16:48:02,583 tacult.base.utils WARNING CUDA requested but not available! Using CPU instead.
+2025-01-29 16:48:02,724 tacult.base.nn_wrapper INFO Network _UtacNNet initialized on device cpu
+2025-01-29 16:48:02,771 tacult.base.nn_wrapper INFO Loaded network from ./temp/resnet/checkpoint_6.pt
+2025-01-29 16:48:02,771 tacult.base.nn_wrapper INFO Network architecture:
+2025-01-29 16:48:02,771 tacult.base.nn_wrapper INFO _UtacNNet(
+  (conv_in): Conv2d(4, 32, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1))
+  (bn_in): BatchNorm2d(32, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+  (res1): ResidualBlock(
+    (conv1): Conv2d(32, 32, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1))
+    (bn1): BatchNorm2d(32, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+    (conv2): Conv2d(32, 32, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1))
+    (bn2): BatchNorm2d(32, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+  )
+  (res2): ResidualBlock(
+    (conv1): Conv2d(32, 32, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1))
+    (bn1): BatchNorm2d(32, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+    (conv2): Conv2d(32, 32, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1))
+    (bn2): BatchNorm2d(32, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+  )
+  (fc1): Linear(in_features=2592, out_features=256, bias=True)
+  (fc_bn1): BatchNorm1d(256, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+  (pi): Linear(in_features=256, out_features=81, bias=True)
+  (v): Linear(in_features=256, out_features=1, bias=True)
+)
+2025-01-29 16:48:02,772 tacult.base.utils WARNING CUDA requested but not available! Using CPU instead.
+2025-01-29 16:48:02,776 tacult.base.nn_wrapper INFO Network _UtacNNet initialized on device cpu
+2025-01-29 16:48:02,821 tacult.base.nn_wrapper INFO Loaded network from ./temp/resnet/checkpoint_9.pt
+2025-01-29 16:48:02,821 tacult.base.nn_wrapper INFO Network architecture:
+2025-01-29 16:48:02,821 tacult.base.nn_wrapper INFO _UtacNNet(
+  (conv_in): Conv2d(4, 32, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1))
+  (bn_in): BatchNorm2d(32, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+  (res1): ResidualBlock(
+    (conv1): Conv2d(32, 32, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1))
+    (bn1): BatchNorm2d(32, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+    (conv2): Conv2d(32, 32, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1))
+    (bn2): BatchNorm2d(32, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+  )
+  (res2): ResidualBlock(
+    (conv1): Conv2d(32, 32, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1))
+    (bn1): BatchNorm2d(32, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+    (conv2): Conv2d(32, 32, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1))
+    (bn2): BatchNorm2d(32, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+  )
+  (fc1): Linear(in_features=2592, out_features=256, bias=True)
+  (fc_bn1): BatchNorm1d(256, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+  (pi): Linear(in_features=256, out_features=81, bias=True)
+  (v): Linear(in_features=256, out_features=1, bias=True)
+)
+2025-01-29 16:48:02,822 tacult.base.utils WARNING CUDA requested but not available! Using CPU instead.
+2025-01-29 16:48:02,827 tacult.base.nn_wrapper INFO Network _UtacNNet initialized on device cpu
+2025-01-29 16:48:02,871 tacult.base.nn_wrapper INFO Loaded network from ./temp/resnet/checkpoint_12.pt
+2025-01-29 16:48:02,871 tacult.base.nn_wrapper INFO Network architecture:
+2025-01-29 16:48:02,871 tacult.base.nn_wrapper INFO _UtacNNet(
+  (conv_in): Conv2d(4, 32, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1))
+  (bn_in): BatchNorm2d(32, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+  (res1): ResidualBlock(
+    (conv1): Conv2d(32, 32, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1))
+    (bn1): BatchNorm2d(32, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+    (conv2): Conv2d(32, 32, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1))
+    (bn2): BatchNorm2d(32, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+  )
+  (res2): ResidualBlock(
+    (conv1): Conv2d(32, 32, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1))
+    (bn1): BatchNorm2d(32, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+    (conv2): Conv2d(32, 32, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1))
+    (bn2): BatchNorm2d(32, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+  )
+  (fc1): Linear(in_features=2592, out_features=256, bias=True)
+  (fc_bn1): BatchNorm1d(256, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+  (pi): Linear(in_features=256, out_features=81, bias=True)
+  (v): Linear(in_features=256, out_features=1, bias=True)
+)
+2025-01-29 16:48:02,874 tacult.base.utils WARNING CUDA requested but not available! Using CPU instead.
+2025-01-29 16:48:02,881 tacult.base.nn_wrapper INFO Network _UtacNNet initialized on device cpu
+2025-01-29 16:48:02,962 tacult.base.nn_wrapper INFO Loaded network from ./temp/resnet2/checkpoint_2.pt
+2025-01-29 16:48:02,962 tacult.base.nn_wrapper INFO Network architecture:
+2025-01-29 16:48:02,962 tacult.base.nn_wrapper INFO _UtacNNet(
+  (conv_in): Conv2d(4, 64, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1))
+  (bn_in): BatchNorm2d(64, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+  (res1): ResidualBlock(
+    (conv1): Conv2d(64, 64, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1))
+    (bn1): BatchNorm2d(64, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+    (conv2): Conv2d(64, 64, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1))
+    (bn2): BatchNorm2d(64, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+  )
+  (res2): ResidualBlock(
+    (conv1): Conv2d(64, 64, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1))
+    (bn1): BatchNorm2d(64, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+    (conv2): Conv2d(64, 64, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1))
+    (bn2): BatchNorm2d(64, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+  )
+  (fc1): Linear(in_features=5184, out_features=256, bias=True)
+  (fc_bn1): BatchNorm1d(256, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+  (pi): Linear(in_features=256, out_features=81, bias=True)
+  (v): Linear(in_features=256, out_features=1, bias=True)
+)
+2025-01-29 16:48:02,963 tacult.base.utils WARNING CUDA requested but not available! Using CPU instead.
+2025-01-29 16:48:02,969 tacult.base.nn_wrapper INFO Network _UtacNNet initialized on device cpu
+2025-01-29 16:48:03,047 tacult.base.nn_wrapper INFO Loaded network from ./temp/resnet2/checkpoint_6.pt
+2025-01-29 16:48:03,047 tacult.base.nn_wrapper INFO Network architecture:
+2025-01-29 16:48:03,047 tacult.base.nn_wrapper INFO _UtacNNet(
+  (conv_in): Conv2d(4, 64, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1))
+  (bn_in): BatchNorm2d(64, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+  (res1): ResidualBlock(
+    (conv1): Conv2d(64, 64, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1))
+    (bn1): BatchNorm2d(64, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+    (conv2): Conv2d(64, 64, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1))
+    (bn2): BatchNorm2d(64, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+  )
+  (res2): ResidualBlock(
+    (conv1): Conv2d(64, 64, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1))
+    (bn1): BatchNorm2d(64, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+    (conv2): Conv2d(64, 64, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1))
+    (bn2): BatchNorm2d(64, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+  )
+  (fc1): Linear(in_features=5184, out_features=256, bias=True)
+  (fc_bn1): BatchNorm1d(256, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+  (pi): Linear(in_features=256, out_features=81, bias=True)
+  (v): Linear(in_features=256, out_features=1, bias=True)
+)
+2025-01-29 16:48:03,048 tacult.base.utils WARNING CUDA requested but not available! Using CPU instead.
+2025-01-29 16:48:03,056 tacult.base.nn_wrapper INFO Network _UtacNNet initialized on device cpu
+2025-01-29 16:48:03,137 tacult.base.nn_wrapper INFO Loaded network from ./temp/resnet2/checkpoint_7.pt
+2025-01-29 16:48:03,137 tacult.base.nn_wrapper INFO Network architecture:
+2025-01-29 16:48:03,137 tacult.base.nn_wrapper INFO _UtacNNet(
+  (conv_in): Conv2d(4, 64, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1))
+  (bn_in): BatchNorm2d(64, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+  (res1): ResidualBlock(
+    (conv1): Conv2d(64, 64, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1))
+    (bn1): BatchNorm2d(64, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+    (conv2): Conv2d(64, 64, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1))
+    (bn2): BatchNorm2d(64, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+  )
+  (res2): ResidualBlock(
+    (conv1): Conv2d(64, 64, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1))
+    (bn1): BatchNorm2d(64, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+    (conv2): Conv2d(64, 64, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1))
+    (bn2): BatchNorm2d(64, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+  )
+  (fc1): Linear(in_features=5184, out_features=256, bias=True)
+  (fc_bn1): BatchNorm1d(256, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+  (pi): Linear(in_features=256, out_features=81, bias=True)
+  (v): Linear(in_features=256, out_features=1, bias=True)
+)
+2025-01-29 16:48:03,138 tacult.base.utils WARNING CUDA requested but not available! Using CPU instead.
+2025-01-29 16:48:03,146 tacult.base.nn_wrapper INFO Network _UtacNNet initialized on device cpu
+2025-01-29 16:48:03,225 tacult.base.nn_wrapper INFO Loaded network from ./temp/resnet2/checkpoint_13.pt
+2025-01-29 16:48:03,226 tacult.base.nn_wrapper INFO Network architecture:
+2025-01-29 16:48:03,226 tacult.base.nn_wrapper INFO _UtacNNet(
+  (conv_in): Conv2d(4, 64, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1))
+  (bn_in): BatchNorm2d(64, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+  (res1): ResidualBlock(
+    (conv1): Conv2d(64, 64, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1))
+    (bn1): BatchNorm2d(64, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+    (conv2): Conv2d(64, 64, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1))
+    (bn2): BatchNorm2d(64, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+  )
+  (res2): ResidualBlock(
+    (conv1): Conv2d(64, 64, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1))
+    (bn1): BatchNorm2d(64, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+    (conv2): Conv2d(64, 64, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1))
+    (bn2): BatchNorm2d(64, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+  )
+  (fc1): Linear(in_features=5184, out_features=256, bias=True)
+  (fc_bn1): BatchNorm1d(256, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+  (pi): Linear(in_features=256, out_features=81, bias=True)
+  (v): Linear(in_features=256, out_features=1, bias=True)
+)
+2025-01-29 16:48:03,227 tacult.base.utils WARNING CUDA requested but not available! Using CPU instead.
+2025-01-29 16:48:03,234 tacult.base.nn_wrapper INFO Network _UtacNNet initialized on device cpu
+2025-01-29 16:48:03,315 tacult.base.nn_wrapper INFO Loaded network from ./temp/resnet2/checkpoint_15.pt
+2025-01-29 16:48:03,315 tacult.base.nn_wrapper INFO Network architecture:
+2025-01-29 16:48:03,315 tacult.base.nn_wrapper INFO _UtacNNet(
+  (conv_in): Conv2d(4, 64, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1))
+  (bn_in): BatchNorm2d(64, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+  (res1): ResidualBlock(
+    (conv1): Conv2d(64, 64, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1))
+    (bn1): BatchNorm2d(64, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+    (conv2): Conv2d(64, 64, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1))
+    (bn2): BatchNorm2d(64, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+  )
+  (res2): ResidualBlock(
+    (conv1): Conv2d(64, 64, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1))
+    (bn1): BatchNorm2d(64, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+    (conv2): Conv2d(64, 64, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1))
+    (bn2): BatchNorm2d(64, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+  )
+  (fc1): Linear(in_features=5184, out_features=256, bias=True)
+  (fc_bn1): BatchNorm1d(256, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+  (pi): Linear(in_features=256, out_features=81, bias=True)
+  (v): Linear(in_features=256, out_features=1, bias=True)
+)
+2025-01-29 16:48:03,316 tacult.base.utils WARNING CUDA requested but not available! Using CPU instead.
+2025-01-29 16:48:03,323 tacult.base.nn_wrapper INFO Network _UtacNNet initialized on device cpu
+2025-01-29 16:48:03,405 tacult.base.nn_wrapper INFO Loaded network from ./temp/resnet2/checkpoint_18.pt
+2025-01-29 16:48:03,406 tacult.base.nn_wrapper INFO Network architecture:
+2025-01-29 16:48:03,406 tacult.base.nn_wrapper INFO _UtacNNet(
+  (conv_in): Conv2d(4, 64, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1))
+  (bn_in): BatchNorm2d(64, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+  (res1): ResidualBlock(
+    (conv1): Conv2d(64, 64, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1))
+    (bn1): BatchNorm2d(64, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+    (conv2): Conv2d(64, 64, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1))
+    (bn2): BatchNorm2d(64, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+  )
+  (res2): ResidualBlock(
+    (conv1): Conv2d(64, 64, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1))
+    (bn1): BatchNorm2d(64, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+    (conv2): Conv2d(64, 64, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1))
+    (bn2): BatchNorm2d(64, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+  )
+  (fc1): Linear(in_features=5184, out_features=256, bias=True)
+  (fc_bn1): BatchNorm1d(256, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+  (pi): Linear(in_features=256, out_features=81, bias=True)
+  (v): Linear(in_features=256, out_features=1, bias=True)
+)
+2025-01-29 16:48:03,407 tacult.base.utils WARNING CUDA requested but not available! Using CPU instead.
+2025-01-29 16:48:03,414 tacult.base.nn_wrapper INFO Network _UtacNNet initialized on device cpu
+2025-01-29 16:48:03,494 tacult.base.nn_wrapper INFO Loaded network from ./temp/resnet2/checkpoint_21.pt
+2025-01-29 16:48:03,494 tacult.base.nn_wrapper INFO Network architecture:
+2025-01-29 16:48:03,494 tacult.base.nn_wrapper INFO _UtacNNet(
+  (conv_in): Conv2d(4, 64, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1))
+  (bn_in): BatchNorm2d(64, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+  (res1): ResidualBlock(
+    (conv1): Conv2d(64, 64, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1))
+    (bn1): BatchNorm2d(64, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+    (conv2): Conv2d(64, 64, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1))
+    (bn2): BatchNorm2d(64, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+  )
+  (res2): ResidualBlock(
+    (conv1): Conv2d(64, 64, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1))
+    (bn1): BatchNorm2d(64, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+    (conv2): Conv2d(64, 64, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1))
+    (bn2): BatchNorm2d(64, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+  )
+  (fc1): Linear(in_features=5184, out_features=256, bias=True)
+  (fc_bn1): BatchNorm1d(256, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+  (pi): Linear(in_features=256, out_features=81, bias=True)
+  (v): Linear(in_features=256, out_features=1, bias=True)
+)
+2025-01-29 16:48:03,495 tacult.base.utils WARNING CUDA requested but not available! Using CPU instead.
+2025-01-29 16:48:03,503 tacult.base.nn_wrapper INFO Network _UtacNNet initialized on device cpu
+2025-01-29 16:48:03,581 tacult.base.nn_wrapper INFO Loaded network from ./temp/resnet2/checkpoint_22.pt
+2025-01-29 16:48:03,581 tacult.base.nn_wrapper INFO Network architecture:
+2025-01-29 16:48:03,581 tacult.base.nn_wrapper INFO _UtacNNet(
+  (conv_in): Conv2d(4, 64, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1))
+  (bn_in): BatchNorm2d(64, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+  (res1): ResidualBlock(
+    (conv1): Conv2d(64, 64, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1))
+    (bn1): BatchNorm2d(64, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+    (conv2): Conv2d(64, 64, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1))
+    (bn2): BatchNorm2d(64, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+  )
+  (res2): ResidualBlock(
+    (conv1): Conv2d(64, 64, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1))
+    (bn1): BatchNorm2d(64, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+    (conv2): Conv2d(64, 64, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1))
+    (bn2): BatchNorm2d(64, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+  )
+  (fc1): Linear(in_features=5184, out_features=256, bias=True)
+  (fc_bn1): BatchNorm1d(256, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+  (pi): Linear(in_features=256, out_features=81, bias=True)
+  (v): Linear(in_features=256, out_features=1, bias=True)
+)
+2025-01-29 16:48:03,583 tacult.base.utils WARNING CUDA requested but not available! Using CPU instead.
+2025-01-29 16:48:03,681 tacult.base.nn_wrapper INFO Network _UtacNNet initialized on device cpu
+2025-01-29 16:48:04,856 tacult.base.nn_wrapper INFO Loaded network from ./temp/run3/checkpoint_46.pt
+2025-01-29 16:48:04,856 tacult.base.nn_wrapper INFO Network architecture:
+2025-01-29 16:48:04,856 tacult.base.nn_wrapper INFO _UtacNNet(
+  (conv1): Conv2d(4, 256, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1))
+  (conv2): Conv2d(256, 256, kernel_size=(1, 1), stride=(1, 1))
+  (conv3): Conv2d(256, 512, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1))
+  (conv4): Conv2d(512, 512, kernel_size=(1, 1), stride=(1, 1))
+  (bn1): BatchNorm2d(256, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+  (bn2): BatchNorm2d(256, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+  (bn3): BatchNorm2d(512, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+  (bn4): BatchNorm2d(512, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+  (fc1): Linear(in_features=41472, out_features=512, bias=True)
+  (fc_bn1): BatchNorm1d(512, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+  (pi): Linear(in_features=512, out_features=81, bias=True)
+  (v): Linear(in_features=512, out_features=1, bias=True)
+)
+2025-01-29 16:48:04,857 tacult.pit INFO Starting tournament with 1000 rounds and 18 agents
+2025-01-29 16:48:04,857 tacult.pit INFO Agents: temp_resnet_iter1_sims2
+	temp_resnet_iter2_sims2
+	temp_resnet_iter5_sims2
+	temp_resnet_iter6_sims2
+	temp_resnet_iter9_sims2
+	temp_resnet_iter12_sims2
+	temp_resnet2_iter2_sims2
+	temp_resnet2_iter6_sims2
+	temp_resnet2_iter7_sims2
+	temp_resnet2_iter13_sims2
+	temp_resnet2_iter15_sims2
+	temp_resnet2_iter18_sims2
+	temp_resnet2_iter21_sims2
+	temp_resnet2_iter22_sims2
+	temp_run3_iter46_sims2
+	Random
+	RawMCTS_sims9_rollouts10
+	RawMCTS_sims81_rollouts10
+2025-01-29 16:48:04,857 tacult.pit INFO Starting round 1/1000
+2025-01-29 16:48:04,857 tacult.pit INFO Playing match: temp_resnet_iter2_sims2 vs RawMCTS_sims9_rollouts10
+2025-01-29 16:48:09,864 tacult.pit INFO 
+Statistics After Match: temp_resnet_iter2_sims2 vs RawMCTS_sims9_rollouts10
+2025-01-29 16:48:09,864 tacult.pit INFO ----------------------------------------------------------------------------------------------------
+2025-01-29 16:48:09,864 tacult.pit INFO Agent                          Rating     Games    Wins   Losses Draws  Win Rate Loss Rate Draw Rate
+2025-01-29 16:48:09,864 tacult.pit INFO ----------------------------------------------------------------------------------------------------
+2025-01-29 16:48:09,864 tacult.pit INFO RawMCTS_sims9_rollouts10          1754.6       8     6      1      1    75.0%    12.5%    12.5%
+2025-01-29 16:48:09,864 tacult.pit INFO temp_resnet_iter1_sims2           1500.0       0     0      0      0     0.0%     0.0%     0.0%
+2025-01-29 16:48:09,864 tacult.pit INFO temp_resnet_iter5_sims2           1500.0       0     0      0      0     0.0%     0.0%     0.0%
+2025-01-29 16:48:09,864 tacult.pit INFO temp_resnet_iter6_sims2           1500.0       0     0      0      0     0.0%     0.0%     0.0%
+2025-01-29 16:48:09,865 tacult.pit INFO temp_resnet_iter9_sims2           1500.0       0     0      0      0     0.0%     0.0%     0.0%
+2025-01-29 16:48:09,865 tacult.pit INFO temp_resnet_iter12_sims2          1500.0       0     0      0      0     0.0%     0.0%     0.0%
+2025-01-29 16:48:09,865 tacult.pit INFO temp_resnet2_iter2_sims2          1500.0       0     0      0      0     0.0%     0.0%     0.0%
+2025-01-29 16:48:09,865 tacult.pit INFO temp_resnet2_iter6_sims2          1500.0       0     0      0      0     0.0%     0.0%     0.0%
+2025-01-29 16:48:09,865 tacult.pit INFO temp_resnet2_iter7_sims2          1500.0       0     0      0      0     0.0%     0.0%     0.0%
+2025-01-29 16:48:09,865 tacult.pit INFO temp_resnet2_iter13_sims2         1500.0       0     0      0      0     0.0%     0.0%     0.0%
+2025-01-29 16:48:09,865 tacult.pit INFO temp_resnet2_iter15_sims2         1500.0       0     0      0      0     0.0%     0.0%     0.0%
+2025-01-29 16:48:09,865 tacult.pit INFO temp_resnet2_iter18_sims2         1500.0       0     0      0      0     0.0%     0.0%     0.0%
+2025-01-29 16:48:09,865 tacult.pit INFO temp_resnet2_iter21_sims2         1500.0       0     0      0      0     0.0%     0.0%     0.0%
+2025-01-29 16:48:09,865 tacult.pit INFO temp_resnet2_iter22_sims2         1500.0       0     0      0      0     0.0%     0.0%     0.0%
+2025-01-29 16:48:09,866 tacult.pit INFO temp_run3_iter46_sims2            1500.0       0     0      0      0     0.0%     0.0%     0.0%
+2025-01-29 16:48:09,866 tacult.pit INFO Random                            1500.0       0     0      0      0     0.0%     0.0%     0.0%
+2025-01-29 16:48:09,866 tacult.pit INFO RawMCTS_sims81_rollouts10         1500.0       0     0      0      0     0.0%     0.0%     0.0%
+2025-01-29 16:48:09,866 tacult.pit INFO temp_resnet_iter2_sims2           1245.4       8     1      6      1    12.5%    75.0%    12.5%
+2025-01-29 16:48:09,866 tacult.pit INFO ----------------------------------------------------------------------------------------------------
+
+2025-01-29 16:48:09,866 tacult.pit INFO Playing match: temp_resnet2_iter6_sims2 vs RawMCTS_sims81_rollouts10
+2025-01-29 16:48:28,064 __main__ INFO Loading UtacGame...
+2025-01-29 16:48:28,065 tacult.base.utils WARNING CUDA requested but not available! Using CPU instead.
+2025-01-29 16:48:28,609 tacult.base.nn_wrapper INFO Network _UtacNNet initialized on device cpu
+2025-01-29 16:48:28,618 tacult.base.nn_wrapper INFO Loaded network from ./temp/resnet/checkpoint_1.pt
+2025-01-29 16:48:28,618 tacult.base.nn_wrapper INFO Network architecture:
+2025-01-29 16:48:28,618 tacult.base.nn_wrapper INFO _UtacNNet(
+  (conv_in): Conv2d(4, 32, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1))
+  (bn_in): BatchNorm2d(32, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+  (res1): ResidualBlock(
+    (conv1): Conv2d(32, 32, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1))
+    (bn1): BatchNorm2d(32, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+    (conv2): Conv2d(32, 32, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1))
+    (bn2): BatchNorm2d(32, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+  )
+  (res2): ResidualBlock(
+    (conv1): Conv2d(32, 32, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1))
+    (bn1): BatchNorm2d(32, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+    (conv2): Conv2d(32, 32, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1))
+    (bn2): BatchNorm2d(32, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+  )
+  (fc1): Linear(in_features=2592, out_features=256, bias=True)
+  (fc_bn1): BatchNorm1d(256, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+  (pi): Linear(in_features=256, out_features=81, bias=True)
+  (v): Linear(in_features=256, out_features=1, bias=True)
+)
+2025-01-29 16:48:28,619 tacult.base.utils WARNING CUDA requested but not available! Using CPU instead.
+2025-01-29 16:48:28,624 tacult.base.nn_wrapper INFO Network _UtacNNet initialized on device cpu
+2025-01-29 16:48:28,632 tacult.base.nn_wrapper INFO Loaded network from ./temp/resnet/checkpoint_2.pt
+2025-01-29 16:48:28,632 tacult.base.nn_wrapper INFO Network architecture:
+2025-01-29 16:48:28,632 tacult.base.nn_wrapper INFO _UtacNNet(
+  (conv_in): Conv2d(4, 32, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1))
+  (bn_in): BatchNorm2d(32, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+  (res1): ResidualBlock(
+    (conv1): Conv2d(32, 32, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1))
+    (bn1): BatchNorm2d(32, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+    (conv2): Conv2d(32, 32, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1))
+    (bn2): BatchNorm2d(32, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+  )
+  (res2): ResidualBlock(
+    (conv1): Conv2d(32, 32, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1))
+    (bn1): BatchNorm2d(32, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+    (conv2): Conv2d(32, 32, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1))
+    (bn2): BatchNorm2d(32, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+  )
+  (fc1): Linear(in_features=2592, out_features=256, bias=True)
+  (fc_bn1): BatchNorm1d(256, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+  (pi): Linear(in_features=256, out_features=81, bias=True)
+  (v): Linear(in_features=256, out_features=1, bias=True)
+)
+2025-01-29 16:48:28,633 tacult.base.utils WARNING CUDA requested but not available! Using CPU instead.
+2025-01-29 16:48:28,638 tacult.base.nn_wrapper INFO Network _UtacNNet initialized on device cpu
+2025-01-29 16:48:28,650 tacult.base.nn_wrapper INFO Loaded network from ./temp/resnet/checkpoint_5.pt
+2025-01-29 16:48:28,650 tacult.base.nn_wrapper INFO Network architecture:
+2025-01-29 16:48:28,650 tacult.base.nn_wrapper INFO _UtacNNet(
+  (conv_in): Conv2d(4, 32, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1))
+  (bn_in): BatchNorm2d(32, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+  (res1): ResidualBlock(
+    (conv1): Conv2d(32, 32, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1))
+    (bn1): BatchNorm2d(32, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+    (conv2): Conv2d(32, 32, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1))
+    (bn2): BatchNorm2d(32, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+  )
+  (res2): ResidualBlock(
+    (conv1): Conv2d(32, 32, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1))
+    (bn1): BatchNorm2d(32, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+    (conv2): Conv2d(32, 32, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1))
+    (bn2): BatchNorm2d(32, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+  )
+  (fc1): Linear(in_features=2592, out_features=256, bias=True)
+  (fc_bn1): BatchNorm1d(256, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+  (pi): Linear(in_features=256, out_features=81, bias=True)
+  (v): Linear(in_features=256, out_features=1, bias=True)
+)
+2025-01-29 16:48:28,651 tacult.base.utils WARNING CUDA requested but not available! Using CPU instead.
+2025-01-29 16:48:28,774 tacult.base.nn_wrapper INFO Network _UtacNNet initialized on device cpu
+2025-01-29 16:48:28,782 tacult.base.nn_wrapper INFO Loaded network from ./temp/resnet/checkpoint_6.pt
+2025-01-29 16:48:28,783 tacult.base.nn_wrapper INFO Network architecture:
+2025-01-29 16:48:28,783 tacult.base.nn_wrapper INFO _UtacNNet(
+  (conv_in): Conv2d(4, 32, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1))
+  (bn_in): BatchNorm2d(32, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+  (res1): ResidualBlock(
+    (conv1): Conv2d(32, 32, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1))
+    (bn1): BatchNorm2d(32, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+    (conv2): Conv2d(32, 32, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1))
+    (bn2): BatchNorm2d(32, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+  )
+  (res2): ResidualBlock(
+    (conv1): Conv2d(32, 32, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1))
+    (bn1): BatchNorm2d(32, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+    (conv2): Conv2d(32, 32, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1))
+    (bn2): BatchNorm2d(32, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+  )
+  (fc1): Linear(in_features=2592, out_features=256, bias=True)
+  (fc_bn1): BatchNorm1d(256, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+  (pi): Linear(in_features=256, out_features=81, bias=True)
+  (v): Linear(in_features=256, out_features=1, bias=True)
+)
+2025-01-29 16:48:28,783 tacult.base.utils WARNING CUDA requested but not available! Using CPU instead.
+2025-01-29 16:48:28,787 tacult.base.nn_wrapper INFO Network _UtacNNet initialized on device cpu
+2025-01-29 16:48:28,797 tacult.base.nn_wrapper INFO Loaded network from ./temp/resnet/checkpoint_9.pt
+2025-01-29 16:48:28,797 tacult.base.nn_wrapper INFO Network architecture:
+2025-01-29 16:48:28,797 tacult.base.nn_wrapper INFO _UtacNNet(
+  (conv_in): Conv2d(4, 32, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1))
+  (bn_in): BatchNorm2d(32, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+  (res1): ResidualBlock(
+    (conv1): Conv2d(32, 32, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1))
+    (bn1): BatchNorm2d(32, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+    (conv2): Conv2d(32, 32, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1))
+    (bn2): BatchNorm2d(32, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+  )
+  (res2): ResidualBlock(
+    (conv1): Conv2d(32, 32, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1))
+    (bn1): BatchNorm2d(32, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+    (conv2): Conv2d(32, 32, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1))
+    (bn2): BatchNorm2d(32, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+  )
+  (fc1): Linear(in_features=2592, out_features=256, bias=True)
+  (fc_bn1): BatchNorm1d(256, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+  (pi): Linear(in_features=256, out_features=81, bias=True)
+  (v): Linear(in_features=256, out_features=1, bias=True)
+)
+2025-01-29 16:48:28,798 tacult.base.utils WARNING CUDA requested but not available! Using CPU instead.
+2025-01-29 16:48:28,802 tacult.base.nn_wrapper INFO Network _UtacNNet initialized on device cpu
+2025-01-29 16:48:28,810 tacult.base.nn_wrapper INFO Loaded network from ./temp/resnet/checkpoint_12.pt
+2025-01-29 16:48:28,810 tacult.base.nn_wrapper INFO Network architecture:
+2025-01-29 16:48:28,810 tacult.base.nn_wrapper INFO _UtacNNet(
+  (conv_in): Conv2d(4, 32, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1))
+  (bn_in): BatchNorm2d(32, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+  (res1): ResidualBlock(
+    (conv1): Conv2d(32, 32, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1))
+    (bn1): BatchNorm2d(32, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+    (conv2): Conv2d(32, 32, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1))
+    (bn2): BatchNorm2d(32, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+  )
+  (res2): ResidualBlock(
+    (conv1): Conv2d(32, 32, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1))
+    (bn1): BatchNorm2d(32, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+    (conv2): Conv2d(32, 32, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1))
+    (bn2): BatchNorm2d(32, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+  )
+  (fc1): Linear(in_features=2592, out_features=256, bias=True)
+  (fc_bn1): BatchNorm1d(256, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+  (pi): Linear(in_features=256, out_features=81, bias=True)
+  (v): Linear(in_features=256, out_features=1, bias=True)
+)
+2025-01-29 16:48:28,812 tacult.base.utils WARNING CUDA requested but not available! Using CPU instead.
+2025-01-29 16:48:28,815 tacult.base.nn_wrapper INFO Network _UtacNNet initialized on device cpu
+2025-01-29 16:49:54,450 __main__ INFO Loading UtacGame...
+2025-01-29 16:49:54,451 tacult.base.utils WARNING CUDA requested but not available! Using CPU instead.
+2025-01-29 16:49:55,019 tacult.base.nn_wrapper INFO Network _UtacNNet initialized on device cpu
+2025-01-29 16:49:55,029 tacult.base.nn_wrapper INFO Loaded network from ./temp/resnet/checkpoint_1.pt
+2025-01-29 16:49:55,030 tacult.base.nn_wrapper INFO Network architecture:
+2025-01-29 16:49:55,030 tacult.base.nn_wrapper INFO _UtacNNet(
+  (conv_in): Conv2d(4, 32, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1))
+  (bn_in): BatchNorm2d(32, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+  (res1): ResidualBlock(
+    (conv1): Conv2d(32, 32, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1))
+    (bn1): BatchNorm2d(32, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+    (conv2): Conv2d(32, 32, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1))
+    (bn2): BatchNorm2d(32, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+  )
+  (res2): ResidualBlock(
+    (conv1): Conv2d(32, 32, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1))
+    (bn1): BatchNorm2d(32, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+    (conv2): Conv2d(32, 32, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1))
+    (bn2): BatchNorm2d(32, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+  )
+  (fc1): Linear(in_features=2592, out_features=256, bias=True)
+  (fc_bn1): BatchNorm1d(256, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+  (pi): Linear(in_features=256, out_features=81, bias=True)
+  (v): Linear(in_features=256, out_features=1, bias=True)
+)
+2025-01-29 16:49:55,031 tacult.base.utils WARNING CUDA requested but not available! Using CPU instead.
+2025-01-29 16:49:55,038 tacult.base.nn_wrapper INFO Network _UtacNNet initialized on device cpu
+2025-01-29 16:49:55,053 tacult.base.nn_wrapper INFO Loaded network from ./temp/resnet/checkpoint_2.pt
+2025-01-29 16:49:55,053 tacult.base.nn_wrapper INFO Network architecture:
+2025-01-29 16:49:55,054 tacult.base.nn_wrapper INFO _UtacNNet(
+  (conv_in): Conv2d(4, 32, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1))
+  (bn_in): BatchNorm2d(32, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+  (res1): ResidualBlock(
+    (conv1): Conv2d(32, 32, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1))
+    (bn1): BatchNorm2d(32, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+    (conv2): Conv2d(32, 32, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1))
+    (bn2): BatchNorm2d(32, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+  )
+  (res2): ResidualBlock(
+    (conv1): Conv2d(32, 32, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1))
+    (bn1): BatchNorm2d(32, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+    (conv2): Conv2d(32, 32, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1))
+    (bn2): BatchNorm2d(32, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+  )
+  (fc1): Linear(in_features=2592, out_features=256, bias=True)
+  (fc_bn1): BatchNorm1d(256, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+  (pi): Linear(in_features=256, out_features=81, bias=True)
+  (v): Linear(in_features=256, out_features=1, bias=True)
+)
+2025-01-29 16:49:55,055 tacult.base.utils WARNING CUDA requested but not available! Using CPU instead.
+2025-01-29 16:49:55,060 tacult.base.nn_wrapper INFO Network _UtacNNet initialized on device cpu
+2025-01-29 16:49:55,073 tacult.base.nn_wrapper INFO Loaded network from ./temp/resnet/checkpoint_5.pt
+2025-01-29 16:49:55,073 tacult.base.nn_wrapper INFO Network architecture:
+2025-01-29 16:49:55,073 tacult.base.nn_wrapper INFO _UtacNNet(
+  (conv_in): Conv2d(4, 32, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1))
+  (bn_in): BatchNorm2d(32, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+  (res1): ResidualBlock(
+    (conv1): Conv2d(32, 32, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1))
+    (bn1): BatchNorm2d(32, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+    (conv2): Conv2d(32, 32, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1))
+    (bn2): BatchNorm2d(32, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+  )
+  (res2): ResidualBlock(
+    (conv1): Conv2d(32, 32, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1))
+    (bn1): BatchNorm2d(32, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+    (conv2): Conv2d(32, 32, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1))
+    (bn2): BatchNorm2d(32, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+  )
+  (fc1): Linear(in_features=2592, out_features=256, bias=True)
+  (fc_bn1): BatchNorm1d(256, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+  (pi): Linear(in_features=256, out_features=81, bias=True)
+  (v): Linear(in_features=256, out_features=1, bias=True)
+)
+2025-01-29 16:49:55,074 tacult.base.utils WARNING CUDA requested but not available! Using CPU instead.
+2025-01-29 16:49:57,021 tacult.base.nn_wrapper INFO Network _UtacNNet initialized on device cpu
+2025-01-29 16:49:57,029 tacult.base.nn_wrapper INFO Loaded network from ./temp/resnet/checkpoint_6.pt
+2025-01-29 16:49:57,029 tacult.base.nn_wrapper INFO Network architecture:
+2025-01-29 16:49:57,029 tacult.base.nn_wrapper INFO _UtacNNet(
+  (conv_in): Conv2d(4, 32, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1))
+  (bn_in): BatchNorm2d(32, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+  (res1): ResidualBlock(
+    (conv1): Conv2d(32, 32, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1))
+    (bn1): BatchNorm2d(32, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+    (conv2): Conv2d(32, 32, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1))
+    (bn2): BatchNorm2d(32, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+  )
+  (res2): ResidualBlock(
+    (conv1): Conv2d(32, 32, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1))
+    (bn1): BatchNorm2d(32, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+    (conv2): Conv2d(32, 32, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1))
+    (bn2): BatchNorm2d(32, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+  )
+  (fc1): Linear(in_features=2592, out_features=256, bias=True)
+  (fc_bn1): BatchNorm1d(256, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+  (pi): Linear(in_features=256, out_features=81, bias=True)
+  (v): Linear(in_features=256, out_features=1, bias=True)
+)
+2025-01-29 16:49:57,030 tacult.base.utils WARNING CUDA requested but not available! Using CPU instead.
+2025-01-29 16:49:57,036 tacult.base.nn_wrapper INFO Network _UtacNNet initialized on device cpu
+2025-01-29 16:49:57,045 tacult.base.nn_wrapper INFO Loaded network from ./temp/resnet/checkpoint_9.pt
+2025-01-29 16:49:57,045 tacult.base.nn_wrapper INFO Network architecture:
+2025-01-29 16:49:57,045 tacult.base.nn_wrapper INFO _UtacNNet(
+  (conv_in): Conv2d(4, 32, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1))
+  (bn_in): BatchNorm2d(32, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+  (res1): ResidualBlock(
+    (conv1): Conv2d(32, 32, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1))
+    (bn1): BatchNorm2d(32, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+    (conv2): Conv2d(32, 32, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1))
+    (bn2): BatchNorm2d(32, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+  )
+  (res2): ResidualBlock(
+    (conv1): Conv2d(32, 32, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1))
+    (bn1): BatchNorm2d(32, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+    (conv2): Conv2d(32, 32, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1))
+    (bn2): BatchNorm2d(32, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+  )
+  (fc1): Linear(in_features=2592, out_features=256, bias=True)
+  (fc_bn1): BatchNorm1d(256, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+  (pi): Linear(in_features=256, out_features=81, bias=True)
+  (v): Linear(in_features=256, out_features=1, bias=True)
+)
+2025-01-29 16:49:57,046 tacult.base.utils WARNING CUDA requested but not available! Using CPU instead.
+2025-01-29 16:49:57,050 tacult.base.nn_wrapper INFO Network _UtacNNet initialized on device cpu
+2025-01-29 16:49:57,059 tacult.base.nn_wrapper INFO Loaded network from ./temp/resnet/checkpoint_12.pt
+2025-01-29 16:49:57,060 tacult.base.nn_wrapper INFO Network architecture:
+2025-01-29 16:49:57,060 tacult.base.nn_wrapper INFO _UtacNNet(
+  (conv_in): Conv2d(4, 32, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1))
+  (bn_in): BatchNorm2d(32, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+  (res1): ResidualBlock(
+    (conv1): Conv2d(32, 32, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1))
+    (bn1): BatchNorm2d(32, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+    (conv2): Conv2d(32, 32, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1))
+    (bn2): BatchNorm2d(32, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+  )
+  (res2): ResidualBlock(
+    (conv1): Conv2d(32, 32, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1))
+    (bn1): BatchNorm2d(32, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+    (conv2): Conv2d(32, 32, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1))
+    (bn2): BatchNorm2d(32, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+  )
+  (fc1): Linear(in_features=2592, out_features=256, bias=True)
+  (fc_bn1): BatchNorm1d(256, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+  (pi): Linear(in_features=256, out_features=81, bias=True)
+  (v): Linear(in_features=256, out_features=1, bias=True)
+)
+2025-01-29 16:49:57,061 tacult.base.utils WARNING CUDA requested but not available! Using CPU instead.
+2025-01-29 16:49:57,064 tacult.base.nn_wrapper INFO Network _UtacNNet initialized on device cpu
+2025-01-29 16:51:01,958 __main__ INFO Loading UtacGame...
+2025-01-29 16:51:01,959 tacult.base.utils WARNING CUDA requested but not available! Using CPU instead.
+2025-01-29 16:51:02,496 tacult.base.nn_wrapper INFO Network _UtacNNet initialized on device cpu
+2025-01-29 16:51:02,540 tacult.base.nn_wrapper INFO Loaded network from ./temp/resnet/checkpoint_1.pt
+2025-01-29 16:51:02,541 tacult.base.nn_wrapper INFO Network architecture:
+2025-01-29 16:51:02,541 tacult.base.nn_wrapper INFO _UtacNNet(
+  (conv_in): Conv2d(4, 32, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1))
+  (bn_in): BatchNorm2d(32, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+  (res1): ResidualBlock(
+    (conv1): Conv2d(32, 32, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1))
+    (bn1): BatchNorm2d(32, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+    (conv2): Conv2d(32, 32, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1))
+    (bn2): BatchNorm2d(32, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+  )
+  (res2): ResidualBlock(
+    (conv1): Conv2d(32, 32, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1))
+    (bn1): BatchNorm2d(32, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+    (conv2): Conv2d(32, 32, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1))
+    (bn2): BatchNorm2d(32, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+  )
+  (fc1): Linear(in_features=2592, out_features=256, bias=True)
+  (fc_bn1): BatchNorm1d(256, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+  (pi): Linear(in_features=256, out_features=81, bias=True)
+  (v): Linear(in_features=256, out_features=1, bias=True)
+)
+2025-01-29 16:51:02,542 tacult.base.utils WARNING CUDA requested but not available! Using CPU instead.
+2025-01-29 16:51:02,547 tacult.base.nn_wrapper INFO Network _UtacNNet initialized on device cpu
+2025-01-29 16:51:02,576 tacult.base.nn_wrapper INFO Loaded network from ./temp/resnet/checkpoint_2.pt
+2025-01-29 16:51:02,576 tacult.base.nn_wrapper INFO Network architecture:
+2025-01-29 16:51:02,577 tacult.base.nn_wrapper INFO _UtacNNet(
+  (conv_in): Conv2d(4, 32, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1))
+  (bn_in): BatchNorm2d(32, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+  (res1): ResidualBlock(
+    (conv1): Conv2d(32, 32, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1))
+    (bn1): BatchNorm2d(32, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+    (conv2): Conv2d(32, 32, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1))
+    (bn2): BatchNorm2d(32, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+  )
+  (res2): ResidualBlock(
+    (conv1): Conv2d(32, 32, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1))
+    (bn1): BatchNorm2d(32, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+    (conv2): Conv2d(32, 32, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1))
+    (bn2): BatchNorm2d(32, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+  )
+  (fc1): Linear(in_features=2592, out_features=256, bias=True)
+  (fc_bn1): BatchNorm1d(256, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+  (pi): Linear(in_features=256, out_features=81, bias=True)
+  (v): Linear(in_features=256, out_features=1, bias=True)
+)
+2025-01-29 16:51:02,577 tacult.base.utils WARNING CUDA requested but not available! Using CPU instead.
+2025-01-29 16:51:02,582 tacult.base.nn_wrapper INFO Network _UtacNNet initialized on device cpu
+2025-01-29 16:51:02,724 tacult.base.nn_wrapper INFO Loaded network from ./temp/resnet/checkpoint_5.pt
+2025-01-29 16:51:02,724 tacult.base.nn_wrapper INFO Network architecture:
+2025-01-29 16:51:02,724 tacult.base.nn_wrapper INFO _UtacNNet(
+  (conv_in): Conv2d(4, 32, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1))
+  (bn_in): BatchNorm2d(32, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+  (res1): ResidualBlock(
+    (conv1): Conv2d(32, 32, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1))
+    (bn1): BatchNorm2d(32, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+    (conv2): Conv2d(32, 32, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1))
+    (bn2): BatchNorm2d(32, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+  )
+  (res2): ResidualBlock(
+    (conv1): Conv2d(32, 32, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1))
+    (bn1): BatchNorm2d(32, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+    (conv2): Conv2d(32, 32, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1))
+    (bn2): BatchNorm2d(32, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+  )
+  (fc1): Linear(in_features=2592, out_features=256, bias=True)
+  (fc_bn1): BatchNorm1d(256, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+  (pi): Linear(in_features=256, out_features=81, bias=True)
+  (v): Linear(in_features=256, out_features=1, bias=True)
+)
+2025-01-29 16:51:02,725 tacult.base.utils WARNING CUDA requested but not available! Using CPU instead.
+2025-01-29 16:51:02,730 tacult.base.nn_wrapper INFO Network _UtacNNet initialized on device cpu
+2025-01-29 16:51:02,764 tacult.base.nn_wrapper INFO Loaded network from ./temp/resnet/checkpoint_6.pt
+2025-01-29 16:51:02,764 tacult.base.nn_wrapper INFO Network architecture:
+2025-01-29 16:51:02,764 tacult.base.nn_wrapper INFO _UtacNNet(
+  (conv_in): Conv2d(4, 32, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1))
+  (bn_in): BatchNorm2d(32, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+  (res1): ResidualBlock(
+    (conv1): Conv2d(32, 32, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1))
+    (bn1): BatchNorm2d(32, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+    (conv2): Conv2d(32, 32, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1))
+    (bn2): BatchNorm2d(32, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+  )
+  (res2): ResidualBlock(
+    (conv1): Conv2d(32, 32, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1))
+    (bn1): BatchNorm2d(32, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+    (conv2): Conv2d(32, 32, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1))
+    (bn2): BatchNorm2d(32, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+  )
+  (fc1): Linear(in_features=2592, out_features=256, bias=True)
+  (fc_bn1): BatchNorm1d(256, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+  (pi): Linear(in_features=256, out_features=81, bias=True)
+  (v): Linear(in_features=256, out_features=1, bias=True)
+)
+2025-01-29 16:51:02,765 tacult.base.utils WARNING CUDA requested but not available! Using CPU instead.
+2025-01-29 16:51:02,770 tacult.base.nn_wrapper INFO Network _UtacNNet initialized on device cpu
+2025-01-29 16:51:02,797 tacult.base.nn_wrapper INFO Loaded network from ./temp/resnet/checkpoint_9.pt
+2025-01-29 16:51:02,797 tacult.base.nn_wrapper INFO Network architecture:
+2025-01-29 16:51:02,797 tacult.base.nn_wrapper INFO _UtacNNet(
+  (conv_in): Conv2d(4, 32, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1))
+  (bn_in): BatchNorm2d(32, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+  (res1): ResidualBlock(
+    (conv1): Conv2d(32, 32, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1))
+    (bn1): BatchNorm2d(32, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+    (conv2): Conv2d(32, 32, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1))
+    (bn2): BatchNorm2d(32, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+  )
+  (res2): ResidualBlock(
+    (conv1): Conv2d(32, 32, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1))
+    (bn1): BatchNorm2d(32, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+    (conv2): Conv2d(32, 32, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1))
+    (bn2): BatchNorm2d(32, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+  )
+  (fc1): Linear(in_features=2592, out_features=256, bias=True)
+  (fc_bn1): BatchNorm1d(256, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+  (pi): Linear(in_features=256, out_features=81, bias=True)
+  (v): Linear(in_features=256, out_features=1, bias=True)
+)
+2025-01-29 16:51:02,798 tacult.base.utils WARNING CUDA requested but not available! Using CPU instead.
+2025-01-29 16:51:02,804 tacult.base.nn_wrapper INFO Network _UtacNNet initialized on device cpu
+2025-01-29 16:51:02,830 tacult.base.nn_wrapper INFO Loaded network from ./temp/resnet/checkpoint_12.pt
+2025-01-29 16:51:02,830 tacult.base.nn_wrapper INFO Network architecture:
+2025-01-29 16:51:02,830 tacult.base.nn_wrapper INFO _UtacNNet(
+  (conv_in): Conv2d(4, 32, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1))
+  (bn_in): BatchNorm2d(32, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+  (res1): ResidualBlock(
+    (conv1): Conv2d(32, 32, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1))
+    (bn1): BatchNorm2d(32, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+    (conv2): Conv2d(32, 32, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1))
+    (bn2): BatchNorm2d(32, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+  )
+  (res2): ResidualBlock(
+    (conv1): Conv2d(32, 32, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1))
+    (bn1): BatchNorm2d(32, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+    (conv2): Conv2d(32, 32, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1))
+    (bn2): BatchNorm2d(32, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+  )
+  (fc1): Linear(in_features=2592, out_features=256, bias=True)
+  (fc_bn1): BatchNorm1d(256, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+  (pi): Linear(in_features=256, out_features=81, bias=True)
+  (v): Linear(in_features=256, out_features=1, bias=True)
+)
+2025-01-29 16:51:02,832 tacult.base.utils WARNING CUDA requested but not available! Using CPU instead.
+2025-01-29 16:51:02,835 tacult.base.nn_wrapper INFO Network _UtacNNet initialized on device cpu
+2025-01-29 16:52:26,053 __main__ INFO Loading UtacGame...
+2025-01-29 16:52:26,054 tacult.base.utils WARNING CUDA requested but not available! Using CPU instead.
+2025-01-29 16:52:26,587 tacult.base.nn_wrapper INFO Network _UtacNNet initialized on device cpu
+2025-01-29 16:52:26,597 tacult.base.nn_wrapper INFO Loaded network from ./temp/resnet/checkpoint_1.pt
+2025-01-29 16:52:26,597 tacult.base.nn_wrapper INFO Network architecture:
+2025-01-29 16:52:26,597 tacult.base.nn_wrapper INFO _UtacNNet(
+  (conv_in): Conv2d(4, 32, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1))
+  (bn_in): BatchNorm2d(32, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+  (res1): ResidualBlock(
+    (conv1): Conv2d(32, 32, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1))
+    (bn1): BatchNorm2d(32, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+    (conv2): Conv2d(32, 32, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1))
+    (bn2): BatchNorm2d(32, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+  )
+  (res2): ResidualBlock(
+    (conv1): Conv2d(32, 32, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1))
+    (bn1): BatchNorm2d(32, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+    (conv2): Conv2d(32, 32, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1))
+    (bn2): BatchNorm2d(32, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+  )
+  (fc1): Linear(in_features=2592, out_features=256, bias=True)
+  (fc_bn1): BatchNorm1d(256, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+  (pi): Linear(in_features=256, out_features=81, bias=True)
+  (v): Linear(in_features=256, out_features=1, bias=True)
+)
+2025-01-29 16:52:26,598 tacult.base.utils WARNING CUDA requested but not available! Using CPU instead.
+2025-01-29 16:52:26,603 tacult.base.nn_wrapper INFO Network _UtacNNet initialized on device cpu
+2025-01-29 16:52:26,615 tacult.base.nn_wrapper INFO Loaded network from ./temp/resnet/checkpoint_2.pt
+2025-01-29 16:52:26,615 tacult.base.nn_wrapper INFO Network architecture:
+2025-01-29 16:52:26,615 tacult.base.nn_wrapper INFO _UtacNNet(
+  (conv_in): Conv2d(4, 32, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1))
+  (bn_in): BatchNorm2d(32, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+  (res1): ResidualBlock(
+    (conv1): Conv2d(32, 32, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1))
+    (bn1): BatchNorm2d(32, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+    (conv2): Conv2d(32, 32, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1))
+    (bn2): BatchNorm2d(32, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+  )
+  (res2): ResidualBlock(
+    (conv1): Conv2d(32, 32, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1))
+    (bn1): BatchNorm2d(32, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+    (conv2): Conv2d(32, 32, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1))
+    (bn2): BatchNorm2d(32, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+  )
+  (fc1): Linear(in_features=2592, out_features=256, bias=True)
+  (fc_bn1): BatchNorm1d(256, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+  (pi): Linear(in_features=256, out_features=81, bias=True)
+  (v): Linear(in_features=256, out_features=1, bias=True)
+)
+2025-01-29 16:52:26,616 tacult.base.utils WARNING CUDA requested but not available! Using CPU instead.
+2025-01-29 16:52:26,619 tacult.base.nn_wrapper INFO Network _UtacNNet initialized on device cpu
+2025-01-29 16:52:26,631 tacult.base.nn_wrapper INFO Loaded network from ./temp/resnet/checkpoint_5.pt
+2025-01-29 16:52:26,631 tacult.base.nn_wrapper INFO Network architecture:
+2025-01-29 16:52:26,631 tacult.base.nn_wrapper INFO _UtacNNet(
+  (conv_in): Conv2d(4, 32, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1))
+  (bn_in): BatchNorm2d(32, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+  (res1): ResidualBlock(
+    (conv1): Conv2d(32, 32, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1))
+    (bn1): BatchNorm2d(32, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+    (conv2): Conv2d(32, 32, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1))
+    (bn2): BatchNorm2d(32, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+  )
+  (res2): ResidualBlock(
+    (conv1): Conv2d(32, 32, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1))
+    (bn1): BatchNorm2d(32, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+    (conv2): Conv2d(32, 32, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1))
+    (bn2): BatchNorm2d(32, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+  )
+  (fc1): Linear(in_features=2592, out_features=256, bias=True)
+  (fc_bn1): BatchNorm1d(256, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+  (pi): Linear(in_features=256, out_features=81, bias=True)
+  (v): Linear(in_features=256, out_features=1, bias=True)
+)
+2025-01-29 16:52:26,632 tacult.base.utils WARNING CUDA requested but not available! Using CPU instead.
+2025-01-29 16:52:26,755 tacult.base.nn_wrapper INFO Network _UtacNNet initialized on device cpu
+2025-01-29 16:52:26,764 tacult.base.nn_wrapper INFO Loaded network from ./temp/resnet/checkpoint_6.pt
+2025-01-29 16:52:26,764 tacult.base.nn_wrapper INFO Network architecture:
+2025-01-29 16:52:26,764 tacult.base.nn_wrapper INFO _UtacNNet(
+  (conv_in): Conv2d(4, 32, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1))
+  (bn_in): BatchNorm2d(32, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+  (res1): ResidualBlock(
+    (conv1): Conv2d(32, 32, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1))
+    (bn1): BatchNorm2d(32, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+    (conv2): Conv2d(32, 32, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1))
+    (bn2): BatchNorm2d(32, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+  )
+  (res2): ResidualBlock(
+    (conv1): Conv2d(32, 32, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1))
+    (bn1): BatchNorm2d(32, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+    (conv2): Conv2d(32, 32, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1))
+    (bn2): BatchNorm2d(32, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+  )
+  (fc1): Linear(in_features=2592, out_features=256, bias=True)
+  (fc_bn1): BatchNorm1d(256, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+  (pi): Linear(in_features=256, out_features=81, bias=True)
+  (v): Linear(in_features=256, out_features=1, bias=True)
+)
+2025-01-29 16:52:26,765 tacult.base.utils WARNING CUDA requested but not available! Using CPU instead.
+2025-01-29 16:52:26,769 tacult.base.nn_wrapper INFO Network _UtacNNet initialized on device cpu
+2025-01-29 16:52:26,781 tacult.base.nn_wrapper INFO Loaded network from ./temp/resnet/checkpoint_9.pt
+2025-01-29 16:52:26,781 tacult.base.nn_wrapper INFO Network architecture:
+2025-01-29 16:52:26,782 tacult.base.nn_wrapper INFO _UtacNNet(
+  (conv_in): Conv2d(4, 32, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1))
+  (bn_in): BatchNorm2d(32, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+  (res1): ResidualBlock(
+    (conv1): Conv2d(32, 32, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1))
+    (bn1): BatchNorm2d(32, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+    (conv2): Conv2d(32, 32, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1))
+    (bn2): BatchNorm2d(32, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+  )
+  (res2): ResidualBlock(
+    (conv1): Conv2d(32, 32, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1))
+    (bn1): BatchNorm2d(32, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+    (conv2): Conv2d(32, 32, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1))
+    (bn2): BatchNorm2d(32, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+  )
+  (fc1): Linear(in_features=2592, out_features=256, bias=True)
+  (fc_bn1): BatchNorm1d(256, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+  (pi): Linear(in_features=256, out_features=81, bias=True)
+  (v): Linear(in_features=256, out_features=1, bias=True)
+)
+2025-01-29 16:52:26,783 tacult.base.utils WARNING CUDA requested but not available! Using CPU instead.
+2025-01-29 16:52:26,787 tacult.base.nn_wrapper INFO Network _UtacNNet initialized on device cpu
+2025-01-29 16:52:26,795 tacult.base.nn_wrapper INFO Loaded network from ./temp/resnet/checkpoint_12.pt
+2025-01-29 16:52:26,796 tacult.base.nn_wrapper INFO Network architecture:
+2025-01-29 16:52:26,796 tacult.base.nn_wrapper INFO _UtacNNet(
+  (conv_in): Conv2d(4, 32, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1))
+  (bn_in): BatchNorm2d(32, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+  (res1): ResidualBlock(
+    (conv1): Conv2d(32, 32, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1))
+    (bn1): BatchNorm2d(32, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+    (conv2): Conv2d(32, 32, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1))
+    (bn2): BatchNorm2d(32, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+  )
+  (res2): ResidualBlock(
+    (conv1): Conv2d(32, 32, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1))
+    (bn1): BatchNorm2d(32, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+    (conv2): Conv2d(32, 32, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1))
+    (bn2): BatchNorm2d(32, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+  )
+  (fc1): Linear(in_features=2592, out_features=256, bias=True)
+  (fc_bn1): BatchNorm1d(256, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+  (pi): Linear(in_features=256, out_features=81, bias=True)
+  (v): Linear(in_features=256, out_features=1, bias=True)
+)
+2025-01-29 16:52:26,797 tacult.base.utils WARNING CUDA requested but not available! Using CPU instead.
+2025-01-29 16:52:26,800 tacult.base.nn_wrapper INFO Network _UtacNNet initialized on device cpu
+2025-01-29 16:52:53,301 __main__ INFO Loading UtacGame...
+2025-01-29 16:52:53,302 tacult.base.utils WARNING CUDA requested but not available! Using CPU instead.
+2025-01-29 16:52:53,829 tacult.base.nn_wrapper INFO Network _UtacNNet initialized on device cpu
+2025-01-29 16:52:53,838 tacult.base.nn_wrapper INFO Loaded network from ./temp/resnet/checkpoint_1.pt
+2025-01-29 16:52:53,838 tacult.base.nn_wrapper INFO Network architecture:
+2025-01-29 16:52:53,839 tacult.base.nn_wrapper INFO _UtacNNet(
+  (conv_in): Conv2d(4, 32, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1))
+  (bn_in): BatchNorm2d(32, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+  (res1): ResidualBlock(
+    (conv1): Conv2d(32, 32, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1))
+    (bn1): BatchNorm2d(32, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+    (conv2): Conv2d(32, 32, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1))
+    (bn2): BatchNorm2d(32, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+  )
+  (res2): ResidualBlock(
+    (conv1): Conv2d(32, 32, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1))
+    (bn1): BatchNorm2d(32, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+    (conv2): Conv2d(32, 32, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1))
+    (bn2): BatchNorm2d(32, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+  )
+  (fc1): Linear(in_features=2592, out_features=256, bias=True)
+  (fc_bn1): BatchNorm1d(256, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+  (pi): Linear(in_features=256, out_features=81, bias=True)
+  (v): Linear(in_features=256, out_features=1, bias=True)
+)
+2025-01-29 16:52:53,840 tacult.base.utils WARNING CUDA requested but not available! Using CPU instead.
+2025-01-29 16:52:53,845 tacult.base.nn_wrapper INFO Network _UtacNNet initialized on device cpu
+2025-01-29 16:52:53,856 tacult.base.nn_wrapper INFO Loaded network from ./temp/resnet/checkpoint_2.pt
+2025-01-29 16:52:53,857 tacult.base.nn_wrapper INFO Network architecture:
+2025-01-29 16:52:53,857 tacult.base.nn_wrapper INFO _UtacNNet(
+  (conv_in): Conv2d(4, 32, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1))
+  (bn_in): BatchNorm2d(32, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+  (res1): ResidualBlock(
+    (conv1): Conv2d(32, 32, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1))
+    (bn1): BatchNorm2d(32, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+    (conv2): Conv2d(32, 32, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1))
+    (bn2): BatchNorm2d(32, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+  )
+  (res2): ResidualBlock(
+    (conv1): Conv2d(32, 32, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1))
+    (bn1): BatchNorm2d(32, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+    (conv2): Conv2d(32, 32, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1))
+    (bn2): BatchNorm2d(32, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+  )
+  (fc1): Linear(in_features=2592, out_features=256, bias=True)
+  (fc_bn1): BatchNorm1d(256, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+  (pi): Linear(in_features=256, out_features=81, bias=True)
+  (v): Linear(in_features=256, out_features=1, bias=True)
+)
+2025-01-29 16:52:53,858 tacult.base.utils WARNING CUDA requested but not available! Using CPU instead.
+2025-01-29 16:52:53,863 tacult.base.nn_wrapper INFO Network _UtacNNet initialized on device cpu
+2025-01-29 16:52:53,875 tacult.base.nn_wrapper INFO Loaded network from ./temp/resnet/checkpoint_5.pt
+2025-01-29 16:52:53,875 tacult.base.nn_wrapper INFO Network architecture:
+2025-01-29 16:52:53,875 tacult.base.nn_wrapper INFO _UtacNNet(
+  (conv_in): Conv2d(4, 32, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1))
+  (bn_in): BatchNorm2d(32, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+  (res1): ResidualBlock(
+    (conv1): Conv2d(32, 32, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1))
+    (bn1): BatchNorm2d(32, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+    (conv2): Conv2d(32, 32, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1))
+    (bn2): BatchNorm2d(32, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+  )
+  (res2): ResidualBlock(
+    (conv1): Conv2d(32, 32, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1))
+    (bn1): BatchNorm2d(32, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+    (conv2): Conv2d(32, 32, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1))
+    (bn2): BatchNorm2d(32, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+  )
+  (fc1): Linear(in_features=2592, out_features=256, bias=True)
+  (fc_bn1): BatchNorm1d(256, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+  (pi): Linear(in_features=256, out_features=81, bias=True)
+  (v): Linear(in_features=256, out_features=1, bias=True)
+)
+2025-01-29 16:52:53,876 tacult.base.utils WARNING CUDA requested but not available! Using CPU instead.
+2025-01-29 16:52:54,000 tacult.base.nn_wrapper INFO Network _UtacNNet initialized on device cpu
+2025-01-29 16:52:54,007 tacult.base.nn_wrapper INFO Loaded network from ./temp/resnet/checkpoint_6.pt
+2025-01-29 16:52:54,007 tacult.base.nn_wrapper INFO Network architecture:
+2025-01-29 16:52:54,007 tacult.base.nn_wrapper INFO _UtacNNet(
+  (conv_in): Conv2d(4, 32, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1))
+  (bn_in): BatchNorm2d(32, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+  (res1): ResidualBlock(
+    (conv1): Conv2d(32, 32, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1))
+    (bn1): BatchNorm2d(32, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+    (conv2): Conv2d(32, 32, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1))
+    (bn2): BatchNorm2d(32, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+  )
+  (res2): ResidualBlock(
+    (conv1): Conv2d(32, 32, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1))
+    (bn1): BatchNorm2d(32, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+    (conv2): Conv2d(32, 32, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1))
+    (bn2): BatchNorm2d(32, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+  )
+  (fc1): Linear(in_features=2592, out_features=256, bias=True)
+  (fc_bn1): BatchNorm1d(256, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+  (pi): Linear(in_features=256, out_features=81, bias=True)
+  (v): Linear(in_features=256, out_features=1, bias=True)
+)
+2025-01-29 16:52:54,008 tacult.base.utils WARNING CUDA requested but not available! Using CPU instead.
+2025-01-29 16:52:54,015 tacult.base.nn_wrapper INFO Network _UtacNNet initialized on device cpu
+2025-01-29 16:52:54,025 tacult.base.nn_wrapper INFO Loaded network from ./temp/resnet/checkpoint_9.pt
+2025-01-29 16:52:54,026 tacult.base.nn_wrapper INFO Network architecture:
+2025-01-29 16:52:54,026 tacult.base.nn_wrapper INFO _UtacNNet(
+  (conv_in): Conv2d(4, 32, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1))
+  (bn_in): BatchNorm2d(32, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+  (res1): ResidualBlock(
+    (conv1): Conv2d(32, 32, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1))
+    (bn1): BatchNorm2d(32, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+    (conv2): Conv2d(32, 32, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1))
+    (bn2): BatchNorm2d(32, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+  )
+  (res2): ResidualBlock(
+    (conv1): Conv2d(32, 32, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1))
+    (bn1): BatchNorm2d(32, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+    (conv2): Conv2d(32, 32, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1))
+    (bn2): BatchNorm2d(32, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+  )
+  (fc1): Linear(in_features=2592, out_features=256, bias=True)
+  (fc_bn1): BatchNorm1d(256, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+  (pi): Linear(in_features=256, out_features=81, bias=True)
+  (v): Linear(in_features=256, out_features=1, bias=True)
+)
+2025-01-29 16:52:54,027 tacult.base.utils WARNING CUDA requested but not available! Using CPU instead.
+2025-01-29 16:52:54,033 tacult.base.nn_wrapper INFO Network _UtacNNet initialized on device cpu
+2025-01-29 16:52:54,042 tacult.base.nn_wrapper INFO Loaded network from ./temp/resnet/checkpoint_12.pt
+2025-01-29 16:52:54,042 tacult.base.nn_wrapper INFO Network architecture:
+2025-01-29 16:52:54,042 tacult.base.nn_wrapper INFO _UtacNNet(
+  (conv_in): Conv2d(4, 32, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1))
+  (bn_in): BatchNorm2d(32, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+  (res1): ResidualBlock(
+    (conv1): Conv2d(32, 32, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1))
+    (bn1): BatchNorm2d(32, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+    (conv2): Conv2d(32, 32, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1))
+    (bn2): BatchNorm2d(32, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+  )
+  (res2): ResidualBlock(
+    (conv1): Conv2d(32, 32, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1))
+    (bn1): BatchNorm2d(32, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+    (conv2): Conv2d(32, 32, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1))
+    (bn2): BatchNorm2d(32, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+  )
+  (fc1): Linear(in_features=2592, out_features=256, bias=True)
+  (fc_bn1): BatchNorm1d(256, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+  (pi): Linear(in_features=256, out_features=81, bias=True)
+  (v): Linear(in_features=256, out_features=1, bias=True)
+)
+2025-01-29 16:52:54,043 tacult.base.utils WARNING CUDA requested but not available! Using CPU instead.
+2025-01-29 16:52:54,145 tacult.base.nn_wrapper INFO Network _UtacNNet initialized on device cpu
+2025-01-29 16:52:54,316 tacult.base.nn_wrapper INFO Loaded network from ./temp/run3/checkpoint_46.pt
+2025-01-29 16:52:54,316 tacult.base.nn_wrapper INFO Network architecture:
+2025-01-29 16:52:54,316 tacult.base.nn_wrapper INFO _UtacNNet(
+  (conv1): Conv2d(4, 256, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1))
+  (conv2): Conv2d(256, 256, kernel_size=(1, 1), stride=(1, 1))
+  (conv3): Conv2d(256, 512, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1))
+  (conv4): Conv2d(512, 512, kernel_size=(1, 1), stride=(1, 1))
+  (bn1): BatchNorm2d(256, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+  (bn2): BatchNorm2d(256, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+  (bn3): BatchNorm2d(512, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+  (bn4): BatchNorm2d(512, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+  (fc1): Linear(in_features=41472, out_features=512, bias=True)
+  (fc_bn1): BatchNorm1d(512, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+  (pi): Linear(in_features=512, out_features=81, bias=True)
+  (v): Linear(in_features=512, out_features=1, bias=True)
+)
+2025-01-29 16:52:54,316 tacult.pit INFO Starting tournament with 1000 rounds and 10 agents
+2025-01-29 16:52:54,317 tacult.pit INFO Agents: temp_resnet_iter1_sims2
+	temp_resnet_iter2_sims2
+	temp_resnet_iter5_sims2
+	temp_resnet_iter6_sims2
+	temp_resnet_iter9_sims2
+	temp_resnet_iter12_sims2
+	temp_run3_iter46_sims2
+	Random
+	RawMCTS_sims9_rollouts10
+	RawMCTS_sims81_rollouts10
+2025-01-29 16:52:54,317 tacult.pit INFO Starting round 1/1000
+2025-01-29 16:52:54,317 tacult.pit INFO Playing match: temp_resnet_iter12_sims2 vs RawMCTS_sims81_rollouts10
+2025-01-29 16:53:01,385 __main__ INFO Loading UtacGame...
+2025-01-29 16:53:01,386 tacult.base.utils WARNING CUDA requested but not available! Using CPU instead.
+2025-01-29 16:53:01,912 tacult.base.nn_wrapper INFO Network _UtacNNet initialized on device cpu
+2025-01-29 16:57:51,872 __main__ INFO Loading UtacGame...
+2025-01-29 16:57:51,873 tacult.base.utils WARNING CUDA requested but not available! Using CPU instead.
+2025-01-29 17:03:31,952 __main__ INFO Loading UtacGame...
+2025-01-29 17:03:31,953 tacult.base.utils WARNING CUDA requested but not available! Using CPU instead.
+2025-01-29 17:04:04,114 __main__ INFO Loading UtacGame...
+2025-01-29 17:04:04,115 tacult.base.utils WARNING CUDA requested but not available! Using CPU instead.
+2025-01-29 17:08:10,067 __main__ INFO Loading UtacGame...
+2025-01-29 17:08:10,068 tacult.base.utils WARNING CUDA requested but not available! Using CPU instead.
+2025-01-29 17:11:38,135 __main__ INFO Loading UtacGame...
+2025-01-29 17:11:38,136 tacult.base.utils WARNING CUDA requested but not available! Using CPU instead.
+2025-01-29 17:11:55,536 __main__ INFO Loading UtacGame...
+2025-01-29 17:11:56,794 tacult.base.nn_wrapper INFO Network _UtacNNet initialized on device cpu
+2025-01-29 17:11:56,803 tacult.base.nn_wrapper INFO Loaded network from ./temp/resnet3/checkpoint_1.pt
+2025-01-29 17:11:56,804 tacult.base.nn_wrapper INFO Network architecture:
+2025-01-29 17:11:56,804 tacult.base.nn_wrapper INFO _UtacNNet(
+  (conv_in): Conv2d(4, 16, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1))
+  (bn_in): BatchNorm2d(16, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+  (resnet): Sequential(
+    (0): ResidualBlock(
+      (conv_block1): Sequential(
+        (0): Conv2d(16, 16, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1))
+        (1): BatchNorm2d(16, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+        (2): ReLU()
+      )
+      (conv_block2): Sequential(
+        (0): Conv2d(16, 16, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1))
+        (1): BatchNorm2d(16, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+      )
+    )
+    (1): ResidualBlock(
+      (conv_block1): Sequential(
+        (0): Conv2d(16, 16, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1))
+        (1): BatchNorm2d(16, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+        (2): ReLU()
+      )
+      (conv_block2): Sequential(
+        (0): Conv2d(16, 16, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1))
+        (1): BatchNorm2d(16, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+      )
+    )
+    (2): ResidualBlock(
+      (conv_block1): Sequential(
+        (0): Conv2d(16, 16, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1))
+        (1): BatchNorm2d(16, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+        (2): ReLU()
+      )
+      (conv_block2): Sequential(
+        (0): Conv2d(16, 16, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1))
+        (1): BatchNorm2d(16, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+      )
+    )
+  )
+  (fc1): Linear(in_features=1296, out_features=256, bias=True)
+  (fc_bn1): BatchNorm1d(256, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+  (pi): Linear(in_features=256, out_features=81, bias=True)
+  (v): Linear(in_features=256, out_features=1, bias=True)
+)
+2025-01-29 17:11:56,804 tacult.pit INFO Starting tournament with 1000 rounds and 4 agents
+2025-01-29 17:11:56,804 tacult.pit INFO Agents: temp_resnet3_iter1_sims2
+	Random
+	RawMCTS_sims9_rollouts10
+	RawMCTS_sims81_rollouts10
+2025-01-29 17:11:56,805 tacult.pit INFO Starting round 1/1000
+2025-01-29 17:11:56,805 tacult.pit INFO Playing match: temp_resnet3_iter1_sims2 vs Random
+2025-01-29 17:12:00,870 tacult.pit INFO 
+Statistics After Match: temp_resnet3_iter1_sims2 vs Random
+2025-01-29 17:12:00,870 tacult.pit INFO ----------------------------------------------------------------------------------------------------
+2025-01-29 17:12:00,870 tacult.pit INFO Agent                          Rating     Games    Wins   Losses Draws  Win Rate Loss Rate Draw Rate
+2025-01-29 17:12:00,870 tacult.pit INFO ----------------------------------------------------------------------------------------------------
+2025-01-29 17:12:00,870 tacult.pit INFO Random                            1652.7       8     5      2      1    62.5%    25.0%    12.5%
+2025-01-29 17:12:00,870 tacult.pit INFO RawMCTS_sims9_rollouts10          1500.0       0     0      0      0     0.0%     0.0%     0.0%
+2025-01-29 17:12:00,870 tacult.pit INFO RawMCTS_sims81_rollouts10         1500.0       0     0      0      0     0.0%     0.0%     0.0%
+2025-01-29 17:12:00,870 tacult.pit INFO temp_resnet3_iter1_sims2          1347.3       8     2      5      1    25.0%    62.5%    12.5%
+2025-01-29 17:12:00,870 tacult.pit INFO ----------------------------------------------------------------------------------------------------
+
+2025-01-29 17:12:00,871 tacult.pit INFO Playing match: RawMCTS_sims9_rollouts10 vs RawMCTS_sims81_rollouts10
+2025-01-29 17:12:40,706 tacult.pit INFO 
+Statistics After Match: RawMCTS_sims9_rollouts10 vs RawMCTS_sims81_rollouts10
+2025-01-29 17:12:40,707 tacult.pit INFO ----------------------------------------------------------------------------------------------------
+2025-01-29 17:12:40,707 tacult.pit INFO Agent                          Rating     Games    Wins   Losses Draws  Win Rate Loss Rate Draw Rate
+2025-01-29 17:12:40,707 tacult.pit INFO ----------------------------------------------------------------------------------------------------
+2025-01-29 17:12:40,707 tacult.pit INFO RawMCTS_sims81_rollouts10         1805.5       8     7      1      0    87.5%    12.5%     0.0%
+2025-01-29 17:12:40,707 tacult.pit INFO Random                            1652.7       8     5      2      1    62.5%    25.0%    12.5%
+2025-01-29 17:12:40,707 tacult.pit INFO temp_resnet3_iter1_sims2          1347.3       8     2      5      1    25.0%    62.5%    12.5%
+2025-01-29 17:12:40,707 tacult.pit INFO RawMCTS_sims9_rollouts10          1194.5       8     1      7      0    12.5%    87.5%     0.0%
+2025-01-29 17:12:40,707 tacult.pit INFO ----------------------------------------------------------------------------------------------------
+
+2025-01-29 17:12:40,708 tacult.pit INFO Playing match: Random vs RawMCTS_sims9_rollouts10
