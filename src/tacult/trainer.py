@@ -7,11 +7,11 @@ from tacult.utils import dotdict
 _args = dotdict(
     {
         "numIters": 300,
-        "minNumEps": 128,  # Minimum number of complete self-play games to simulate during a new iteration, an upper bound over this minimum is the number of environments.
-        "numEnvs": 128,
+        "minNumEps": 256,  # Minimum number of complete self-play games to simulate during a new iteration, an upper bound over this minimum is the number of environments.
+        "numEnvs": 256,
         "tempThreshold": 10,  #
         "updateThreshold": 0.6,  # During arena playoff, new neural net will be accepted if threshold or more of games are won.
-        "maxlenOfQueue": 1_000_000,  # Number of game examples to train the neural networks. Do (minNumEps + numEnvs) * 81 * 8
+        "maxlenOfQueue": 500_000,  # Number of game examples to train the neural networks. Do (minNumEps + numEnvs) * 81 * 8
         "numMCTSSims": 800,  # Number of games moves for MCTS to simulate.
         "cpuct": 2.4,
 
@@ -23,24 +23,24 @@ _args = dotdict(
         "steps_per_epoch": 10,
         "epochs": 10,
         "batch_size": 4096,
-        "lr": 0.2,
+        "lr": 3e-3,
         "num_warm_restarts": 3,
         "onnx_export": False,
         "model_args": {
-            # "channels": 16,
-            # "num_residual_blocks": 3,
-            # "embedding_size": 256,
-            "dropout": 0.3,
+            "channels": 32,
+            "num_residual_blocks": 3,
+            "embedding_size": 256,
+            "dropout": 0.2,
             "cuda": False,
         },
         "saveAllModels": True,
         "saveTrainExamples": False,
         "load_checkpoint": True,
-        "load_model": False,
+        "load_model": True,
         "cuda": False,
 
-        "load_folder": "./temp/",
-        "checkpoint_folder": "./temp/t/",
+        "load_folder": "./temp/resnet2/",
+        "checkpoint_folder": "./temp/resnet2/",
     }
 )
 

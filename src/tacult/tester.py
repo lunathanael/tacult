@@ -61,7 +61,7 @@ def main(args=_args):
 
     game = Game()
 
-    pit = Pit([], [], game, games_per_match=8, num_rounds=1000, verbose=3)
+    pit = Pit([], [], game, games_per_match=16, num_rounds=1000, verbose=3)
 
     # pit.load_checkpoints_to_pit(checkpoint_dir="./temp/resnet", num_sims_list=[2])
     pit.load_checkpoints_to_pit(checkpoint_dir="./temp/resnet2", num_sims_list=[2])
@@ -96,8 +96,8 @@ def main(args=_args):
         def reset(self):
             self.mcts_instance = RawMCTS(self.game, self.args)
 
-    rollouts_list = [10]
-    num_sims_list = [9, 81]
+    rollouts_list = []
+    num_sims_list = []
     for num_sims in num_sims_list:
         for num_rollouts in rollouts_list:
             marg = {

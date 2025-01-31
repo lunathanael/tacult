@@ -11,7 +11,7 @@ import torch
 import torch.nn as nn
 
 from tacult.utac_game import UtacGame
-from tacult.network import UtacNNet
+from tacult.base.nn_wrapper import load_network
 
 
 def run_argparse() -> argparse.Namespace:
@@ -23,7 +23,10 @@ def run_argparse() -> argparse.Namespace:
 
 
 def load_policy_value_net(state_dict_path: pathlib.Path, device: torch.device) -> nn.Module:
-    policy_value_net = UtacNNet(cuda=False, onnx_export=True)
+    directory = pathlib.Path(state_dict_path).parent
+    filename = pathlib.Path(state_dict_path).name
+    policy_value_net = load_network(folder=directory, filename=filename)
+    policy_value_net = policy_value_net.nnet
     policy_value_net.to(device=device)
     checkpoint = torch.load(state_dict_path, map_location=device, weights_only=False)
     state_dict = checkpoint['state_dict']

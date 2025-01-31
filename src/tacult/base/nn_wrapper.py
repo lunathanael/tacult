@@ -40,12 +40,6 @@ class NNetWrapper(NeuralNet):
             except KeyError:
                 T_max = args.epochs * args.steps_per_epoch * args.numIters
 
-        # Create scheduler
-        self.scheduler = torch.optim.lr_scheduler.CosineAnnealingLR(
-            self.optimizer,
-            T_max=T_max
-        )
-
         log.info(f"Network {network.__class__.__name__} initialized on device {self.device}")
 
     def training_step(self, boards, pis, vs):
@@ -58,7 +52,6 @@ class NNetWrapper(NeuralNet):
         # Add gradient clipping
         torch.nn.utils.clip_grad_norm_(self.nnet.parameters(), 1.0)
         self.optimizer.step()
-        self.scheduler.step()
         return pi_loss.item(), v_loss.item()
 
     
@@ -106,9 +99,6 @@ class NNetWrapper(NeuralNet):
                     batch_boards, batch_pis, batch_vs = next(dataloader_iter)
 
                 pi_loss, v_loss = self.training_step(batch_boards, batch_pis, batch_vs)
-                
-                # Optionally log the learning rate
-                current_lr = self.scheduler.get_last_lr()[0]
 
                 # Track metrics
                 total_pi_loss += pi_loss
@@ -117,7 +107,6 @@ class NNetWrapper(NeuralNet):
                 pbar.set_postfix({
                     'pi_loss': f'{pi_loss:.4f}',
                     'v_loss': f'{v_loss:.4f}',
-                    'lr': f'{current_lr:.2e}'
                 })
 
 
@@ -170,7 +159,6 @@ class NNetWrapper(NeuralNet):
         torch.save({
             'state_dict': self.nnet.state_dict(),
             'optimizer': self.optimizer.state_dict(),
-            'scheduler': self.scheduler.state_dict()
         }, filepath)
 
     def load_checkpoint(
@@ -199,11 +187,6 @@ class NNetWrapper(NeuralNet):
             self.optimizer.load_state_dict(checkpoint['optimizer'])
         else:
             log.warning("No optimizer state dict found in checkpoint")
-
-        if 'scheduler' in checkpoint:
-            self.scheduler.load_state_dict(checkpoint['scheduler'])
-        else:
-            log.warning("No scheduler state dict found in checkpoint")
 
     def train_mode(self):
         """Set the network to training mode"""

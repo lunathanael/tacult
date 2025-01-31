@@ -252,6 +252,7 @@ class Coach():
                 self.nnet.save_checkpoint(folder=self.args.checkpoint_folder, filename='best.pt')
                 self.saveTrainExamples(directory=self.args.checkpoint_folder, filename='best.pt.examples')
                 self.pnet.load_checkpoint(folder=self.args.checkpoint_folder, filename='best.pt')
+                self.pnet_elo = self.nnet_elo
 
     def getCheckpointFile(self, iteration):
         return 'checkpoint_' + str(iteration) + '.pt'
@@ -283,7 +284,6 @@ class Coach():
             log.info("File with trainExamples found. Loading it...")
             with open(examplesFile, "rb") as f:
                 self.trainExamplesHistory = deque(Unpickler(f).load(), maxlen=self.args.maxlenOfQueue)
-            log.info('Loading done!')
-
+            log.info(f'Loaded training data with {len(self.trainExamplesHistory)} examples')
             # examples based on the model were already collected (loaded)
             self.skipFirstSelfPlay = True

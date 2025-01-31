@@ -24,7 +24,6 @@ class Generator():
         self.game = game
         self.args = args
         self.mcts = RawMCTS(game, args)
-        # Pre-allocate tensors
         self.iterationTrainExamples = []
 
     def execute_episode(self):
@@ -36,6 +35,7 @@ class Generator():
         """
         train_examples = []
         board = self.game.getInitBoard()
+        self.mcts = RawMCTS(self.game, self.args)
         current_player = 1
         episode_step = 0
 
