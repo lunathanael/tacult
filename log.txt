@@ -7730,3 +7730,382 @@ Win Rates:
 
 2025-01-30 18:18:16,306 tacult.pit INFO Starting round 3/1000
 2025-01-30 18:18:16,306 tacult.pit INFO Playing match: temp_resnet2_iter2_sims2 vs temp_run3_iter46_sims2
+2025-01-31 14:36:11,187 __main__ INFO Loading UtacGame...
+2025-01-31 14:36:11,897 tacult.base.nn_wrapper INFO Network _UtacNNet initialized on device cpu
+2025-01-31 14:36:11,934 tacult.base.nn_wrapper INFO Loaded network from ./temp/resnet2/checkpoint_1.pt
+2025-01-31 14:36:11,934 tacult.base.nn_wrapper INFO Network architecture:
+2025-01-31 14:36:11,934 tacult.base.nn_wrapper INFO _UtacNNet(
+  (conv_in): Conv2d(4, 32, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1))
+  (bn_in): BatchNorm2d(32, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+  (resnet): Sequential(
+    (0): ResidualBlock(
+      (conv_block1): Sequential(
+        (0): Conv2d(32, 32, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1))
+        (1): BatchNorm2d(32, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+        (2): ReLU()
+      )
+      (conv_block2): Sequential(
+        (0): Conv2d(32, 32, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1))
+        (1): BatchNorm2d(32, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+      )
+    )
+    (1): ResidualBlock(
+      (conv_block1): Sequential(
+        (0): Conv2d(32, 32, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1))
+        (1): BatchNorm2d(32, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+        (2): ReLU()
+      )
+      (conv_block2): Sequential(
+        (0): Conv2d(32, 32, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1))
+        (1): BatchNorm2d(32, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+      )
+    )
+    (2): ResidualBlock(
+      (conv_block1): Sequential(
+        (0): Conv2d(32, 32, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1))
+        (1): BatchNorm2d(32, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+        (2): ReLU()
+      )
+      (conv_block2): Sequential(
+        (0): Conv2d(32, 32, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1))
+        (1): BatchNorm2d(32, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+      )
+    )
+  )
+  (fc1): Linear(in_features=2592, out_features=256, bias=True)
+  (fc_bn1): BatchNorm1d(256, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+  (pi): Linear(in_features=256, out_features=81, bias=True)
+  (v): Linear(in_features=256, out_features=1, bias=True)
+)
+2025-01-31 14:36:11,941 tacult.base.nn_wrapper INFO Network _UtacNNet initialized on device cpu
+2025-01-31 14:36:11,968 tacult.base.nn_wrapper INFO Loaded network from ./temp/resnet2/checkpoint_2.pt
+2025-01-31 14:36:11,968 tacult.base.nn_wrapper INFO Network architecture:
+2025-01-31 14:36:11,968 tacult.base.nn_wrapper INFO _UtacNNet(
+  (conv_in): Conv2d(4, 32, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1))
+  (bn_in): BatchNorm2d(32, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+  (resnet): Sequential(
+    (0): ResidualBlock(
+      (conv_block1): Sequential(
+        (0): Conv2d(32, 32, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1))
+        (1): BatchNorm2d(32, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+        (2): ReLU()
+      )
+      (conv_block2): Sequential(
+        (0): Conv2d(32, 32, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1))
+        (1): BatchNorm2d(32, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+      )
+    )
+    (1): ResidualBlock(
+      (conv_block1): Sequential(
+        (0): Conv2d(32, 32, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1))
+        (1): BatchNorm2d(32, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+        (2): ReLU()
+      )
+      (conv_block2): Sequential(
+        (0): Conv2d(32, 32, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1))
+        (1): BatchNorm2d(32, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+      )
+    )
+    (2): ResidualBlock(
+      (conv_block1): Sequential(
+        (0): Conv2d(32, 32, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1))
+        (1): BatchNorm2d(32, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+        (2): ReLU()
+      )
+      (conv_block2): Sequential(
+        (0): Conv2d(32, 32, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1))
+        (1): BatchNorm2d(32, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+      )
+    )
+  )
+  (fc1): Linear(in_features=2592, out_features=256, bias=True)
+  (fc_bn1): BatchNorm1d(256, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+  (pi): Linear(in_features=256, out_features=81, bias=True)
+  (v): Linear(in_features=256, out_features=1, bias=True)
+)
+2025-01-31 14:36:12,099 tacult.base.nn_wrapper INFO Network _UtacNNet initialized on device cpu
+2025-01-31 14:36:12,132 tacult.base.nn_wrapper INFO Loaded network from ./temp/resnet2/checkpoint_3.pt
+2025-01-31 14:36:12,133 tacult.base.nn_wrapper INFO Network architecture:
+2025-01-31 14:36:12,133 tacult.base.nn_wrapper INFO _UtacNNet(
+  (conv_in): Conv2d(4, 32, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1))
+  (bn_in): BatchNorm2d(32, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+  (resnet): Sequential(
+    (0): ResidualBlock(
+      (conv_block1): Sequential(
+        (0): Conv2d(32, 32, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1))
+        (1): BatchNorm2d(32, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+        (2): ReLU()
+      )
+      (conv_block2): Sequential(
+        (0): Conv2d(32, 32, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1))
+        (1): BatchNorm2d(32, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+      )
+    )
+    (1): ResidualBlock(
+      (conv_block1): Sequential(
+        (0): Conv2d(32, 32, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1))
+        (1): BatchNorm2d(32, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+        (2): ReLU()
+      )
+      (conv_block2): Sequential(
+        (0): Conv2d(32, 32, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1))
+        (1): BatchNorm2d(32, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+      )
+    )
+    (2): ResidualBlock(
+      (conv_block1): Sequential(
+        (0): Conv2d(32, 32, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1))
+        (1): BatchNorm2d(32, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+        (2): ReLU()
+      )
+      (conv_block2): Sequential(
+        (0): Conv2d(32, 32, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1))
+        (1): BatchNorm2d(32, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+      )
+    )
+  )
+  (fc1): Linear(in_features=2592, out_features=256, bias=True)
+  (fc_bn1): BatchNorm1d(256, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+  (pi): Linear(in_features=256, out_features=81, bias=True)
+  (v): Linear(in_features=256, out_features=1, bias=True)
+)
+2025-01-31 14:36:12,141 tacult.base.nn_wrapper INFO Network _UtacNNet initialized on device cpu
+2025-01-31 14:36:12,163 tacult.base.nn_wrapper INFO Loaded network from ./temp/resnet2/checkpoint_5.pt
+2025-01-31 14:36:12,163 tacult.base.nn_wrapper INFO Network architecture:
+2025-01-31 14:36:12,164 tacult.base.nn_wrapper INFO _UtacNNet(
+  (conv_in): Conv2d(4, 32, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1))
+  (bn_in): BatchNorm2d(32, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+  (resnet): Sequential(
+    (0): ResidualBlock(
+      (conv_block1): Sequential(
+        (0): Conv2d(32, 32, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1))
+        (1): BatchNorm2d(32, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+        (2): ReLU()
+      )
+      (conv_block2): Sequential(
+        (0): Conv2d(32, 32, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1))
+        (1): BatchNorm2d(32, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+      )
+    )
+    (1): ResidualBlock(
+      (conv_block1): Sequential(
+        (0): Conv2d(32, 32, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1))
+        (1): BatchNorm2d(32, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+        (2): ReLU()
+      )
+      (conv_block2): Sequential(
+        (0): Conv2d(32, 32, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1))
+        (1): BatchNorm2d(32, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+      )
+    )
+    (2): ResidualBlock(
+      (conv_block1): Sequential(
+        (0): Conv2d(32, 32, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1))
+        (1): BatchNorm2d(32, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+        (2): ReLU()
+      )
+      (conv_block2): Sequential(
+        (0): Conv2d(32, 32, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1))
+        (1): BatchNorm2d(32, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+      )
+    )
+  )
+  (fc1): Linear(in_features=2592, out_features=256, bias=True)
+  (fc_bn1): BatchNorm1d(256, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+  (pi): Linear(in_features=256, out_features=81, bias=True)
+  (v): Linear(in_features=256, out_features=1, bias=True)
+)
+2025-01-31 14:36:12,171 tacult.base.nn_wrapper INFO Network _UtacNNet initialized on device cpu
+2025-01-31 14:36:12,194 tacult.base.nn_wrapper INFO Loaded network from ./temp/resnet2/checkpoint_7.pt
+2025-01-31 14:36:12,195 tacult.base.nn_wrapper INFO Network architecture:
+2025-01-31 14:36:12,195 tacult.base.nn_wrapper INFO _UtacNNet(
+  (conv_in): Conv2d(4, 32, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1))
+  (bn_in): BatchNorm2d(32, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+  (resnet): Sequential(
+    (0): ResidualBlock(
+      (conv_block1): Sequential(
+        (0): Conv2d(32, 32, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1))
+        (1): BatchNorm2d(32, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+        (2): ReLU()
+      )
+      (conv_block2): Sequential(
+        (0): Conv2d(32, 32, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1))
+        (1): BatchNorm2d(32, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+      )
+    )
+    (1): ResidualBlock(
+      (conv_block1): Sequential(
+        (0): Conv2d(32, 32, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1))
+        (1): BatchNorm2d(32, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+        (2): ReLU()
+      )
+      (conv_block2): Sequential(
+        (0): Conv2d(32, 32, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1))
+        (1): BatchNorm2d(32, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+      )
+    )
+    (2): ResidualBlock(
+      (conv_block1): Sequential(
+        (0): Conv2d(32, 32, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1))
+        (1): BatchNorm2d(32, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+        (2): ReLU()
+      )
+      (conv_block2): Sequential(
+        (0): Conv2d(32, 32, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1))
+        (1): BatchNorm2d(32, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+      )
+    )
+  )
+  (fc1): Linear(in_features=2592, out_features=256, bias=True)
+  (fc_bn1): BatchNorm1d(256, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+  (pi): Linear(in_features=256, out_features=81, bias=True)
+  (v): Linear(in_features=256, out_features=1, bias=True)
+)
+2025-01-31 14:36:12,323 tacult.base.nn_wrapper INFO Network _UtacNNet initialized on device cpu
+2025-01-31 14:36:12,612 tacult.base.nn_wrapper INFO Loaded network from ./temp/run3/checkpoint_46.pt
+2025-01-31 14:36:12,612 tacult.base.nn_wrapper INFO Network architecture:
+2025-01-31 14:36:12,613 tacult.base.nn_wrapper INFO _UtacNNet(
+  (conv1): Conv2d(4, 256, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1))
+  (conv2): Conv2d(256, 256, kernel_size=(1, 1), stride=(1, 1))
+  (conv3): Conv2d(256, 512, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1))
+  (conv4): Conv2d(512, 512, kernel_size=(1, 1), stride=(1, 1))
+  (bn1): BatchNorm2d(256, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+  (bn2): BatchNorm2d(256, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+  (bn3): BatchNorm2d(512, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+  (bn4): BatchNorm2d(512, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+  (fc1): Linear(in_features=41472, out_features=512, bias=True)
+  (fc_bn1): BatchNorm1d(512, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+  (pi): Linear(in_features=512, out_features=81, bias=True)
+  (v): Linear(in_features=512, out_features=1, bias=True)
+)
+2025-01-31 14:36:12,613 tacult.pit INFO Starting tournament with 1000 rounds and 7 agents
+2025-01-31 14:36:12,613 tacult.pit INFO Agents: 
+	temp_resnet2_iter1_sims80
+	temp_resnet2_iter2_sims80
+	temp_resnet2_iter3_sims80
+	temp_resnet2_iter5_sims80
+	temp_resnet2_iter7_sims80
+	temp_run3_iter46_sims80
+	Random
+2025-01-31 14:36:12,613 tacult.pit INFO Starting round 1/1000
+2025-01-31 14:36:12,613 tacult.pit INFO Playing match: temp_resnet2_iter2_sims80 vs Random
+2025-01-31 14:36:45,061 tacult.pit INFO 
+Statistics After Match: temp_resnet2_iter2_sims80 vs Random
+2025-01-31 14:36:45,061 tacult.pit INFO ----------------------------------------------------------------------------------------------------
+2025-01-31 14:36:45,061 tacult.pit INFO Agent                          Rating     Games    Wins   Losses Draws  Win Rate Loss Rate Draw Rate
+2025-01-31 14:36:45,061 tacult.pit INFO ----------------------------------------------------------------------------------------------------
+2025-01-31 14:36:45,061 tacult.pit INFO temp_resnet2_iter2_sims80         1899.5      16    14      0      2    87.5%     0.0%    12.5%
+2025-01-31 14:36:45,061 tacult.pit INFO temp_resnet2_iter1_sims80         1500.0       0     0      0      0     0.0%     0.0%     0.0%
+2025-01-31 14:36:45,062 tacult.pit INFO temp_resnet2_iter3_sims80         1500.0       0     0      0      0     0.0%     0.0%     0.0%
+2025-01-31 14:36:45,062 tacult.pit INFO temp_resnet2_iter5_sims80         1500.0       0     0      0      0     0.0%     0.0%     0.0%
+2025-01-31 14:36:45,062 tacult.pit INFO temp_resnet2_iter7_sims80         1500.0       0     0      0      0     0.0%     0.0%     0.0%
+2025-01-31 14:36:45,062 tacult.pit INFO temp_run3_iter46_sims80           1500.0       0     0      0      0     0.0%     0.0%     0.0%
+2025-01-31 14:36:45,062 tacult.pit INFO Random                            1100.5      16     0     14      2     0.0%    87.5%    12.5%
+2025-01-31 14:36:45,062 tacult.pit INFO ----------------------------------------------------------------------------------------------------
+
+2025-01-31 14:36:45,062 tacult.pit INFO Playing match: temp_resnet2_iter1_sims80 vs Random
+2025-01-31 14:37:21,015 tacult.pit INFO 
+Statistics After Match: temp_resnet2_iter1_sims80 vs Random
+2025-01-31 14:37:21,016 tacult.pit INFO ----------------------------------------------------------------------------------------------------
+2025-01-31 14:37:21,016 tacult.pit INFO Agent                          Rating     Games    Wins   Losses Draws  Win Rate Loss Rate Draw Rate
+2025-01-31 14:37:21,016 tacult.pit INFO ----------------------------------------------------------------------------------------------------
+2025-01-31 14:37:21,016 tacult.pit INFO temp_resnet2_iter2_sims80         1899.5      16    14      0      2    87.5%     0.0%    12.5%
+2025-01-31 14:37:21,016 tacult.pit INFO temp_resnet2_iter1_sims80         1622.8      16    15      0      1    93.8%     0.0%     6.2%
+2025-01-31 14:37:21,016 tacult.pit INFO temp_resnet2_iter3_sims80         1500.0       0     0      0      0     0.0%     0.0%     0.0%
+2025-01-31 14:37:21,016 tacult.pit INFO temp_resnet2_iter5_sims80         1500.0       0     0      0      0     0.0%     0.0%     0.0%
+2025-01-31 14:37:21,016 tacult.pit INFO temp_resnet2_iter7_sims80         1500.0       0     0      0      0     0.0%     0.0%     0.0%
+2025-01-31 14:37:21,016 tacult.pit INFO temp_run3_iter46_sims80           1500.0       0     0      0      0     0.0%     0.0%     0.0%
+2025-01-31 14:37:21,016 tacult.pit INFO Random                            1012.2      32     0     29      3     0.0%    90.6%     9.4%
+2025-01-31 14:37:21,017 tacult.pit INFO ----------------------------------------------------------------------------------------------------
+
+2025-01-31 14:37:21,017 tacult.pit INFO Playing match: temp_resnet2_iter3_sims80 vs temp_resnet2_iter7_sims80
+2025-01-31 14:38:23,283 tacult.pit INFO 
+Statistics After Match: temp_resnet2_iter3_sims80 vs temp_resnet2_iter7_sims80
+2025-01-31 14:38:23,283 tacult.pit INFO ----------------------------------------------------------------------------------------------------
+2025-01-31 14:38:23,283 tacult.pit INFO Agent                          Rating     Games    Wins   Losses Draws  Win Rate Loss Rate Draw Rate
+2025-01-31 14:38:23,284 tacult.pit INFO ----------------------------------------------------------------------------------------------------
+2025-01-31 14:38:23,284 tacult.pit INFO temp_resnet2_iter2_sims80         1899.5      16    14      0      2    87.5%     0.0%    12.5%
+2025-01-31 14:38:23,284 tacult.pit INFO temp_resnet2_iter7_sims80         1728.3      16    12      4      0    75.0%    25.0%     0.0%
+2025-01-31 14:38:23,284 tacult.pit INFO temp_resnet2_iter1_sims80         1622.8      16    15      0      1    93.8%     0.0%     6.2%
+2025-01-31 14:38:23,284 tacult.pit INFO temp_resnet2_iter5_sims80         1500.0       0     0      0      0     0.0%     0.0%     0.0%
+2025-01-31 14:38:23,284 tacult.pit INFO temp_run3_iter46_sims80           1500.0       0     0      0      0     0.0%     0.0%     0.0%
+2025-01-31 14:38:23,284 tacult.pit INFO temp_resnet2_iter3_sims80         1271.7      16     4     12      0    25.0%    75.0%     0.0%
+2025-01-31 14:38:23,284 tacult.pit INFO Random                            1012.2      32     0     29      3     0.0%    90.6%     9.4%
+2025-01-31 14:38:23,285 tacult.pit INFO ----------------------------------------------------------------------------------------------------
+
+2025-01-31 14:38:23,285 tacult.pit INFO Playing match: temp_resnet2_iter7_sims80 vs temp_run3_iter46_sims80
+2025-01-31 14:42:56,511 tacult.pit INFO 
+Statistics After Match: temp_resnet2_iter7_sims80 vs temp_run3_iter46_sims80
+2025-01-31 14:42:56,511 tacult.pit INFO ----------------------------------------------------------------------------------------------------
+2025-01-31 14:42:56,511 tacult.pit INFO Agent                          Rating     Games    Wins   Losses Draws  Win Rate Loss Rate Draw Rate
+2025-01-31 14:42:56,511 tacult.pit INFO ----------------------------------------------------------------------------------------------------
+2025-01-31 14:42:56,512 tacult.pit INFO temp_resnet2_iter2_sims80         1899.5      16    14      0      2    87.5%     0.0%    12.5%
+2025-01-31 14:42:56,512 tacult.pit INFO temp_run3_iter46_sims80           1823.6      16     6      4      6    37.5%    25.0%    37.5%
+2025-01-31 14:42:56,512 tacult.pit INFO temp_resnet2_iter1_sims80         1622.8      16    15      0      1    93.8%     0.0%     6.2%
+2025-01-31 14:42:56,512 tacult.pit INFO temp_resnet2_iter7_sims80         1585.5      32    16     10      6    50.0%    31.2%    18.8%
+2025-01-31 14:42:56,512 tacult.pit INFO temp_resnet2_iter5_sims80         1500.0       0     0      0      0     0.0%     0.0%     0.0%
+2025-01-31 14:42:56,512 tacult.pit INFO temp_resnet2_iter3_sims80         1271.7      16     4     12      0    25.0%    75.0%     0.0%
+2025-01-31 14:42:56,512 tacult.pit INFO Random                            1012.2      32     0     29      3     0.0%    90.6%     9.4%
+2025-01-31 14:42:56,512 tacult.pit INFO ----------------------------------------------------------------------------------------------------
+
+2025-01-31 14:42:56,512 tacult.pit INFO Playing match: temp_resnet2_iter5_sims80 vs Random
+2025-01-31 14:43:32,506 tacult.pit INFO 
+Statistics After Match: temp_resnet2_iter5_sims80 vs Random
+2025-01-31 14:43:32,506 tacult.pit INFO ----------------------------------------------------------------------------------------------------
+2025-01-31 14:43:32,506 tacult.pit INFO Agent                          Rating     Games    Wins   Losses Draws  Win Rate Loss Rate Draw Rate
+2025-01-31 14:43:32,506 tacult.pit INFO ----------------------------------------------------------------------------------------------------
+2025-01-31 14:43:32,506 tacult.pit INFO temp_resnet2_iter2_sims80         1899.5      16    14      0      2    87.5%     0.0%    12.5%
+2025-01-31 14:43:32,506 tacult.pit INFO temp_run3_iter46_sims80           1823.6      16     6      4      6    37.5%    25.0%    37.5%
+2025-01-31 14:43:32,506 tacult.pit INFO temp_resnet2_iter1_sims80         1622.8      16    15      0      1    93.8%     0.0%     6.2%
+2025-01-31 14:43:32,506 tacult.pit INFO temp_resnet2_iter7_sims80         1585.5      32    16     10      6    50.0%    31.2%    18.8%
+2025-01-31 14:43:32,506 tacult.pit INFO temp_resnet2_iter5_sims80         1504.2      16    15      1      0    93.8%     6.2%     0.0%
+2025-01-31 14:43:32,506 tacult.pit INFO temp_resnet2_iter3_sims80         1271.7      16     4     12      0    25.0%    75.0%     0.0%
+2025-01-31 14:43:32,507 tacult.pit INFO Random                             978.4      48     1     44      3     2.1%    91.7%     6.2%
+2025-01-31 14:43:32,507 tacult.pit INFO ----------------------------------------------------------------------------------------------------
+
+2025-01-31 14:43:32,507 tacult.pit INFO Playing match: temp_resnet2_iter1_sims80 vs temp_run3_iter46_sims80
+2025-01-31 14:47:32,070 tacult.pit INFO 
+Statistics After Match: temp_resnet2_iter1_sims80 vs temp_run3_iter46_sims80
+2025-01-31 14:47:32,071 tacult.pit INFO ----------------------------------------------------------------------------------------------------
+2025-01-31 14:47:32,071 tacult.pit INFO Agent                          Rating     Games    Wins   Losses Draws  Win Rate Loss Rate Draw Rate
+2025-01-31 14:47:32,071 tacult.pit INFO ----------------------------------------------------------------------------------------------------
+2025-01-31 14:47:32,071 tacult.pit INFO temp_resnet2_iter2_sims80         1899.5      16    14      0      2    87.5%     0.0%    12.5%
+2025-01-31 14:47:32,071 tacult.pit INFO temp_run3_iter46_sims80           1888.3      32    19      5      8    59.4%    15.6%    25.0%
+2025-01-31 14:47:32,071 tacult.pit INFO temp_resnet2_iter7_sims80         1585.5      32    16     10      6    50.0%    31.2%    18.8%
+2025-01-31 14:47:32,071 tacult.pit INFO temp_resnet2_iter1_sims80         1544.9      32    16     13      3    50.0%    40.6%     9.4%
+2025-01-31 14:47:32,071 tacult.pit INFO temp_resnet2_iter5_sims80         1504.2      16    15      1      0    93.8%     6.2%     0.0%
+2025-01-31 14:47:32,071 tacult.pit INFO temp_resnet2_iter3_sims80         1271.7      16     4     12      0    25.0%    75.0%     0.0%
+2025-01-31 14:47:32,072 tacult.pit INFO Random                             978.4      48     1     44      3     2.1%    91.7%     6.2%
+2025-01-31 14:47:32,072 tacult.pit INFO ----------------------------------------------------------------------------------------------------
+
+2025-01-31 14:47:32,072 tacult.pit INFO Playing match: temp_resnet2_iter3_sims80 vs temp_resnet2_iter5_sims80
+2025-01-31 14:49:19,823 tacult.pit INFO 
+Statistics After Match: temp_resnet2_iter3_sims80 vs temp_resnet2_iter5_sims80
+2025-01-31 14:49:19,824 tacult.pit INFO ----------------------------------------------------------------------------------------------------
+2025-01-31 14:49:19,824 tacult.pit INFO Agent                          Rating     Games    Wins   Losses Draws  Win Rate Loss Rate Draw Rate
+2025-01-31 14:49:19,824 tacult.pit INFO ----------------------------------------------------------------------------------------------------
+2025-01-31 14:49:19,824 tacult.pit INFO temp_resnet2_iter2_sims80         1899.5      16    14      0      2    87.5%     0.0%    12.5%
+2025-01-31 14:49:19,824 tacult.pit INFO temp_run3_iter46_sims80           1888.3      32    19      5      8    59.4%    15.6%    25.0%
+2025-01-31 14:49:19,824 tacult.pit INFO temp_resnet2_iter7_sims80         1585.5      32    16     10      6    50.0%    31.2%    18.8%
+2025-01-31 14:49:19,824 tacult.pit INFO temp_resnet2_iter1_sims80         1544.9      32    16     13      3    50.0%    40.6%     9.4%
+2025-01-31 14:49:19,824 tacult.pit INFO temp_resnet2_iter5_sims80         1392.5      32    23      5      4    71.9%    15.6%    12.5%
+2025-01-31 14:49:19,824 tacult.pit INFO temp_resnet2_iter3_sims80         1353.1      32     8     20      4    25.0%    62.5%    12.5%
+2025-01-31 14:49:19,825 tacult.pit INFO Random                             978.4      48     1     44      3     2.1%    91.7%     6.2%
+2025-01-31 14:49:19,825 tacult.pit INFO ----------------------------------------------------------------------------------------------------
+
+2025-01-31 14:49:19,825 tacult.pit INFO Playing match: temp_resnet2_iter3_sims80 vs Random
+2025-01-31 14:50:23,299 tacult.pit INFO 
+Statistics After Match: temp_resnet2_iter3_sims80 vs Random
+2025-01-31 14:50:23,299 tacult.pit INFO ----------------------------------------------------------------------------------------------------
+2025-01-31 14:50:23,300 tacult.pit INFO Agent                          Rating     Games    Wins   Losses Draws  Win Rate Loss Rate Draw Rate
+2025-01-31 14:50:23,300 tacult.pit INFO ----------------------------------------------------------------------------------------------------
+2025-01-31 14:50:23,300 tacult.pit INFO temp_resnet2_iter2_sims80         1899.5      16    14      0      2    87.5%     0.0%    12.5%
+2025-01-31 14:50:23,300 tacult.pit INFO temp_run3_iter46_sims80           1888.3      32    19      5      8    59.4%    15.6%    25.0%
+2025-01-31 14:50:23,301 tacult.pit INFO temp_resnet2_iter7_sims80         1585.5      32    16     10      6    50.0%    31.2%    18.8%
+2025-01-31 14:50:23,301 tacult.pit INFO temp_resnet2_iter1_sims80         1544.9      32    16     13      3    50.0%    40.6%     9.4%
+2025-01-31 14:50:23,301 tacult.pit INFO temp_resnet2_iter3_sims80         1405.6      48    24     20      4    50.0%    41.7%     8.3%
+2025-01-31 14:50:23,301 tacult.pit INFO temp_resnet2_iter5_sims80         1392.5      32    23      5      4    71.9%    15.6%    12.5%
+2025-01-31 14:50:23,301 tacult.pit INFO Random                             922.1      64     1     60      3     1.6%    93.8%     4.7%
+2025-01-31 14:50:23,301 tacult.pit INFO ----------------------------------------------------------------------------------------------------
+
+2025-01-31 14:50:23,301 tacult.pit INFO Playing match: temp_run3_iter46_sims80 vs Random

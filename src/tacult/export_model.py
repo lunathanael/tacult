@@ -185,6 +185,7 @@ def main(_args=None) -> None:
 
     print(f"len(torch_outputs) = {len(torch_outputs)}")
 
+
     onnxruntime_outputs = compute_onnxruntime_outputs(
         policy_value_net_onnx_path=args.policy_value_net_onnx_path,
         input_arrays=input_arrays,

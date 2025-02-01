@@ -11,7 +11,7 @@ _args = dotdict(
         "numEnvs": 256,
         "tempThreshold": 10,  #
         "updateThreshold": 0.6,  # During arena playoff, new neural net will be accepted if threshold or more of games are won.
-        "maxlenOfQueue": 500_000,  # Number of game examples to train the neural networks. Do (minNumEps + numEnvs) * 81 * 8
+        "maxlenOfQueue": 1_000_000,  # Number of game examples to train the neural networks. Do (minNumEps + numEnvs) * 81 * 8
         "numMCTSSims": 800,  # Number of games moves for MCTS to simulate.
         "cpuct": 2.4,
 

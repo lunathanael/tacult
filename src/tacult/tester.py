@@ -64,8 +64,8 @@ def main(args=_args):
     pit = Pit([], [], game, games_per_match=16, num_rounds=1000, verbose=3)
 
     # pit.load_checkpoints_to_pit(checkpoint_dir="./temp/resnet", num_sims_list=[2])
-    pit.load_checkpoints_to_pit(checkpoint_dir="./temp/resnet2", num_sims_list=[2])
-    pit.load_checkpoints_to_pit(checkpoint_dir="./temp/run3", num_sims_list=[2])
+    pit.load_checkpoints_to_pit(checkpoint_dir="./temp/resnet2", num_sims_list=[80])
+    pit.load_checkpoints_to_pit(checkpoint_dir="./temp/run3", num_sims_list=[80])
 
     # Create and add random player
     class RandomPlayer(Pit.PitAgent):
