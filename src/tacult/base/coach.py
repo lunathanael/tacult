@@ -151,6 +151,7 @@ class Coach():
                         for x in self._trainExamples[i]
                     ]
                 )
+                self._trainExamples[i] = []
                 self._autoresetEnvs[i] = True
         
         return results
@@ -216,6 +217,7 @@ class Coach():
             self.nnet.train(self.trainExamplesHistory)
 
             self.nnet.save_checkpoint(folder=self.args.checkpoint_folder, filename='temp.pt')
+            self.saveTrainExamples(directory=self.args.checkpoint_folder, filename='temp.pt.examples')
 
             numEnvs = self.args.numEnvs
             numMCTSSims = self.args.numMCTSSims

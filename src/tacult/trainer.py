@@ -15,7 +15,7 @@ _args = dotdict(
         "numMCTSSims": 800,  # Number of games moves for MCTS to simulate.
         "cpuct": 2.4,
 
-        "arenaNumMCTSSims": 80,
+        "arenaNumMCTSSims": 100,
         "arenaCompare": 256,  # Number of games to play during arena play to determine if new net will be accepted.
         "verbose": False,  # Whether to print verbose output for Arena.
 
@@ -40,7 +40,7 @@ _args = dotdict(
         "cuda": False,
 
         "load_folder": "./temp/resnet2/",
-        "checkpoint_folder": "./temp/resnet2/",
+        "checkpoint_folder": "./temp/resnet3/",
     }
 )
 
