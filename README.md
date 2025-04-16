@@ -1,8 +1,142 @@
-# Tacult - Ultimate Tic Tac Toe AI
+# Tacult: A Reinforcement Learning Agent for Ultimate Tic-Tac-Toe
 
-A Python implementation of an AI system for Ultimate Tic Tac Toe (UTAC) using deep learning and Monte Carlo Tree Search (MCTS). This project provides tools for training, evaluating, and playing against AI agents in the Ultimate Tic Tac Toe game.
+## Overview
 
-A live playable version of the AI is available [here](https://tacult.lunathanael.dev/).
+**Tacult** is a scalable deep reinforcement learning agent developed to play Ultimate Tic-Tac-Toe using self-play. It leverages a combination of vectorized Monte Carlo Tree Search (MCTS) and neural network policy/value estimation to iteratively improve performance, drawing inspiration from methods like AlphaZero and MuZero.
+
+The system is composed of three main components:
+
+1. **utac** – A high-performance C++ library implementing the logic of Ultimate Tic-Tac-Toe, including move generation, terminal condition checking, and a fast board representation.
+2. **utac-gym** – A Python Gym-compatible wrapper that exposes the environment to training and evaluation loops, facilitating interaction with reinforcement learning frameworks.
+3. **tacult** – The core training engine, which integrates a scalable MCTS-based actor-learner pipeline, shared replay buffer, and neural network training using PyTorch.
+
+This project is a research-oriented approach to explore scalable self-play RL training on a game with hierarchical structure and partial move constraints, requiring careful handling of game rules and strategic foresight.
+
+## Screenshots
+
+Example analysis of a board position.
+![image](https://github.com/user-attachments/assets/d139a555-c57e-4072-9b73-064ec053e9cb)
+
+Example Arena Playout, elo ratings in the picture depicted represent 1:100 odds with only 15 training iterations and 2 simulations! 
+![Screenshot 2025-02-04 021404](https://github.com/user-attachments/assets/e7091fad-450f-4f90-a834-0036834818a6)
+
+Picturization of Model
+![Screenshot 2025-01-27 214801](https://github.com/user-attachments/assets/9549ca13-23f1-4adf-af96-ddfd32dc4d0c)
+
+Figures from early training using tensorboard
+![Screenshot 2025-01-09 180732](https://github.com/user-attachments/assets/92388d1f-ebf1-4da5-8093-4c239186313b)
+
+## Deeper Dive
+
+Tacult fuses the AlphaZero research paradigm with high‑performance engineering. At its core is **utac**, a C++ engine that represents the 9×9 Ultimate board via bitmasking and perfect‑hash lookup tables, yielding **> 5 000 MCTS node evaluations per second**. To scale self‑play, Tacult employs **vectorized MCTS**, processing hundreds of trees in parallel and using NumPy‑accelerated replay buffers for rapid data ingestion and sampling. Selection in each tree is governed by the PUCT formula:
+
+$` 
+\mathrm{UCT}(s,a) \;=\; Q(s,a)\;+\;c_{\text{puct}}\;P(s,a)\;\frac{\sqrt{\sum_b N(s,b)}}{1 + N(s,a)} 
+`$
+
+where
+
+$`
+Q(s,a) \;=\;\frac{W(s,a)}{N(s,a)},\quad 
+P(s,a)\;\text{is the neural‐net prior},\quad 
+N(s,a)\;\text{is the visit count}.
+`$
+
+After MCTS completes, moves are sampled according to the root‑visit distribution:
+
+$`
+\pi(a\mid s)\;=\;\frac{N(s,a)^{1/\tau}}{\sum_b N(s,b)^{1/\tau}},
+`$
+
+and stored alongside observations and final outcomes in a replay buffer. Network training minimizes the combined loss:
+
+$`
+\ell(\theta)\;=\;(z - v)^2 \;-\;\boldsymbol{\pi}^\top\!\log \, \boldsymbol{p}\;+\;\lambda\|\theta\|^2,
+`$
+
+with parameters updated by stochastic gradient descent:
+
+$`
+\theta \;\leftarrow\;\theta \;-\;\eta\,\nabla_\theta \,\ell(\theta).
+`$
+
+---
+
+Bridging C++ throughput and Python flexibility is **utac‑gym**, built on Nanobind for near‑zero overhead calls. This interface drives PyTorch training on GPUs, while retaining the C++ engine’s speed. The neural model follows a deep ResNet backbone—with initial convolutions, multiple residual blocks, and separate policy/value heads—mirroring the architecture from Silver et al. (2017). The **policy head** outputs logits which are normalized via softmax:
+
+$`
+p_i\;=\;\frac{\exp(z_i)}{\sum_j \exp(z_j)},
+`$
+
+and the **value head** predicts a scalar $`v\in[-1,1]`$. Candidate networks are validated through an **Elo‑style arena**, where ratings evolve by:
+
+$`
+E_A\;=\;\frac{1}{1 + 10^{(R_B - R_A)/400}},
+`$
+
+$`
+R'_A\;=\;R_A \;+\;K\,(S_A - E_A),
+`$
+
+ensuring only statistically significant improvements (ΔElo ≥ 10) survive. Together, these elements deliver a research‑grade platform—grounded in DeepMind’s pioneering RL algorithms and optimized for blazing performance.
+
+## Network Architecture
+
+The neural network is a dual-headed architecture that processes observations from the Ultimate Tic-Tac-Toe board and outputs two quantities:
+
+- A **policy vector**, representing the agent's probability distribution over valid moves.
+- A **value scalar**, representing the expected outcome (win, draw, or loss) from the current game state.
+
+### Heuristic Design of the Network
+
+The input to the network encodes the current board state using multiple binary planes. These include:
+
+- A plane for the positions of X pieces.
+- A plane for the positions of O pieces.
+- A plane for valid next subgrids (due to the rules of Ultimate Tic-Tac-Toe).
+- A plane indicating the current player's identity.
+- A historical stack of previous board states to give temporal context (e.g., 8 frames for temporal unrolling).
+
+These planes form a tensor of shape (C, 9, 9), where C is the number of input channels.
+
+The neural network itself begins with a stack of convolutional layers designed to extract spatial and hierarchical features across the 9x9 macro grid. A series of residual blocks follow to facilitate deeper learning without vanishing gradients, similar to ResNet-based AlphaZero models.
+
+Once a high-dimensional representation is computed, the network bifurcates into two heads:
+
+- The **policy head** maps the shared representation to a logits vector of shape (9×9 = 81), which is then masked and normalized using a softmax function during training and MCTS rollouts.
+- The **value head** reduces the shared representation through dense layers and outputs a scalar in the range [-1, 1], representing the expected result from the perspective of the current player.
+
+Batch normalization and ReLU activations are used throughout the network, and weight initialization follows He normal initialization for stability.
+
+## Reinforcement Learning Framework
+
+### Self-Play and MCTS
+
+Tacult uses a vectorized Monte Carlo Tree Search (vMCTS) for policy improvement. During training, multiple environments are run in parallel, each performing MCTS rollouts per move using the latest neural network.
+
+The MCTS uses a UCB1-like selection function to balance exploration and exploitation, backed by neural network predictions. Upon expansion of a node, the network outputs are stored in the node’s statistics, and backpropagation of values occurs up the tree.
+
+The selected action is then sampled proportionally to visit counts (softmax of root visit counts) during training, and greedily during evaluation.
+
+### Replay Buffer
+
+A prioritized replay buffer stores self-play episodes in the form of:
+
+- The observation tensor.
+- The search-derived policy target.
+- The game outcome.
+
+The buffer is periodically sampled for training in batches. The agent is trained using a composite loss function:
+
+- Cross-entropy loss for the policy head.
+- Mean squared error loss for the value head.
+- Optional entropy regularization.
+
+### Vectorization
+
+A key design choice was the implementation of vectorized environments and batched network inference. By processing multiple MCTS trees in parallel, the system achieves high GPU utilization and faster training throughput.
+
+The Gym wrapper (`utac-gym`) supports this batching by returning stacked observations and handling step/reset across vectorized envs.
 
 ## Prerequisites
 
@@ -124,11 +258,16 @@ pit.run()
   - `export_model.py` - ONNX export functionality
   - `utac_game.py` - Game rules and mechanics
   - `pit.py` - Tournament system
+## References
+
+This project draws inspiration from:
+
+- Silver, D., Schrittwieser, J., et al. "Mastering the game of Go without human knowledge." *Nature* 550.7676 (2017): 354-359.
+- Schrittwieser, J., et al. "Mastering Atari, Go, Chess and Shogi by planning with a learned model." *Nature* 588.7839 (2020): 604–609.
+- Pettinger, A. "Monte Carlo Tree Search and Deep Reinforcement Learning." [Online Article] (https://apettit.github.io/blog/rl/2024/03/29/mcts.html)
+
+These references underpin the agent’s architectural decisions, training loop design, and data representation.
 
 ## License
 
-This project is licensed under the MIT License - see the LICENSE file for details.
-
-## Author
-
-- Lunathanel (info@lunathanel.dev)
+MIT License. See `LICENSE` file for more details.
