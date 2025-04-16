@@ -1,4 +1,9 @@
-# Tacult: A Reinforcement Learning Agent for Ultimate Tic-Tac-Toe
+# Tacult: An AI Agent for Ultimate Tic-Tac-Toe
+
+You can play against the AI or use the AI to crush any opponent [here](https://tacult.lunathanael.dev/), or
+```
+https://tacult.lunathanael.dev/
+```
 
 ## Overview
 
@@ -10,7 +15,7 @@ The system is composed of three main components:
 2. **utac-gym** – A Python Gym-compatible wrapper that exposes the environment to training and evaluation loops, facilitating interaction with reinforcement learning frameworks.
 3. **tacult** – The core training engine, which integrates a scalable MCTS-based actor-learner pipeline, shared replay buffer, and neural network training using PyTorch.
 
-This project is a research-oriented approach to explore scalable self-play RL training on a game with hierarchical structure and partial move constraints, requiring careful handling of game rules and strategic foresight.
+This project is a research-oriented approach to explore scalable self-play RL training on a game with a hierarchical structure and partial move constraints, requiring careful handling of game rules and strategic foresight.
 
 ## Screenshots
 
