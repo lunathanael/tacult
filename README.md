@@ -2,6 +2,8 @@
 
 A Python implementation of an AI system for Ultimate Tic Tac Toe (UTAC) using deep learning and Monte Carlo Tree Search (MCTS). This project provides tools for training, evaluating, and playing against AI agents in the Ultimate Tic Tac Toe game.
 
+A live playable version of the AI is available [https://tacult.lunathanael.dev/](here).
+
 ## Prerequisites
 
 Before installing this package, you need to install the `utac-gym` package first:
